@@ -66,4 +66,14 @@ describe("Genealogy tree", function() {
     var answer = 850;
     expect(x).toEqual(answer);
   });
+
+  it("calculation layout level y", function() {
+    var level = 2;
+
+    GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
+    var y = GenealogyTree.prototype.calcLayoutLevelY(level);
+
+    var answer = 2 * GenealogyTree.prototype.options.stepY;
+    expect(y).toEqual(answer);
+  });
 });

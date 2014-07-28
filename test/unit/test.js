@@ -25,6 +25,7 @@ describe("Genealogy tree", function() {
   });
 
   it("create layout level", function() {
+    var level = 2;
     var width = 50;
     var nodeArr = [{
       id: 1,
@@ -35,12 +36,14 @@ describe("Genealogy tree", function() {
     }];
 
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
-    var layout = GenealogyTree.prototype.createLayoutLevel(nodeArr);
+    var layout = GenealogyTree.prototype.createLayoutLevel(nodeArr, level);
 
     var x = GenealogyTree.prototype.calcStartX(nodeArr.length, width);
+    var y = GenealogyTree.prototype.calcLayoutLevelY(level);
+
     for (var i = 0; i < layout.length - 1; i++) {
       expect(layout[i].x).toEqual(x);
-      expect(layout[i].y).not.toBeUndefined();
+      expect(layout[i].y).toEqual(y);
       x += GenealogyTree.prototype.options.stepX;
     }
   });

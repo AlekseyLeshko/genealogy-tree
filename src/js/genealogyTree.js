@@ -24,7 +24,7 @@ GenealogyTree.prototype = {
     for (var i = 0; i < nodeArr.length; i++) {
       var node = this.clone(nodeArr[i]);
       node.x = x;
-      node.y = 0;
+      node.y = y;
       layout.push(node);
       x += this.options.stepX;
     }

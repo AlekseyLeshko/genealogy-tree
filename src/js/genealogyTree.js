@@ -52,20 +52,36 @@ GenealogyTree.prototype = {
     return copy;
   },
 
-  findElement: function(obj, arr) {
+  findElement: function(key, val, arr) {
     for (var i = 0; i < arr.length; i++) {
-      if (arr[i][obj.key] === obj.val) {
+      if (arr[i][key] === val) {
         return arr[i];
       }
     }
   },
 
   createLayouts: function(rootRelationships, nodes, relationships) {
-    var layouts = [];
+    this.layouts = [];
 
+  },
+
+  craeteRootLayout: function(nodes, relationships) {
     var layout = [];
+    var children = [];
+    for (var i = 0; i < rootRelationships.length; i++) {
+      var relationship = this.findElementbyId(rootRelationships[i], relationships);
+      var wife = this.findElementbyId(relationship.wife, nodes);
+      var husband = this.findElementbyId(relationship.husband, nodes);
+      layout.push(wife);
+      layout.push(husband);
+    }
+    layouts.push(layout);
+    return children;
+  },
 
-
-    return layouts;
+  getNodeOfRelationship: function(val, nodes) {
+    var key = 'id';
+    var node = this.findElement(key, val, nodes);
+    return node;
   }
 };

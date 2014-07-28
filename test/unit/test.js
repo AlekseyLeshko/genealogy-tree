@@ -37,9 +37,11 @@ describe("Genealogy tree", function() {
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
     var layout = GenealogyTree.prototype.createLayoutLevel(nodeArr);
 
-    for (var i = 0; i < layout.length; i++) {
-      expect(layout[i].x).not.toBeUndefined();
+    var x = GenealogyTree.prototype.calcStartX(nodeArr.length, width);
+    for (var i = 0; i < layout.length - 1; i++) {
+      expect(layout[i].x).toEqual(x);
       expect(layout[i].y).not.toBeUndefined();
+      x += GenealogyTree.prototype.options.stepX;
     }
   });
 

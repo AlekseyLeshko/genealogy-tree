@@ -19,12 +19,13 @@ GenealogyTree.prototype = {
 
   createLayoutLevel: function(nodeArr) {
     var layout = [];
-    var startX = this.calcStartX(nodeArr.length, nodeArr[0].width);
+    var x = this.calcStartX(nodeArr.length, nodeArr[0].width);
     for (var i = 0; i < nodeArr.length; i++) {
       var node = this.clone(nodeArr[i]);
-      node.x = 0;
+      node.x = x;
       node.y = 0;
       layout.push(node);
+      x += this.options.stepX;
     }
     return layout;
   },

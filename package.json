@@ -1,0 +1,23 @@
+{
+  "name": "genealogy-tree",
+  "private": true,
+  "version": "0.0.0",
+  "description": "genealogy-tree",
+  "repository": "https://github.com/AlekseyLeshko/genealogy-tree",
+  "license": "MIT",
+  "devDependencies": {
+    "karma": "~0.10",
+    "shelljs": "^0.2.6",
+    "karma-junit-reporter": "^0.2.2"
+  },
+  "scripts": {
+    "prestart": "npm install",
+
+    "pretest": "npm install",
+    "test": "karma start test/karma.conf.js",
+    "test-single-run": "karma start test/karma.conf.js  --single-run",
+
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update"
+  }
+}

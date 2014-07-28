@@ -9,10 +9,10 @@ GenealogyTree.prototype = {
         width: 700,
         height: 700
       },
-      width: 500,
-      height: 500,
-      stepX: 50,
-      stepY: 50,
+      width: 700,
+      height: 700,
+      stepX: 75,
+      stepY: 100,
       nodeWidth: 50
     };
     return defaultOptions;

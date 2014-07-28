@@ -11,8 +11,8 @@ describe("Genealogy tree", function() {
   it("get default options", function() {
     var defaultWidth = 700;
     var defaultHeight = 700;
-    var stepX = 50;
-    var stepY = 50;
+    var stepX = 75;
+    var stepY = 100;
 
     var options = GenealogyTree.prototype.getDefaultOptions();
 
@@ -66,7 +66,7 @@ describe("Genealogy tree", function() {
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
     var y = GenealogyTree.prototype.calcStartY(countNode, widthNode);
 
-    var answer = 350;
+    var answer = 500;
     expect(y).toEqual(answer);
   });
 

@@ -19,7 +19,7 @@ GenealogyTree.prototype = {
 
   createLayoutLevel: function(nodeArr) {
     var layout = [];
-    // var startX = this.calcStartX(nodeArr.length, nodeArr[0].width);
+    var startX = this.calcStartX(nodeArr.length, nodeArr[0].width);
     for (var i = 0; i < nodeArr.length; i++) {
       var node = this.clone(nodeArr[i]);
       node.x = 0;
@@ -31,7 +31,6 @@ GenealogyTree.prototype = {
 
   calcStartX: function(countNode, widthNode) {
     var x = (countNode * widthNode) + ((countNode - 1) * this.options.stepX);
-    console.log(x);
     return this.options.width - x;
   },
 

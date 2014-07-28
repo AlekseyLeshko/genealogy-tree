@@ -25,12 +25,13 @@ describe("Genealogy tree", function() {
   });
 
   it("create layout level", function() {
+    var width = 50;
     var nodeArr = [{
       id: 1,
-      width: 20
+      width: width
     }, {
       id: 2,
-      width: 20
+      width: width
     }];
 
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
@@ -54,13 +55,13 @@ describe("Genealogy tree", function() {
   });
 
   it("calculation start x", function() {
-    var countNode = 5;
+    var countNode = 2;
     var widthNode = 50;
 
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
     var x = GenealogyTree.prototype.calcStartX(countNode, widthNode);
 
-    var answer = 550;
-    expect(x).toEqual(550);
+    var answer = 850;
+    expect(x).toEqual(answer);
   });
 });

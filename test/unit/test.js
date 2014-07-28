@@ -79,4 +79,71 @@ describe("Genealogy tree", function() {
     var answer = 2 * GenealogyTree.prototype.options.stepX;
     expect(x).toEqual(answer);
   });
+
+  it("create layouts", function() {
+    var nodes = [{
+      "id": 1,
+      "name": "Adam",
+      "gender": "male",
+      "isConcubine": false,
+      "isUnnamed": false,
+      "isDeid": false
+    }, {
+      "id": 2,
+      "name": "Eve",
+      "gender": "female",
+      "isConcubine": false,
+      "isUnnamed": false,
+      "isDeid": true
+    }, {
+      "id": 3,
+      "name": "Wife Seth",
+      "gender": "female",
+      "isConcubine": false,
+      "isUnnamed": true,
+      "isDeid": false
+    }, {
+      "id": 4,
+      "name": "Seth",
+      "gender": "male",
+      "isConcubine": true,
+      "isUnnamed": false,
+      "isDeid": false
+    }];
+
+    var relationships = [{
+      "id": 1,
+      "husband": 1,
+      "wife": 2,
+      "isLegitimateRelationships": true,
+      "children": [3, 4]
+    }, {
+      "id": 2,
+      "husband": 4,
+      "wife": 3,
+      "isLegitimateRelationships": true,
+      "children": []
+    }];
+    var rootRelationshipId = 1;
+
+    var layouts = GenealogyTree.prototype.createLayouts([rootRelationshipId], nodes, relationships);
+    expect(layouts.length).toEqual(2);
+  });
+
+  it("find element", function() {
+    var arr = [{
+      id: 1
+    }, {
+      id: 2
+    }];
+
+    var o = {
+      key: "id",
+      val: 2
+    };
+
+    var obj = GenealogyTree.prototype.findElement(o, arr);
+
+    expect(obj.id).toEqual(2);
+  });
 });

@@ -45,8 +45,27 @@ GenealogyTree.prototype = {
     if (null == obj || "object" != typeof obj) return obj;
       var copy = obj.constructor();
       for (var attr in obj) {
-          if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+          if (obj.hasOwnProperty(attr)) {
+            copy[attr] = obj[attr];
+          }
       }
     return copy;
+  },
+
+  findElement: function(obj, arr) {
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i][obj.key] === obj.val) {
+        return arr[i];
+      }
+    }
+  },
+
+  createLayouts: function(rootRelationships, nodes, relationships) {
+    var layouts = [];
+
+    var layout = [];
+
+
+    return layouts;
   }
 };

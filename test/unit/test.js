@@ -11,8 +11,8 @@ describe("Genealogy tree", function() {
   it("get default options", function() {
     var defaultWidth = 700;
     var defaultHeight = 700;
-    var stepX = 70;
-    var stepY = 70;
+    var stepX = 50;
+    var stepY = 50;
 
     var options = GenealogyTree.prototype.getDefaultOptions();
 
@@ -33,11 +33,12 @@ describe("Genealogy tree", function() {
       width: 20
     }];
 
-    var nodeLayout = GenealogyTree.prototype.createLayoutLevel(nodeArr);
-    console.log(nodeArr[0]);
-    for (var i = 0; i < nodeLayout.length; i++) {
-      expect(nodeLayout[i].width).not.toBeUndefined();
-      expect(nodeLayout[i].height).not.toBeUndefined();
+    GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
+    var layout = GenealogyTree.prototype.createLayoutLevel(nodeArr);
+
+    for (var i = 0; i < layout.length; i++) {
+      expect(layout[i].x).not.toBeUndefined();
+      expect(layout[i].y).not.toBeUndefined();
     }
   });
 
@@ -50,5 +51,16 @@ describe("Genealogy tree", function() {
     var copy = GenealogyTree.prototype.clone(node);
 
     expect(copy).toEqual(node);
+  });
+
+  it("calculation start x", function() {
+    var countNode = 5;
+    var widthNode = 50;
+
+    GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
+    var x = GenealogyTree.prototype.calcStartX(countNode, widthNode);
+
+    var answer = 550;
+    expect(x).toEqual(550);
   });
 });

@@ -9,21 +9,30 @@ GenealogyTree.prototype = {
         width: 700,
         height: 700
       },
-      stepX: 70,
-      stepY: 70
+      width: 1000,
+      height: 1000,
+      stepX: 50,
+      stepY: 50
     };
     return defaultOptions;
   },
 
   createLayoutLevel: function(nodeArr) {
     var layout = [];
+    // var startX = this.calcStartX(nodeArr.length, nodeArr[0].width);
     for (var i = 0; i < nodeArr.length; i++) {
-      var node = nodeArr[i];
-      node.width = 0;
-      node.height = 0;
+      var node = this.clone(nodeArr[i]);
+      node.x = 0;
+      node.y = 0;
       layout.push(node);
     }
     return layout;
+  },
+
+  calcStartX: function(countNode, widthNode) {
+    var x = (countNode * widthNode) + ((countNode - 1) * this.options.stepX);
+    console.log(x);
+    return this.options.width - x;
   },
 
   clone: function(obj) {

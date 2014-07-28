@@ -38,13 +38,13 @@ describe("Genealogy tree", function() {
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
     var layout = GenealogyTree.prototype.createLayoutLevel(nodeArr, level);
 
-    var x = GenealogyTree.prototype.calcStartX(nodeArr.length, width);
-    var y = GenealogyTree.prototype.calcLayoutLevelY(level);
+    var x = GenealogyTree.prototype.calcLayoutLevelX(level);
+    var y = GenealogyTree.prototype.calcStartY(nodeArr.length, width);
 
     for (var i = 0; i < layout.length - 1; i++) {
       expect(layout[i].x).toEqual(x);
       expect(layout[i].y).toEqual(y);
-      x += GenealogyTree.prototype.options.stepX;
+      y += GenealogyTree.prototype.options.stepY;
     }
   });
 
@@ -59,24 +59,24 @@ describe("Genealogy tree", function() {
     expect(copy).toEqual(node);
   });
 
-  it("calculation start x", function() {
+  it("calculation start y", function() {
     var countNode = 2;
     var widthNode = 50;
 
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
-    var x = GenealogyTree.prototype.calcStartX(countNode, widthNode);
+    var y = GenealogyTree.prototype.calcStartY(countNode, widthNode);
 
-    var answer = 850;
-    expect(x).toEqual(answer);
+    var answer = 350;
+    expect(y).toEqual(answer);
   });
 
-  it("calculation layout level y", function() {
+  it("calculation layout level x", function() {
     var level = 2;
 
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
-    var y = GenealogyTree.prototype.calcLayoutLevelY(level);
+    var x = GenealogyTree.prototype.calcLayoutLevelX(level);
 
-    var answer = 2 * GenealogyTree.prototype.options.stepY;
-    expect(y).toEqual(answer);
+    var answer = 2 * GenealogyTree.prototype.options.stepX;
+    expect(x).toEqual(answer);
   });
 });

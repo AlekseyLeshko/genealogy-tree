@@ -9,8 +9,8 @@ GenealogyTree.prototype = {
         width: 700,
         height: 700
       },
-      width: 1000,
-      height: 1000,
+      width: 500,
+      height: 500,
       stepX: 50,
       stepY: 50
     };
@@ -19,26 +19,26 @@ GenealogyTree.prototype = {
 
   createLayoutLevel: function(nodeArr, level) {
     var layout = [];
-    var x = this.calcStartX(nodeArr.length, nodeArr[0].width);
-    var y = this.calcLayoutLevelY(level);
+    var y = this.calcStartY(nodeArr.length, nodeArr[0].width);
+    var x = this.calcLayoutLevelX(level);
     for (var i = 0; i < nodeArr.length; i++) {
       var node = this.clone(nodeArr[i]);
       node.x = x;
       node.y = y;
       layout.push(node);
-      x += this.options.stepX;
+      y += this.options.stepY;
     }
     return layout;
   },
 
-  calcStartX: function(countNode, widthNode) {
-    var x = (countNode * widthNode) + ((countNode - 1) * this.options.stepX);
-    return this.options.width - x;
+  calcStartY: function(countNode, widthNode) {
+    var y = (countNode * widthNode) + ((countNode - 1) * this.options.stepY);
+    return this.options.width - y;
   },
 
-  calcLayoutLevelY: function(level) {
-    var y = level * this.options.stepY;
-    return y;
+  calcLayoutLevelX: function(level) {
+    var x = level * this.options.stepX;
+    return x;
   },
 
   clone: function(obj) {

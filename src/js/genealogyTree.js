@@ -1,19 +1,16 @@
 GenealogyTree = function() {
-  this.options = {};
+  this.options = this.getDefaultOptions();
 };
 
 GenealogyTree.prototype = {
-  createOptions: function(options) {
-    var defaultOptions = this.getDefaultOptions();
-    this.pluginOptions = $.extend(defaultOptions, options);
-  },
-
   getDefaultOptions: function() {
     var defaultOptions = {
       container: {
         width: 700,
         height: 700
-      }
+      },
+      stepX: 70,
+      stepY: 70
     };
     return defaultOptions;
   },

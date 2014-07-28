@@ -81,10 +81,13 @@ describe("Genealogy tree", function() {
   });
 
   it("create layouts", function() {
-    var rootNodes = [1, 2];
+    var rootRelationships = [1];
 
-    var layouts = GenealogyTree.prototype.createLayouts(rootNodes, getNodes(), getRelationships());
+    var layouts = GenealogyTree.prototype.createLayouts(rootRelationships, getNodes(), getRelationships());
+
+    expect(layouts.length).toEqual(2);
     expect(layouts[0].length).toEqual(2);
+    expect(layouts[1].length).toEqual(2);
   });
 
   it("create root layout", function() {
@@ -108,6 +111,14 @@ describe("Genealogy tree", function() {
     var obj = GenealogyTree.prototype.findElementInArr(key, val, arr);
 
     expect(obj[key]).toEqual(val);
+  });
+
+  it("get relationships", function() {
+    var nodes = getNodes().slice(0, 2);
+
+    var arr = GenealogyTree.prototype.getRelationships(nodes, getRelationships());
+
+    expect(arr.length).toEqual(1);
   });
 
   it("get nodes", function() {
@@ -182,28 +193,32 @@ function getNodes() {
     "gender": "male",
     "isConcubine": false,
     "isUnnamed": false,
-    "isDeid": false
+    "isDeid": false,
+    "relationship": 1
   }, {
     "id": 2,
     "name": "Eve",
     "gender": "female",
     "isConcubine": false,
     "isUnnamed": false,
-    "isDeid": true
+    "isDeid": true,
+    "relationship": 1
   }, {
     "id": 3,
     "name": "Wife Seth",
     "gender": "female",
     "isConcubine": false,
     "isUnnamed": true,
-    "isDeid": false
+    "isDeid": false,
+    "relationship": 2
   }, {
     "id": 4,
     "name": "Seth",
     "gender": "male",
     "isConcubine": true,
     "isUnnamed": false,
-    "isDeid": false
+    "isDeid": false,
+    "relationship": 2
   }];
 
   return nodes;
@@ -212,16 +227,12 @@ function getNodes() {
 function getRelationships() {
   var relationships = [{
     "id": 1,
-    "husband": 1,
-    "wife": 2,
     "isLegitimateRelationships": true,
     "children": [3, 4]
   }, {
     "id": 2,
-    "husband": 4,
-    "wife": 3,
     "isLegitimateRelationships": true,
-    "children": [5, 6]
+    "children": []
   }];
   return relationships;
 }

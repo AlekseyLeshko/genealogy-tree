@@ -60,13 +60,34 @@ GenealogyTree.prototype = {
     }
   },
 
-  createLayouts: function(rootRelationships, nodes, relationships) {
+  createLayouts: function(roots, nodes, relationships) {
     this.layouts = [];
 
-    this.layouts.push(craeteRootLayout(rootRelationships, nodes, relationships));
-    if (this.children.length > 0) {
-      // for (var index = 0; i )
+    do {
+      this.layouts.push(this.craeteLayout(roots, nodes, relationships));
+      if (this.children.length > 0) {
+        var nodeArr = this.getNodes(this.children, nodes);
+        roots = getRelationships(nodeArr, relationships);
+      } else {
+        break;
+      }
+    } while(true);
+
+    return this.layouts;
+  },
+
+  getRelationships: function(nodes, relationships) {
+    var key = 'id';
+    var arr = [];
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i];
+      var relationship = this.findElementInArr(key, node.relationship, relationships);
+
+      if (!this.findElementInArr(key, relationship.id, arr)) {
+        arr.push(relationship);
+      }
     }
+    return arr;
   },
 
   getNodes: function(ids, nodes) {
@@ -80,7 +101,7 @@ GenealogyTree.prototype = {
     return arr;
   },
 
-  craeteRootLayout: function(rootRelationships, nodes, relationships) {
+  craeteLayout: function(rootRelationships, nodes, relationships) {
     var key = 'id';
     var layout = [];
     this.children = [];

@@ -9,11 +9,11 @@ GenealogyTree.prototype = {
         width: 700,
         height: 700
       },
-      width: 700,
-      height: 700,
+      width: 500,
+      height: 500,
       stepX: 75,
       stepY: 100,
-      nodeWidth: 50
+      nodeWidth: 30
     };
     return defaultOptions;
   },
@@ -33,8 +33,9 @@ GenealogyTree.prototype = {
   },
 
   calcStartY: function(countNode, widthNode) {
-    var y = (countNode * widthNode) + ((countNode - 1) * this.options.stepY);
-    return this.options.width - y;
+    var y = (((countNode / 2) * widthNode) + ((countNode - 1) * this.options.stepY)) / 2;
+    var res = (this.options.width / 2) - y;
+    return res;
   },
 
   calcLayoutLevelX: function(level) {

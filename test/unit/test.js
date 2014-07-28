@@ -26,7 +26,7 @@ describe("Genealogy tree", function() {
 
   it("create layout level", function() {
     var level = 2;
-    var width = 50;
+    var width = 30;
     var nodeArr = [{
       id: 1,
       width: width
@@ -66,7 +66,7 @@ describe("Genealogy tree", function() {
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
     var y = GenealogyTree.prototype.calcStartY(countNode, widthNode);
 
-    var answer = 500;
+    var answer = 175;
     expect(y).toEqual(answer);
   });
 

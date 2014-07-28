@@ -63,23 +63,46 @@ GenealogyTree.prototype = {
   createLayouts: function(rootRelationships, nodes, relationships) {
     this.layouts = [];
 
+    this.layouts.push(craeteRootLayout(rootRelationships, nodes, relationships));
+    if (this.children.length > 0) {
+      // for (var index = 0; i )
+    }
   },
 
-  craeteRootLayout: function(nodes, relationships) {
+  getNodes: function(ids, nodes) {
+    var key = 'id';
+    var arr = [];
+    for (var i = 0; i < ids.length; i++) {
+      var val = ids[i];
+      var node = this.findElementInArr(key, val, nodes);
+      arr.push(node);
+    }
+    return arr;
+  },
+
+  craeteRootLayout: function(rootRelationships, nodes, relationships) {
+    var key = 'id';
     var layout = [];
-    var children = [];
+    this.children = [];
+
     for (var i = 0; i < rootRelationships.length; i++) {
-      var relationship = this.findElementInArrbyId(rootRelationships[i], relationships);
+      var id = rootRelationships[i];
+      var relationship = this.findElementInArr(key, id, relationships);
+
       var wifeNode = this.getNodeOfRelationship(relationship.wife, nodes);
       var husbandNode = this.getNodeOfRelationship(relationship.husband, nodes);
-
-      var children = children.concat(rootRelationships[i].children);
-
-      layout.push(wife);
-      layout.push(husband);
+      layout.push(wifeNode);
+      layout.push(husbandNode);
+      this.createEdge();
+      this.children = this.children.concat(relationship.children);
+      this.unsetValInArr(relationship, relationships);
     }
-    layouts.push(layout);
-    return children;
+
+    return layout
+  },
+
+  createEdge: function() {
+    console.error('Implementation!');
   },
 
   getNodeOfRelationship: function(val, nodes) {

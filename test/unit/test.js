@@ -87,6 +87,15 @@ describe("Genealogy tree", function() {
     expect(layouts[0].length).toEqual(2);
   });
 
+  it("create root layout", function() {
+    var rootRelationships = [1, 2];
+
+    var layout = GenealogyTree.prototype.craeteRootLayout(rootRelationships, getNodes(), getRelationships());
+
+    expect(layout.length).toEqual(4)
+    expect(GenealogyTree.prototype.children.length).toEqual(4);
+  });
+
   it("find element by id", function() {
     var arr = [{
       id: 1
@@ -99,6 +108,14 @@ describe("Genealogy tree", function() {
     var obj = GenealogyTree.prototype.findElementInArr(key, val, arr);
 
     expect(obj[key]).toEqual(val);
+  });
+
+  it("get nodes", function() {
+    var arrIds = [1, 2 ,3];
+
+    var nodes = GenealogyTree.prototype.getNodes(arrIds, getNodes());
+
+    expect(nodes.length).toEqual(arrIds.length);
   });
 
   it("not finded element by id", function() {
@@ -133,6 +150,23 @@ describe("Genealogy tree", function() {
     var arr = [1, 2, 3, 4, 5];
     var length = arr.length;
     var val = 3;
+
+    var res = GenealogyTree.prototype.unsetValInArr(val, arr);
+
+    expect(res).toEqual([val]);
+    expect(arr.length).toEqual(length - 1);
+  });
+
+  it("unset val in object arr", function() {
+    var arr = [{
+      id: 1
+    }, {
+      id: 2
+    }, {
+      id: 3
+    }];
+    var length = arr.length;
+    var val = arr[1];
 
     var res = GenealogyTree.prototype.unsetValInArr(val, arr);
 
@@ -187,7 +221,7 @@ function getRelationships() {
     "husband": 4,
     "wife": 3,
     "isLegitimateRelationships": true,
-    "children": []
+    "children": [5, 6]
   }];
   return relationships;
 }

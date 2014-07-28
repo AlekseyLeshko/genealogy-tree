@@ -1,5 +1,8 @@
-describe("A suite", function() {
-  it("contains spec with an expectation", function() {
-    expect(true).toBe(true);
+'use strict';
+
+describe("Genealogy tree", function() {
+  it("create ", function() {
+    var gTree = new GenealogyTree();
+    expect(gTree).not.toBeNull();
   });
 });

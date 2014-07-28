@@ -1,0 +1,2 @@
+GenealogyTree = function() {
+};

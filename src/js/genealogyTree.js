@@ -52,7 +52,7 @@ GenealogyTree.prototype = {
     return copy;
   },
 
-  findElement: function(key, val, arr) {
+  findElementInArr: function(key, val, arr) {
     for (var i = 0; i < arr.length; i++) {
       if (arr[i][key] === val) {
         return arr[i];
@@ -69,9 +69,12 @@ GenealogyTree.prototype = {
     var layout = [];
     var children = [];
     for (var i = 0; i < rootRelationships.length; i++) {
-      var relationship = this.findElementbyId(rootRelationships[i], relationships);
-      var wife = this.findElementbyId(relationship.wife, nodes);
-      var husband = this.findElementbyId(relationship.husband, nodes);
+      var relationship = this.findElementInArrbyId(rootRelationships[i], relationships);
+      var wifeNode = this.getNodeOfRelationship(relationship.wife, nodes);
+      var husbandNode = this.getNodeOfRelationship(relationship.husband, nodes);
+
+      var children = children.concat(rootRelationships[i].children);
+
       layout.push(wife);
       layout.push(husband);
     }
@@ -81,7 +84,14 @@ GenealogyTree.prototype = {
 
   getNodeOfRelationship: function(val, nodes) {
     var key = 'id';
-    var node = this.findElement(key, val, nodes);
+    var node = this.findElementInArr(key, val, nodes);
     return node;
+  },
+
+  unsetValInArr: function(value, arr) {
+    var index = arr.indexOf(value);
+    if(index != -1) {
+      return arr.splice(index, 1);
+    }
   }
 };

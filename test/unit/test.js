@@ -96,7 +96,7 @@ describe("Genealogy tree", function() {
 
     var val = 2;
     var key = 'id';
-    var obj = GenealogyTree.prototype.findElement(key, val, arr);
+    var obj = GenealogyTree.prototype.findElementInArr(key, val, arr);
 
     expect(obj[key]).toEqual(val);
   });
@@ -110,7 +110,7 @@ describe("Genealogy tree", function() {
 
     var val = 3;
     var key = 'id';
-    var obj = GenealogyTree.prototype.findElement(key, val, arr);
+    var obj = GenealogyTree.prototype.findElementInArr(key, val, arr);
 
     expect(obj).toBeUndefined();
   });
@@ -120,6 +120,24 @@ describe("Genealogy tree", function() {
     var node = GenealogyTree.prototype.getNodeOfRelationship(getRelationships()[0][key], getNodes());
 
     expect(node).toEqual(getNodes()[1]);
+  });
+
+  it("get node of relationship not finded node", function() {
+    var val = '-1';
+    var node = GenealogyTree.prototype.getNodeOfRelationship(val, getNodes());
+
+    expect(node).toBeUndefined();
+  });
+
+  it("unset val in simple arr", function() {
+    var arr = [1, 2, 3, 4, 5];
+    var length = arr.length;
+    var val = 3;
+
+    var res = GenealogyTree.prototype.unsetValInArr(val, arr);
+
+    expect(res).toEqual([val]);
+    expect(arr.length).toEqual(length - 1);
   });
 });
 

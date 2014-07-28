@@ -81,7 +81,7 @@ describe("Genealogy tree", function() {
   });
 
   it("create layouts", function() {
-    var rootRelationships = [1];
+    var rootRelationships = getRelationships().slice(0, 1);
 
     var layouts = GenealogyTree.prototype.createLayouts(rootRelationships, getNodes(), getRelationships());
 
@@ -90,13 +90,13 @@ describe("Genealogy tree", function() {
     expect(layouts[1].length).toEqual(2);
   });
 
-  it("create root layout", function() {
-    var rootRelationships = [1, 2];
+  it("create layout", function() {
+    var rootRelationships = getRelationships();
 
-    var layout = GenealogyTree.prototype.craeteRootLayout(rootRelationships, getNodes(), getRelationships());
+    var layout = GenealogyTree.prototype.craeteLayout(rootRelationships, getNodes(), getRelationships());
 
     expect(layout.length).toEqual(4)
-    expect(GenealogyTree.prototype.children.length).toEqual(4);
+    expect(GenealogyTree.prototype.children.length).toEqual(2);
   });
 
   it("find element by id", function() {
@@ -227,10 +227,14 @@ function getNodes() {
 function getRelationships() {
   var relationships = [{
     "id": 1,
+    "husband": 1,
+    "wife": 2,
     "isLegitimateRelationships": true,
     "children": [3, 4]
   }, {
     "id": 2,
+    "husband": 4,
+    "wife": 3,
     "isLegitimateRelationships": true,
     "children": []
   }];

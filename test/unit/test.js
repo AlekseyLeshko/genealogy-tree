@@ -19,8 +19,36 @@ describe("Genealogy tree", function() {
     expect(options).not.toBeNull();
     expect(options.container).not.toBeUndefined();
     expect(options.container.width).toEqual(defaultWidth);
-    expect(options.container.width).toEqual(defaultHeight);
+    expect(options.container.height).toEqual(defaultHeight);
     expect(options.stepY).toEqual(stepY);
     expect(options.stepX).toEqual(stepX);
+  });
+
+  it("create layout level", function() {
+    var nodeArr = [{
+      id: 1,
+      width: 20
+    }, {
+      id: 2,
+      width: 20
+    }];
+
+    var nodeLayout = GenealogyTree.prototype.createLayoutLevel(nodeArr);
+    console.log(nodeArr[0]);
+    for (var i = 0; i < nodeLayout.length; i++) {
+      expect(nodeLayout[i].width).not.toBeUndefined();
+      expect(nodeLayout[i].height).not.toBeUndefined();
+    }
+  });
+
+  it("clone object", function() {
+    var node = {
+      id: 1,
+      width: 20
+    };
+
+    var copy = GenealogyTree.prototype.clone(node);
+
+    expect(copy).toEqual(node);
   });
 });

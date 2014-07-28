@@ -14,4 +14,24 @@ GenealogyTree.prototype = {
     };
     return defaultOptions;
   },
+
+  createLayoutLevel: function(nodeArr) {
+    var layout = [];
+    for (var i = 0; i < nodeArr.length; i++) {
+      var node = nodeArr[i];
+      node.width = 0;
+      node.height = 0;
+      layout.push(node);
+    }
+    return layout;
+  },
+
+  clone: function(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+      var copy = obj.constructor();
+      for (var attr in obj) {
+          if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+      }
+    return copy;
+  }
 };

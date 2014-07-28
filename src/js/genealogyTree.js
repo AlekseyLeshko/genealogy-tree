@@ -12,14 +12,15 @@ GenealogyTree.prototype = {
       width: 500,
       height: 500,
       stepX: 50,
-      stepY: 50
+      stepY: 50,
+      nodeWidth: 25
     };
     return defaultOptions;
   },
 
   createLayoutLevel: function(nodeArr, level) {
     var layout = [];
-    var y = this.calcStartY(nodeArr.length, nodeArr[0].width);
+    var y = this.calcStartY(nodeArr.length, this.options.nodeWidth);
     var x = this.calcLayoutLevelX(level);
     for (var i = 0; i < nodeArr.length; i++) {
       var node = this.clone(nodeArr[i]);
@@ -119,6 +120,7 @@ GenealogyTree.prototype = {
       this.children = this.children.concat(relationship.children);
       this.unsetValInArr(relationship, relationships);
     }
+     layout = this.createLayoutLevel(layout, this.layouts.length);
 
     return layout
   },

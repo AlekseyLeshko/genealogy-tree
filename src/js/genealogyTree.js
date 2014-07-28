@@ -13,7 +13,7 @@ GenealogyTree.prototype = {
       height: 500,
       stepX: 50,
       stepY: 50,
-      nodeWidth: 25
+      nodeWidth: 50
     };
     return defaultOptions;
   },
@@ -68,7 +68,7 @@ GenealogyTree.prototype = {
       this.layouts.push(this.craeteLayout(rootRelationships, nodes, relationships));
       if (this.children.length > 0) {
 
-        var nodeArr = this.getNodes(this.children, nodes);
+        var nodeArr = this.findNodesById(this.children, nodes);
         rootRelationships = this.getRelationships(nodeArr, relationships);
         this.children.length = 0;
       } else {
@@ -93,7 +93,7 @@ GenealogyTree.prototype = {
     return arr;
   },
 
-  getNodes: function(ids, nodes) {
+  findNodesById: function(ids, nodes) {
     var key = 'id';
     var arr = [];
     for (var i = 0; i < ids.length; i++) {
@@ -140,5 +140,14 @@ GenealogyTree.prototype = {
     if(index != -1) {
       return arr.splice(index, 1);
     }
+  },
+
+  getNodes: function() {
+    var nodes = [];
+    for (var i = 0; i < this.layouts.length; i++) {
+      nodes = nodes.concat(this.layouts[i]);
+    }
+
+    return nodes;
   }
 };

@@ -124,7 +124,7 @@ describe("Genealogy tree", function() {
   it("get nodes", function() {
     var arrIds = [1, 2 ,3];
 
-    var nodes = GenealogyTree.prototype.getNodes(arrIds, getNodes());
+    var nodes = GenealogyTree.prototype.findNodesById(arrIds, getNodes());
 
     expect(nodes.length).toEqual(arrIds.length);
   });
@@ -183,6 +183,15 @@ describe("Genealogy tree", function() {
 
     expect(res).toEqual([val]);
     expect(arr.length).toEqual(length - 1);
+  });
+
+  it("get nodes", function() {
+    var rootRelationships = getRelationships().slice(0, 1);
+
+    var layouts = GenealogyTree.prototype.createLayouts(rootRelationships, getNodes(), getRelationships());
+    var nodes = GenealogyTree.prototype.getNodes();
+
+    expect(nodes.length).toEqual(4);
   });
 });
 

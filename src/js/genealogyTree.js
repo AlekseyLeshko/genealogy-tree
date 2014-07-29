@@ -1,4 +1,7 @@
-GenealogyTree = function() {
+GenealogyTree = function(nodes, relationships) {
+  this.nodes = nodes;
+  this.relationships = relationships;
+
   this.options = this.getDefaultOptions();
 };
 
@@ -6,11 +9,9 @@ GenealogyTree.prototype = {
   getDefaultOptions: function() {
     var defaultOptions = {
       container: {
-        width: 700,
-        height: 700
+        width: 500,
+        height: 500
       },
-      width: 500,
-      height: 500,
       stepX: 75,
       stepY: 100,
       nodeWidth: 30
@@ -34,7 +35,7 @@ GenealogyTree.prototype = {
 
   calcStartY: function(countNode, widthNode) {
     var y = (((countNode / 2) * widthNode) + ((countNode - 1) * this.options.stepY)) / 2;
-    var res = (this.options.width / 2) - y;
+    var res = (this.options.container.width / 2) - y;
     return res;
   },
 

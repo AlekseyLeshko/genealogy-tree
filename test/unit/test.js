@@ -2,15 +2,26 @@
 
 describe("Genealogy tree", function() {
   it("create tree without parameters", function() {
+
+
     var gTree = new GenealogyTree();
+
     expect(gTree).not.toBeNull();
-    expect(gTree.options).not.toBeUndefined();
     expect(gTree.options).toEqual(GenealogyTree.prototype.getDefaultOptions());
   });
 
+  it('create tree with parameters', function() {
+    var nodes = getNodes();
+    var relationships = getRelationships();
+    var gTree = new GenealogyTree(nodes, relationships);
+
+    expect(gTree.nodes.length).toEqual(nodes.length);
+    expect(gTree.relationships.length).toEqual(relationships.length);
+  });
+
   it("get default options", function() {
-    var defaultWidth = 700;
-    var defaultHeight = 700;
+    var defaultWidth = 500;
+    var defaultHeight = 500;
     var stepX = 75;
     var stepY = 100;
 

@@ -122,7 +122,6 @@ GenealogyTree.prototype = {
       this.children = this.children.concat(relationship.children);
       this.unsetValInArr(relationship, relationships);
     }
-     layout = this.createLayoutLevel(layout, this.layouts.length);
 
     return layout
   },

@@ -112,7 +112,7 @@ describe("Genealogy tree", function() {
     }];
 
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
-    var layout = GenealogyTree.prototype.createLayoutLevel(nodeArr, level);
+    var layout = GenealogyTree.prototype.calcCoordinatesForLayout(nodeArr, level);
 
     var x = GenealogyTree.prototype.calcLayoutLevelX(level);
     var y = GenealogyTree.prototype.calcStartY(nodeArr.length, width);

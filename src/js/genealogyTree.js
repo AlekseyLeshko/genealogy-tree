@@ -100,7 +100,7 @@ GenealogyTree.prototype = {
     return defaultOptions;
   },
 
-  createLayoutLevel: function(nodeArr, level) {
+  calcCoordinatesForLayout: function(nodeArr, level) {
     var layout = [];
     var y = this.calcStartY(nodeArr.length, this.options.nodeWidth);
     var x = this.calcLayoutLevelX(level);

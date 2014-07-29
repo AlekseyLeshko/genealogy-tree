@@ -1,13 +1,87 @@
-GenealogyTree = function(nodes, relationships) {
+GenealogyTree = function(nodes, relationships, rootRelationships) {
   this.nodes = nodes;
   this.relationships = relationships;
+  this.rootRelationships = rootRelationships;
 
   this.options = this.getDefaultOptions();
+  this.level = 1;
+  this.dataLayouts = [];
+  this.layouts = [];
 };
 
 GenealogyTree.prototype = {
-  generationLauouts: function() {
+  getStartLevel: function () {
+    var startlevel = 1;
+    return startlevel;
+  },
 
+  generationLauouts: function() {
+    this.layouts = [1, 2];
+
+  },
+
+  generationLauout: function() {
+    var key = 'id';
+    var layout = [];
+
+    var self = this;
+    _.each(this.rootRelationships, this.relationshipProcessor, self);
+
+    // for (var i = 0; i < this.rootRelationships.length; i++) {
+    //   var relationship = this.rootRelationships[i];
+
+    //   layout = layout.concat(this.addSpousesNodeToLayout());
+
+    //   this.createEdge();
+    //   this.addNodesForNextLayout(relationship.children)
+
+    //   this.unsetValInRelationships(relationship);
+    // }
+
+    return layout;
+  },
+
+  relationshipProcessor: function(relationship) {
+    console.log(relationship);
+    this.addSpousesNodeToLayout(relationship);
+    this.createEdge();
+    this.addNodesForLayoutData(relationship.children)
+
+    this.unsetValInRelationships(relationship);
+  },
+
+  addNodesForCurrentLayout: function(arr) {
+    var layout = this.layouts[this.level];
+    if (!layout) {
+      layout = [];
+    }
+
+    layout = layout.concat(arr);
+
+    this.layouts[this.level] = layout;
+  },
+
+  addNodesForLayoutData: function(arr) {
+    var nextLeval = this.level + 1;
+    var layout = this.dataLayouts[nextLeval];
+    if (!layout) {
+      layout = [];
+    }
+
+    layout = layout.concat(arr);
+
+    this.dataLayouts[nextLeval] = layout;
+  },
+
+  addSpousesNodeToLayout: function(relationship) {
+    var layout = [];
+
+    var wifeNode = this.getNodeOfRelationship(relationship.wife, nodes);
+    var husbandNode = this.getNodeOfRelationship(relationship.husband, nodes);
+    layout.push(wifeNode);
+    layout.push(husbandNode);
+
+    this.addNodesForCurrentLayout();
   },
 
   getDefaultOptions: function() {
@@ -68,15 +142,13 @@ GenealogyTree.prototype = {
   },
 
   createLayouts: function(rootRelationships, nodes, relationships) {
-    this.layouts = [];
-
     do {
-      this.layouts.push(this.craeteLayout(rootRelationships, nodes, relationships));
-      if (this.children.length > 0) {
+      this.layouts.push(this.generationLauout());
+      if (this.dataLayouts.length > 0) {
 
-        var nodeArr = this.findNodesById(this.children, nodes);
+        var nodeArr = this.findNodesById(this.dataLayouts, nodes);
         rootRelationships = this.getRelationships(nodeArr, relationships);
-        this.children.length = 0;
+        this.dataLayouts.length = 0;
       } else {
         break;
       }
@@ -110,26 +182,6 @@ GenealogyTree.prototype = {
     return arr;
   },
 
-  craeteLayout: function(rootRelationships, nodes, relationships) {
-    var key = 'id';
-    var layout = [];
-    this.children = [];
-
-    for (var i = 0; i < rootRelationships.length; i++) {
-      var relationship = rootRelationships[i];
-
-      var wifeNode = this.getNodeOfRelationship(relationship.wife, nodes);
-      var husbandNode = this.getNodeOfRelationship(relationship.husband, nodes);
-      layout.push(wifeNode);
-      layout.push(husbandNode);
-      this.createEdge();
-      this.children = this.children.concat(relationship.children);
-      this.unsetValInArr(relationship, relationships);
-    }
-
-    return layout
-  },
-
   createEdge: function() {
     // console.error('Implementation!');
   },
@@ -140,10 +192,10 @@ GenealogyTree.prototype = {
     return node;
   },
 
-  unsetValInArr: function(value, arr) {
-    var index = arr.indexOf(value);
+  unsetValInRelationships: function(value) {
+    var index = this.relationships.indexOf(value);
     if(index != -1) {
-      return arr.splice(index, 1);
+      return this.relationships.splice(index, 1);
     }
   },
 

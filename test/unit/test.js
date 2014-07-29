@@ -1,7 +1,7 @@
 'use strict';
 
 describe("Genealogy tree", function() {
-  it("create ", function() {
+  it("create tree without parameters", function() {
     var gTree = new GenealogyTree();
     expect(gTree).not.toBeNull();
     expect(gTree.options).not.toBeUndefined();

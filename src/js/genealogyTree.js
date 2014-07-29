@@ -57,8 +57,8 @@ GenealogyTree.prototype = {
   addSpousesNodeToLayout: function(relationship) {
     var layout = [];
 
-    var wifeNode = this.getNodeOfRelationship(relationship.wife, this.nodes);
-    var husbandNode = this.getNodeOfRelationship(relationship.husband, this.nodes);
+    var wifeNode = this.getNodeOfRelationship(relationship.wife);
+    var husbandNode = this.getNodeOfRelationship(relationship.husband);
     layout.push(wifeNode);
     layout.push(husbandNode);
 
@@ -174,9 +174,9 @@ GenealogyTree.prototype = {
     // console.error('Implementation!');
   },
 
-  getNodeOfRelationship: function(val, nodes) {
+  getNodeOfRelationship: function(val) {
     var key = 'id';
-    var node = this.findElementInArr(key, val, nodes);
+    var node = this.findElementInArr(key, val, this.nodes);
     return node;
   },
 
@@ -194,7 +194,9 @@ GenealogyTree.prototype = {
   getNodes: function() {
     var nodes = [];
     for (var i = 0; i < this.layouts.length; i++) {
-      nodes = nodes.concat(this.layouts[i]);
+      if (this.layouts[i]) {
+        nodes = nodes.concat(this.layouts[i]);
+      }
     }
 
     return nodes;

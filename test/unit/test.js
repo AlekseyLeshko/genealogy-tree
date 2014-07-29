@@ -204,7 +204,8 @@ describe("Genealogy tree", function() {
 
   it("get node of relationship", function() {
     var key = 'wife';
-    var node = GenealogyTree.prototype.getNodeOfRelationship(getRelationships()[0][key], getNodes());
+
+    var node = GenealogyTree.prototype.getNodeOfRelationship(getRelationships()[0][key]);
 
     expect(node).toEqual(getNodes()[1]);
   });
@@ -229,14 +230,17 @@ describe("Genealogy tree", function() {
     expect(arr.length).toEqual(length - 1);
   });
 
-  // it("get nodes", function() {
-  //   var rootRelationships = getRelationships().slice(0, 1);
+  it("get nodes", function() {
+    var nodes = getNodes();
+    var relationships = getRelationships();
+    var rootRelationships = getRootRelationships();
 
-  //   var layouts = GenealogyTree.prototype.createLayouts(rootRelationships, getNodes(), getRelationships());
-  //   var nodes = GenealogyTree.prototype.getNodes();
+    var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
+    gTree.generationLayouts();
+    var nodes = gTree.getNodes();
 
-  //   expect(nodes.length).toEqual(4);
-  // });
+    expect(nodes.length).toEqual(4);
+  });
 
   it('comparison objects', function() {
     var x = { a: 1, b: 2};

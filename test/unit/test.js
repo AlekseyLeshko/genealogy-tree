@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Generation structure of genealogy tree', function() {
+describe('Generation structure of genealogy tree: ', function() {
   it('create tree without parameters', function() {
     var gTree = new GenealogyTree();
 

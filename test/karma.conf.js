@@ -16,16 +16,26 @@ module.exports = function(config){
     browsers : ['Chrome'],
 
     plugins : [
-            'karma-chrome-launcher',
-            'karma-firefox-launcher',
-            'karma-jasmine',
-            'karma-junit-reporter'
-            ],
+      'karma-chrome-launcher',
+      'karma-jasmine',
+      'karma-junit-reporter',
+      'karma-coverage'
+    ],
 
     junitReporter : {
       outputFile: 'test_out/unit.xml',
       suite: 'unit'
-    }
+    },
 
+    reporters: ['progress', 'coverage'],
+
+    preprocessors: {
+      'src/js/**/*.js': ['coverage']
+    },
+
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    }
   });
 };

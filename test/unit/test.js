@@ -287,8 +287,27 @@ describe("Genealogy tree", function() {
     expect(answer).toBe(true);
   });
 
-  it('calculation width', function() {
+  // it('calculation container width for empty layout', function() {
+  //   GenealogyTree.prototype.options = getDefaultOptions();
+  //   var width = GenealogyTree.prototype.calcContainerWidth();
 
+  //   expect(width).toEqual(700);
+  // });
+
+  // it('calculation container width for layout', function() {
+  //   GenealogyTree.prototype.layouts = [getNodes()];
+  //   GenealogyTree.prototype.options = getDefaultOptions();
+  //   var width = GenealogyTree.prototype.calcContainerWidth();
+
+  //   expect(width).toEqual();
+  // });
+
+  it('width calculation layout', function() {
+    GenealogyTree.prototype.layouts = [undefined, [], getNodes()];
+    GenealogyTree.prototype.options = getDefaultOptions();
+    var width = GenealogyTree.prototype.widthCalculationLayout();
+
+    expect(width).toEqual(420);
   });
 });
 
@@ -363,8 +382,8 @@ function getDefaultOptions() {
       height: 250
     },
     indents: {
-      xIndent: 100,
-      yindent: 100
+      indentX: 100,
+      indentY: 100
     },
     stepX: 75,
     stepY: 100,

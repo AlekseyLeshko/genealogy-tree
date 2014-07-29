@@ -98,8 +98,8 @@ GenealogyTree.prototype = {
         height: 250
       },
       indents: {
-        xIndent: 100,
-        yindent: 100
+        indentX: 100,
+        indentY: 100
       },
       stepX: 75,
       stepY: 100,
@@ -213,7 +213,29 @@ GenealogyTree.prototype = {
     return  JSON.stringify(x) === JSON.stringify(y) ;
   },
 
-  calcWidth: function() {
+  widthCalculationLayout: function() {
+    var arr = [];
+    _.each(this.layouts, function(layout) {
+      if (layout) {
+        var length = layout.length;
+        arr.push(length);
+      }
+    });
 
+    var maxCount = _.max(arr, function(length) {
+      return length;
+    });
+
+    var width = (this.options.nodeWidth * maxCount) + ((maxCount - 1) * this.options.stepY);
+
+    return width;
+  },
+
+  calcContainerWidth: function() {
+    var layoutWidth = this.widthCalculationLayout();
+    var frame = this.options.frame.width * 2;
+    var indent = this.options.indents.indentX * 2;
+
+    return layoutWidth + frame + indent;
   }
 };

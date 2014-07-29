@@ -31,15 +31,15 @@ GenealogyTree.prototype = {
     this.unsetRelationship(relationship);
   },
 
-  addNodesForCurrentLayout: function(arr) {
-    var layout = this.layouts[this.level];
-    if (!layout) {
-      layout = [];
-    }
+  addSpousesNodeToLayout: function(relationship) {
+    var layout = [];
 
-    layout = layout.concat(arr);
+    var wifeNode = this.getNodeOfRelationship(relationship.wife, this.nodes);
+    var husbandNode = this.getNodeOfRelationship(relationship.husband, this.nodes);
+    layout.push(wifeNode);
+    layout.push(husbandNode);
 
-    this.layouts[this.level] = layout;
+    this.addNodesForCurrentLayout(layout);
   },
 
   addNodesForLayoutData: function(arr) {
@@ -54,15 +54,15 @@ GenealogyTree.prototype = {
     this.dataLayouts[nextLeval] = layout;
   },
 
-  addSpousesNodeToLayout: function(relationship) {
-    var layout = [];
+  addNodesForCurrentLayout: function(arr) {
+    var layout = this.layouts[this.level];
+    if (!layout) {
+      layout = [];
+    }
 
-    var wifeNode = this.getNodeOfRelationship(relationship.wife, this.nodes);
-    var husbandNode = this.getNodeOfRelationship(relationship.husband, this.nodes);
-    layout.push(wifeNode);
-    layout.push(husbandNode);
+    layout = layout.concat(arr);
 
-    this.addNodesForCurrentLayout(layout);
+    this.layouts[this.level] = layout;
   },
 
   getDefaultOptions: function() {

@@ -22,24 +22,14 @@ describe("Genealogy tree", function() {
     expect(gTree.relationships.length).toEqual(relationships.length);
   });
 
-  // it("generation layouts", function() {
-  //   GenealogyTree.prototype.generationLauouts();
-  //   var layouts = GenealogyTree.prototype.layouts;
+  it("generation layouts", function() {
+    GenealogyTree.prototype.generationLayouts();
+    var layouts = GenealogyTree.prototype.layouts;
 
-  //   // expect(layouts.length).toEqual(2);
-  //   // expect(layouts[0].length).toEqual(2);
-  //   // expect(layouts[1].length).toEqual(2);
-  // });
-
-  // it("create layouts", function() {
-  //   var rootRelationships = getRelationships().slice(0, 1);
-
-  //   var layouts = GenealogyTree.prototype.createLayouts(rootRelationships, getNodes(), getRelationships());
-
-  //   expect(layouts.length).toEqual(2);
-  //   expect(layouts[0].length).toEqual(2);
-  //   expect(layouts[1].length).toEqual(2);
-  // });
+    expect(layouts.length).toEqual(2);
+    expect(layouts[0].length).toEqual(2);
+    // expect(layouts[1].length).toEqual(2);
+  });
 
   it("generation layout", function() {
     var nodes = getNodes();

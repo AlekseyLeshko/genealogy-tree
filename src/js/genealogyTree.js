@@ -15,7 +15,7 @@ GenealogyTree.prototype = {
     return startlevel;
   },
 
-  generationLauouts: function() {
+  generationLayouts: function() {
     this.layouts = [1, 2];
   },
 

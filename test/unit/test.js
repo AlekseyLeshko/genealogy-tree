@@ -290,7 +290,7 @@ describe("Genealogy tree", function() {
     expect(answer).toBe(true);
   });
 
-  it('calculation container width for empty layout', function() {
+  it('calculation width container for empty layout', function() {
     GenealogyTree.prototype.layouts = [];
     GenealogyTree.prototype.options = getDefaultOptions();
     var width = GenealogyTree.prototype.calcWidthСontainer();
@@ -298,7 +298,7 @@ describe("Genealogy tree", function() {
     expect(width).toEqual(700);
   });
 
-  it('calculation container width for layout', function() {
+  it('calculation width container for layout', function() {
     GenealogyTree.prototype.layouts = [getNodes()];
     GenealogyTree.prototype.options = getDefaultOptions();
     var width = GenealogyTree.prototype.calcWidthСontainer();
@@ -328,6 +328,13 @@ describe("Genealogy tree", function() {
     var width = GenealogyTree.prototype.widthCalculationLayout();
 
     expect(width).toEqual(0);
+  });
+
+  it('calculation height container', function() {
+    GenealogyTree.prototype.layouts = [1];
+    var height = GenealogyTree.prototype.calcHeightСontainer();
+
+    expect(height).toEqual(800);
   });
 });
 

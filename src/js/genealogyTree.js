@@ -250,5 +250,14 @@ GenealogyTree.prototype = {
     var indent = this.options.indents.indentX * 2;
 
     return layoutWidth + frame + indent;
+  },
+
+  calcHeightСontainer: function() {
+    var layoutHeight = this.layouts.length;
+    var frame = this.options.frame.height * 2;
+    var indent = this.options.indents.indentY * 2;
+
+    return (layoutHeight * this.options.stepY) +
+      frame + indent;
   }
 };

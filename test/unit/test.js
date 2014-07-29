@@ -1,7 +1,7 @@
 'use strict';
 
-describe("Genealogy tree", function() {
-  it("create tree without parameters", function() {
+describe('Generation of genealogy tree structure', function() {
+  it('create tree without parameters', function() {
     var gTree = new GenealogyTree();
 
     expect(gTree).not.toBeNull();
@@ -22,7 +22,7 @@ describe("Genealogy tree", function() {
     expect(gTree.relationships.length).toEqual(relationships.length);
   });
 
-  it("generation layouts", function() {
+  it('generation layouts', function() {
     var nodes = getNodes();
     var relationships = getRelationships();
     var rootRelationships = getRootRelationships();
@@ -37,7 +37,7 @@ describe("Genealogy tree", function() {
     expect(layouts[2].length).toEqual(2);
   });
 
-  it("generation layout", function() {
+  it('generation layout', function() {
     var nodes = getNodes();
     var relationships = getRelationships();
     var rootRelationships = getRootRelationships();
@@ -56,7 +56,7 @@ describe("Genealogy tree", function() {
     expect(gTree.dataLayouts[2].length).toEqual(2);
   });
 
-  it("get default options", function() {
+  it('get default options', function() {
     var options = GenealogyTree.prototype.getDefaultOptions();
 
     expect(options).toEqual(getDefaultOptions());
@@ -99,7 +99,7 @@ describe("Genealogy tree", function() {
     expect(arr[2].length).toEqual(2);
   });
 
-  it("create layout level", function() {
+  it('create layout level', function() {
     var level = 2;
     var width = 30;
     var nodeArr = [{
@@ -125,7 +125,7 @@ describe("Genealogy tree", function() {
     }
   });
 
-  it("clone object", function() {
+  it('clone object', function() {
     var node = {
       id: 1,
       width: 20
@@ -136,7 +136,7 @@ describe("Genealogy tree", function() {
     expect(copy).toEqual(node);
   });
 
-  it("calculation start y", function() {
+  it('calculation start y', function() {
     var countNode = 2;
     var widthNode = 30;
 
@@ -147,7 +147,7 @@ describe("Genealogy tree", function() {
     expect(y).toEqual(answer);
   });
 
-  it("calculation layout level x", function() {
+  it('calculation layout level x', function() {
     var level = 2;
 
     GenealogyTree.prototype.level = level;
@@ -161,7 +161,7 @@ describe("Genealogy tree", function() {
     expect(x).toEqual(answer);
   });
 
-  it("find element by id", function() {
+  it('find element by id', function() {
     var arr = [{
       id: 1
     }, {
@@ -175,7 +175,7 @@ describe("Genealogy tree", function() {
     expect(obj[key]).toEqual(val);
   });
 
-  it("get relationships", function() {
+  it('get relationships', function() {
     var nodes = getNodes().slice(0, 2);
 
     GenealogyTree.prototype.relationships = getRelationships();
@@ -184,7 +184,7 @@ describe("Genealogy tree", function() {
     expect(arr.length).toEqual(1);
   });
 
-  it("get nodes by id", function() {
+  it('get nodes by id', function() {
     var arrIds = [1, 2 ,3];
 
     GenealogyTree.prototype.nodes = getNodes()
@@ -193,7 +193,7 @@ describe("Genealogy tree", function() {
     expect(nodes.length).toEqual(arrIds.length);
   });
 
-  it("not finded element by id", function() {
+  it('not finded element by id', function() {
     var arr = [{
       id: 1
     }, {
@@ -207,7 +207,7 @@ describe("Genealogy tree", function() {
     expect(obj).toBeUndefined();
   });
 
-  it("get node of relationship", function() {
+  it('get node of relationship', function() {
     var key = 'wife';
 
     var node = GenealogyTree.prototype.getNodeOfRelationship(getRelationships()[0][key]);
@@ -215,14 +215,14 @@ describe("Genealogy tree", function() {
     expect(node).toEqual(getNodes()[1]);
   });
 
-  it("get node of relationship not finded node", function() {
+  it('get node of relationship not finded node', function() {
     var val = '-1';
     var node = GenealogyTree.prototype.getNodeOfRelationship(val, getNodes());
 
     expect(node).toBeUndefined();
   });
 
-  it("unset val in relationships", function() {
+  it('unset val in relationships', function() {
     var relationships = getRelationships();
     var length = relationships.length;
     var val = relationships[0];
@@ -235,7 +235,7 @@ describe("Genealogy tree", function() {
     expect(arr.length).toEqual(length - 1);
   });
 
-  it("get nodes", function() {
+  it('get nodes', function() {
     var nodes = getNodes();
     var relationships = getRelationships();
     var rootRelationships = getRootRelationships();
@@ -340,37 +340,37 @@ describe("Genealogy tree", function() {
 
 function getNodes() {
   var nodes = [{
-    "id": 1,
-    "name": "Adam",
-    "gender": "male",
-    "isConcubine": false,
-    "isUnnamed": false,
-    "isDeid": false,
-    "relationship": 1
+    'id': 1,
+    'name': 'Adam',
+    'gender': 'male',
+    'isConcubine': false,
+    'isUnnamed': false,
+    'isDeid': false,
+    'relationship': 1
   }, {
-    "id": 2,
-    "name": "Eve",
-    "gender": "female",
-    "isConcubine": false,
-    "isUnnamed": false,
-    "isDeid": true,
-    "relationship": 1
+    'id': 2,
+    'name': 'Eve',
+    'gender': 'female',
+    'isConcubine': false,
+    'isUnnamed': false,
+    'isDeid': true,
+    'relationship': 1
   }, {
-    "id": 3,
-    "name": "Wife Seth",
-    "gender": "female",
-    "isConcubine": false,
-    "isUnnamed": true,
-    "isDeid": false,
-    "relationship": 2
+    'id': 3,
+    'name': 'Wife Seth',
+    'gender': 'female',
+    'isConcubine': false,
+    'isUnnamed': true,
+    'isDeid': false,
+    'relationship': 2
   }, {
-    "id": 4,
-    "name": "Seth",
-    "gender": "male",
-    "isConcubine": true,
-    "isUnnamed": false,
-    "isDeid": false,
-    "relationship": 2
+    'id': 4,
+    'name': 'Seth',
+    'gender': 'male',
+    'isConcubine': true,
+    'isUnnamed': false,
+    'isDeid': false,
+    'relationship': 2
   }];
 
   return nodes;
@@ -378,17 +378,17 @@ function getNodes() {
 
 function getRelationships() {
   var relationships = [{
-    "id": 1,
-    "husband": 1,
-    "wife": 2,
-    "isLegitimateRelationships": true,
-    "children": [3, 4]
+    'id': 1,
+    'husband': 1,
+    'wife': 2,
+    'isLegitimateRelationships': true,
+    'children': [3, 4]
   }, {
-    "id": 2,
-    "husband": 4,
-    "wife": 3,
-    "isLegitimateRelationships": true,
-    "children": []
+    'id': 2,
+    'husband': 4,
+    'wife': 3,
+    'isLegitimateRelationships': true,
+    'children': []
   }];
   return relationships;
 }

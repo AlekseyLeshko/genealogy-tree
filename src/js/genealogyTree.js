@@ -110,6 +110,7 @@ GenealogyTree.prototype = {
 
   calc: function() {
     this.options.container.width = this.calcWidthСontainer();
+    this.options.container.height = this.calcHeightСontainer();
   },
 
   calcCoordinatesForLayout: function(arr) {

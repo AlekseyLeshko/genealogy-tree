@@ -21,7 +21,6 @@ GenealogyTree.prototype = {
   },
 
   generationLauout: function() {
-    // var self = this;
     _.each(this.rootRelationships, this.relationshipProcessor, this);
   },
 
@@ -30,9 +29,7 @@ GenealogyTree.prototype = {
     this.addNodesForLayoutData(relationship.children)
     this.createEdge();
 
-    console.log(this.relationships.length);
     this.unsetRelationship(relationship);
-    console.log(this.relationships.length);
   },
 
   addNodesForCurrentLayout: function(arr) {
@@ -66,7 +63,7 @@ GenealogyTree.prototype = {
     layout.push(wifeNode);
     layout.push(husbandNode);
 
-    this.addNodesForCurrentLayout();
+    this.addNodesForCurrentLayout(layout);
   },
 
   getDefaultOptions: function() {
@@ -178,8 +175,9 @@ GenealogyTree.prototype = {
   },
 
   unsetRelationship: function(value) {
+    var self = this;
     var index = _.find(this.relationships, function(obj) {
-      this.comparison(obj, value);
+      self.comparison(obj, value);
     });
 
     if(!index) {

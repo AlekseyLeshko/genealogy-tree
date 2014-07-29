@@ -41,23 +41,23 @@ describe("Genealogy tree", function() {
   //   expect(layouts[1].length).toEqual(2);
   // });
 
-  it("create layout", function() {
+  it("generation layout", function() {
     var nodes = getNodes();
     var relationships = getRelationships();
     var rootRelationships = getRootRelationships();
+    var length = relationships.length - 1;
 
     var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
-    console.log(gTree);
-
     gTree.generationLauout();
+    var layouts = gTree.layouts;
 
-    expect(gTree.relationships.length).toEqual(relationships.length - 1);
-    // var layouts = gTree.layouts;
+    expect(gTree.relationships.length).toEqual(length);
 
-    // alert(layouts);
-    // expect(layouts.length).toEqual(2);
-    // expect(layouts[1].length).toEqual(4)
-    // expect(gTree.dataLayouts.length).toEqual(2);
+    expect(layouts.length).toEqual(2);
+    expect(layouts[0]).toBeUndefined();
+    expect(layouts[1].length).toEqual(2);
+    expect(gTree.dataLayouts.length).toEqual(3);
+    expect(gTree.dataLayouts[2].length).toEqual(2);
   });
 
   it("get default options", function() {
@@ -247,6 +247,21 @@ describe("Genealogy tree", function() {
 
     expect(res).toBe(true);
   });
+
+  it('add spouses node to layout', function() {
+    var nodes = getNodes();
+    var relationships = getRelationships();
+    var val = relationships[0];
+    var rootRelationships = getRootRelationships();
+
+    var gTree = new GenealogyTree(nodes, relationships, rootRelationships)
+    gTree.addSpousesNodeToLayout(val);
+    var layouts = gTree.layouts;
+
+    expect(layouts.length).toEqual(2);
+    expect(layouts[0]).toBeUndefined();
+    expect(layouts[1].length).toEqual(2);
+  })
 });
 
 function getNodes() {

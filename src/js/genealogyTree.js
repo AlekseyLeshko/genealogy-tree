@@ -17,7 +17,6 @@ GenealogyTree.prototype = {
 
   generationLauouts: function() {
     this.layouts = [1, 2];
-
   },
 
   generationLauout: function() {

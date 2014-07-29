@@ -5,7 +5,8 @@ module.exports = function(config){
 
     files : [
       'src/js/**/*.js',
-      'test/unit/**/*.js'
+      'test/unit/**/*.js',
+      'node_modules/underscore/underscore-min.js'
     ],
 
     autoWatch : true,

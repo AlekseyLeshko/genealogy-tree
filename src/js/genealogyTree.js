@@ -108,10 +108,14 @@ GenealogyTree.prototype = {
     return defaultOptions;
   },
 
+  calc: function() {
+    this.options.container.width = this.calcWidthСontainer();
+  },
+
   calcCoordinatesForLayout: function(arr) {
     var layout = [];
     var y = this.calcStartY(arr.length);
-    var x = this.calcLayoutLevelX();
+    var x = this.calcValX();
     for (var i = 0; i < arr.length; i++) {
       var node = this.clone(arr[i]);
       node.x = x;
@@ -128,8 +132,9 @@ GenealogyTree.prototype = {
     return res;
   },
 
-  calcLayoutLevelX: function() {
-    var x = this.level * this.options.stepX;
+  calcValX: function() {
+    var indent = this.options.indents.indentX + this.options.frame.height;
+    var x = this.level * this.options.stepX + indent;
     return x;
   },
 

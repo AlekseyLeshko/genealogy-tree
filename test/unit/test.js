@@ -2,19 +2,21 @@
 
 describe("Genealogy tree", function() {
   it("create tree without parameters", function() {
-
-
     var gTree = new GenealogyTree();
 
     expect(gTree).not.toBeNull();
-    expect(gTree.options).toEqual(GenealogyTree.prototype.getDefaultOptions());
+    expect(gTree.options).toEqual(getDefaultOptions());
+    expect(gTree.nodes).toBeUndefined();
+    expect(gTree.relationships).toBeUndefined();
   });
 
   it('create tree with parameters', function() {
     var nodes = getNodes();
     var relationships = getRelationships();
+
     var gTree = new GenealogyTree(nodes, relationships);
 
+    expect(gTree.options).toEqual(getDefaultOptions());
     expect(gTree.nodes.length).toEqual(nodes.length);
     expect(gTree.relationships.length).toEqual(relationships.length);
   });

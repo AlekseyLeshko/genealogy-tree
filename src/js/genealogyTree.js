@@ -17,26 +17,35 @@ GenealogyTree.prototype = {
 
   generationLayouts: function() {
     do {
-      this.generationLayout
-      this.layouts.push(this.generationLayout());
-      if (this.dataLayouts.length > 0) {
-
-        var nodeArr = this.findNodesById(this.dataLayouts, nodes);
-        rootRelationships = this.getRelationships(nodeArr, relationships);
-        this.dataLayouts.length = 0;
+      this.generationLayout();
+      if (this.needToCreateNextLayout()) {
+        this.preparationNextLayout();
       } else {
         break;
       }
     } while(true);
+  },
 
-    return this.layouts;
+  preparationNextLayout: function() {
+    var nodeArr = this.findNodesById(this.dataLayouts, this.nodes);
+    rootRelationships = this.getRelationships(nodeArr);
+    // this.dataLayouts.length = 0;
+  },
+
+  needToCreateNextLayout: function() {
+    var answer = false;
+    var nextLeval = this.level + 1;
+    if (this.dataLayouts[nextLeval] && this.dataLayouts[nextLeval].length > 0) {
+      answer = true;
+    }
+    return answer;
   },
 
   generationLayout: function() {
-    _.each(this.rootRelationships, this.relationshipProcessor, this);
+    _.each(this.rootRelationships, this.preparationRelationship, this);
   },
 
-  relationshipProcessor: function(relationship) {
+  preparationRelationship: function(relationship) {
     this.addSpousesNodeToLayout(relationship);
     this.addNodesForLayoutData(relationship.children)
     this.createEdge();
@@ -135,12 +144,12 @@ GenealogyTree.prototype = {
     }
   },
 
-  getRelationships: function(nodes, relationships) {
+  getRelationships: function(nodes) {
     var key = 'id';
     var arr = [];
     for (var i = 0; i < nodes.length; i++) {
       var node = nodes[i];
-      var relationship = this.findElementInArr(key, node.relationship, relationships);
+      var relationship = this.findElementInArr(key, node.relationship, this.relationships);
 
       if (!this.findElementInArr(key, relationship.id, arr)) {
         arr.push(relationship);
@@ -149,12 +158,12 @@ GenealogyTree.prototype = {
     return arr;
   },
 
-  findNodesById: function(ids, nodes) {
+  findNodesById: function(ids) {
     var key = 'id';
     var arr = [];
     for (var i = 0; i < ids.length; i++) {
       var val = ids[i];
-      var node = this.findElementInArr(key, val, nodes);
+      var node = this.findElementInArr(key, val, this.nodes);
       arr.push(node);
     }
     return arr;

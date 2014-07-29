@@ -23,8 +23,14 @@ describe("Genealogy tree", function() {
   });
 
   it("generation layouts", function() {
-    GenealogyTree.prototype.generationLayouts();
-    var layouts = GenealogyTree.prototype.layouts;
+    var nodes = getNodes();
+    var relationships = getRelationships();
+    var rootRelationships = getRootRelationships();
+
+    var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
+
+    gTree.generationLayouts();
+    var layouts = gTree.layouts;
 
     expect(layouts.length).toEqual(2);
     expect(layouts[0].length).toEqual(2);
@@ -166,15 +172,17 @@ describe("Genealogy tree", function() {
   it("get relationships", function() {
     var nodes = getNodes().slice(0, 2);
 
-    var arr = GenealogyTree.prototype.getRelationships(nodes, getRelationships());
+    GenealogyTree.prototype.relationships = getRelationships();
+    var arr = GenealogyTree.prototype.getRelationships(nodes);
 
     expect(arr.length).toEqual(1);
   });
 
-  it("get nodes", function() {
+  it("get nodes by id", function() {
     var arrIds = [1, 2 ,3];
 
-    var nodes = GenealogyTree.prototype.findNodesById(arrIds, getNodes());
+    GenealogyTree.prototype.nodes = getNodes()
+    var nodes = GenealogyTree.prototype.findNodesById(arrIds);
 
     expect(nodes.length).toEqual(arrIds.length);
   });
@@ -251,7 +259,25 @@ describe("Genealogy tree", function() {
     expect(layouts.length).toEqual(2);
     expect(layouts[0]).toBeUndefined();
     expect(layouts[1].length).toEqual(2);
-  })
+  });
+
+  it('need create next layout when data layout is empty', function() {
+    var level = 1;
+    GenealogyTree.prototype.dataLayouts = [];
+
+    var answer = GenealogyTree.prototype.needToCreateNextLayout();
+
+    expect(answer).toBe(false);
+  });
+
+  it('need craete next layout when data layout is not empty', function() {
+    var level = 1;
+    GenealogyTree.prototype.dataLayouts = [[], [], getNodes()];
+
+    var answer = GenealogyTree.prototype.needToCreateNextLayout();
+
+    expect(answer).toBe(true);
+  });
 });
 
 function getNodes() {

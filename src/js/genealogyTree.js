@@ -16,10 +16,23 @@ GenealogyTree.prototype = {
   },
 
   generationLayouts: function() {
-    this.layouts = [1, 2];
+    do {
+      this.generationLayout
+      this.layouts.push(this.generationLayout());
+      if (this.dataLayouts.length > 0) {
+
+        var nodeArr = this.findNodesById(this.dataLayouts, nodes);
+        rootRelationships = this.getRelationships(nodeArr, relationships);
+        this.dataLayouts.length = 0;
+      } else {
+        break;
+      }
+    } while(true);
+
+    return this.layouts;
   },
 
-  generationLauout: function() {
+  generationLayout: function() {
     _.each(this.rootRelationships, this.relationshipProcessor, this);
   },
 
@@ -120,22 +133,6 @@ GenealogyTree.prototype = {
         return arr[i];
       }
     }
-  },
-
-  createLayouts: function(rootRelationships, nodes, relationships) {
-    do {
-      this.layouts.push(this.generationLauout());
-      if (this.dataLayouts.length > 0) {
-
-        var nodeArr = this.findNodesById(this.dataLayouts, nodes);
-        rootRelationships = this.getRelationships(nodeArr, relationships);
-        this.dataLayouts.length = 0;
-      } else {
-        break;
-      }
-    } while(true);
-
-    return this.layouts;
   },
 
   getRelationships: function(nodes, relationships) {

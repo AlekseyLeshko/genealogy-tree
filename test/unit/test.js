@@ -38,7 +38,7 @@ describe("Genealogy tree", function() {
     var length = relationships.length - 1;
 
     var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
-    gTree.generationLauout();
+    gTree.generationLayout();
     var layouts = gTree.layouts;
 
     expect(gTree.relationships.length).toEqual(length);

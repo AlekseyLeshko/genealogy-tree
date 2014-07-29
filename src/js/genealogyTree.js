@@ -27,8 +27,9 @@ GenealogyTree.prototype = {
   },
 
   preparationNextLayout: function() {
-    var nodeArr = this.findNodesById(this.dataLayouts, this.nodes);
-    rootRelationships = this.getRelationships(nodeArr);
+    this.level++;
+    var nodeArr = this.findNodesById(this.dataLayouts[this.level]);
+    this.rootRelationships = this.getRelationships(nodeArr);
     // this.dataLayouts.length = 0;
   },
 

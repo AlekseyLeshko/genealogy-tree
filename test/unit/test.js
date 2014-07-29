@@ -32,8 +32,9 @@ describe("Genealogy tree", function() {
     gTree.generationLayouts();
     var layouts = gTree.layouts;
 
-    expect(layouts.length).toEqual(2);
-    expect(layouts[0].length).toEqual(2);
+    expect(layouts.length).toEqual(3);
+    expect(layouts[1].length).toEqual(2);
+    expect(layouts[2].length).toEqual(2);
     // expect(layouts[1].length).toEqual(2);
   });
 

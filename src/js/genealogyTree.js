@@ -100,10 +100,10 @@ GenealogyTree.prototype = {
     return defaultOptions;
   },
 
-  calcCoordinatesForLayout: function(nodeArr, level) {
+  calcCoordinatesForLayout: function(nodeArr) {
     var layout = [];
-    var y = this.calcStartY(nodeArr.length, this.options.nodeWidth);
-    var x = this.calcLayoutLevelX(level);
+    var y = this.calcStartY(nodeArr.length);
+    var x = this.calcLayoutLevelX();
     for (var i = 0; i < nodeArr.length; i++) {
       var node = this.clone(nodeArr[i]);
       node.x = x;
@@ -114,14 +114,14 @@ GenealogyTree.prototype = {
     return layout;
   },
 
-  calcStartY: function(countNode, widthNode) {
-    var y = (((countNode / 2) * widthNode) + ((countNode - 1) * this.options.stepY)) / 2;
+  calcStartY: function(countNode) {
+    var y = (((countNode / 2) * this.options.nodeWidth) + ((countNode - 1) * this.options.stepY)) / 2;
     var res = (this.options.container.width / 2) - y;
     return res;
   },
 
-  calcLayoutLevelX: function(level) {
-    var x = level * this.options.stepX;
+  calcLayoutLevelX: function() {
+    var x = this.level * this.options.stepX;
     return x;
   },
 

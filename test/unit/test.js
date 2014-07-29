@@ -110,12 +110,14 @@ describe("Genealogy tree", function() {
       id: 2,
       width: width
     }];
+    var level = 2;
 
+    GenealogyTree.prototype.level = level;
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
     var layout = GenealogyTree.prototype.calcCoordinatesForLayout(nodeArr, level);
 
-    var x = GenealogyTree.prototype.calcLayoutLevelX(level);
-    var y = GenealogyTree.prototype.calcStartY(nodeArr.length, width);
+    var x = GenealogyTree.prototype.calcLayoutLevelX();
+    var y = GenealogyTree.prototype.calcStartY(nodeArr.length);
 
     for (var i = 0; i < layout.length - 1; i++) {
       expect(layout[i].x).toEqual(x);
@@ -137,20 +139,21 @@ describe("Genealogy tree", function() {
 
   it("calculation start y", function() {
     var countNode = 2;
-    var widthNode = 50;
+    var widthNode = 30;
 
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
-    var y = GenealogyTree.prototype.calcStartY(countNode, widthNode);
+    var y = GenealogyTree.prototype.calcStartY(countNode);
 
-    var answer = 175;
+    var answer = 185;
     expect(y).toEqual(answer);
   });
 
   it("calculation layout level x", function() {
     var level = 2;
 
+    GenealogyTree.prototype.level = level;
     GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
-    var x = GenealogyTree.prototype.calcLayoutLevelX(level);
+    var x = GenealogyTree.prototype.calcLayoutLevelX();
 
     var answer = 2 * GenealogyTree.prototype.options.stepX;
     expect(x).toEqual(answer);
@@ -279,6 +282,7 @@ describe("Genealogy tree", function() {
     var level = 1;
     GenealogyTree.prototype.dataLayouts = [[], [], getNodes()];
 
+    GenealogyTree.prototype.level = level;
     var answer = GenealogyTree.prototype.needToCreateNextLayout();
 
     expect(answer).toBe(true);

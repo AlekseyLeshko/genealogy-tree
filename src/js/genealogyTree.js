@@ -6,6 +6,10 @@ GenealogyTree = function(nodes, relationships) {
 };
 
 GenealogyTree.prototype = {
+  generationLauouts: function() {
+
+  },
+
   getDefaultOptions: function() {
     var defaultOptions = {
       container: {

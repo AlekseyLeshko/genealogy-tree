@@ -22,19 +22,9 @@ describe("Genealogy tree", function() {
   });
 
   it("get default options", function() {
-    var defaultWidth = 500;
-    var defaultHeight = 500;
-    var stepX = 75;
-    var stepY = 100;
-
     var options = GenealogyTree.prototype.getDefaultOptions();
 
-    expect(options).not.toBeNull();
-    expect(options.container).not.toBeUndefined();
-    expect(options.container.width).toEqual(defaultWidth);
-    expect(options.container.height).toEqual(defaultHeight);
-    expect(options.stepY).toEqual(stepY);
-    expect(options.stepX).toEqual(stepX);
+    expect(options).toEqual(getDefaultOptions());
   });
 
   it("create layout level", function() {

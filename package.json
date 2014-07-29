@@ -7,8 +7,9 @@
   "license": "MIT",
   "devDependencies": {
     "karma": "~0.10",
+    "karma-junit-reporter": "^0.2.2",
     "shelljs": "^0.2.6",
-    "karma-junit-reporter": "^0.2.2"
+    "underscore": "^1.6.0"
   },
   "scripts": {
     "prestart": "npm install",
@@ -19,5 +20,6 @@
     "update-webdriver": "webdriver-manager update"
   },
   "dependencies": {
+    "underscore": "^1.6.0"
   }
 }

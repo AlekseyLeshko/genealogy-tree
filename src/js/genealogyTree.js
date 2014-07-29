@@ -21,33 +21,18 @@ GenealogyTree.prototype = {
   },
 
   generationLauout: function() {
-    var key = 'id';
-    var layout = [];
-
-    var self = this;
-    _.each(this.rootRelationships, this.relationshipProcessor, self);
-
-    // for (var i = 0; i < this.rootRelationships.length; i++) {
-    //   var relationship = this.rootRelationships[i];
-
-    //   layout = layout.concat(this.addSpousesNodeToLayout());
-
-    //   this.createEdge();
-    //   this.addNodesForNextLayout(relationship.children)
-
-    //   this.unsetValInRelationships(relationship);
-    // }
-
-    return layout;
+    // var self = this;
+    _.each(this.rootRelationships, this.relationshipProcessor, this);
   },
 
   relationshipProcessor: function(relationship) {
-    console.log(relationship);
     this.addSpousesNodeToLayout(relationship);
-    this.createEdge();
     this.addNodesForLayoutData(relationship.children)
+    this.createEdge();
 
-    this.unsetValInRelationships(relationship);
+    console.log(this.relationships.length);
+    this.unsetRelationship(relationship);
+    console.log(this.relationships.length);
   },
 
   addNodesForCurrentLayout: function(arr) {
@@ -76,8 +61,8 @@ GenealogyTree.prototype = {
   addSpousesNodeToLayout: function(relationship) {
     var layout = [];
 
-    var wifeNode = this.getNodeOfRelationship(relationship.wife, nodes);
-    var husbandNode = this.getNodeOfRelationship(relationship.husband, nodes);
+    var wifeNode = this.getNodeOfRelationship(relationship.wife, this.nodes);
+    var husbandNode = this.getNodeOfRelationship(relationship.husband, this.nodes);
     layout.push(wifeNode);
     layout.push(husbandNode);
 
@@ -192,9 +177,12 @@ GenealogyTree.prototype = {
     return node;
   },
 
-  unsetValInRelationships: function(value) {
-    var index = this.relationships.indexOf(value);
-    if(index != -1) {
+  unsetRelationship: function(value) {
+    var index = _.find(this.relationships, function(obj) {
+      this.comparison(obj, value);
+    });
+
+    if(!index) {
       return this.relationships.splice(index, 1);
     }
   },
@@ -206,5 +194,9 @@ GenealogyTree.prototype = {
     }
 
     return nodes;
+  },
+
+  comparison: function(x, y) {
+    return  JSON.stringify(x) === JSON.stringify(y) ;
   }
 };

@@ -260,3 +260,17 @@ function getRelationships() {
   }];
   return relationships;
 }
+
+
+function getDefaultOptions() {
+  var defaultOptions = {
+    container: {
+      width: 500,
+      height: 500
+    },
+    stepX: 75,
+    stepY: 100,
+    nodeWidth: 30
+  };
+  return defaultOptions;
+};

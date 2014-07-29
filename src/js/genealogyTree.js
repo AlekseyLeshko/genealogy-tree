@@ -93,6 +93,14 @@ GenealogyTree.prototype = {
         width: 500,
         height: 500
       },
+      frame: {
+        width: 250,
+        height: 250
+      },
+      indents: {
+        xIndent: 100,
+        yindent: 100
+      },
       stepX: 75,
       stepY: 100,
       nodeWidth: 30
@@ -100,12 +108,12 @@ GenealogyTree.prototype = {
     return defaultOptions;
   },
 
-  calcCoordinatesForLayout: function(nodeArr) {
+  calcCoordinatesForLayout: function(arr) {
     var layout = [];
-    var y = this.calcStartY(nodeArr.length);
+    var y = this.calcStartY(arr.length);
     var x = this.calcLayoutLevelX();
-    for (var i = 0; i < nodeArr.length; i++) {
-      var node = this.clone(nodeArr[i]);
+    for (var i = 0; i < arr.length; i++) {
+      var node = this.clone(arr[i]);
       node.x = x;
       node.y = y;
       layout.push(node);
@@ -203,5 +211,9 @@ GenealogyTree.prototype = {
 
   comparison: function(x, y) {
     return  JSON.stringify(x) === JSON.stringify(y) ;
+  },
+
+  calcWidth: function() {
+
   }
 };

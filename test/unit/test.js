@@ -35,7 +35,6 @@ describe("Genealogy tree", function() {
     expect(layouts.length).toEqual(3);
     expect(layouts[1].length).toEqual(2);
     expect(layouts[2].length).toEqual(2);
-    // expect(layouts[1].length).toEqual(2);
   });
 
   it("generation layout", function() {
@@ -287,6 +286,10 @@ describe("Genealogy tree", function() {
 
     expect(answer).toBe(true);
   });
+
+  it('calculation width', function() {
+
+  });
 });
 
 function getNodes() {
@@ -354,6 +357,14 @@ function getDefaultOptions() {
     container: {
       width: 500,
       height: 500
+    },
+    frame: {
+      width: 250,
+      height: 250
+    },
+    indents: {
+      xIndent: 100,
+      yindent: 100
     },
     stepX: 75,
     stepY: 100,

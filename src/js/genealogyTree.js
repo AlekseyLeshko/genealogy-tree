@@ -214,6 +214,10 @@ GenealogyTree.prototype = {
   },
 
   widthCalculationLayout: function() {
+    if (this.layouts.length <= 0) {
+      return 0;
+    }
+
     var arr = [];
     _.each(this.layouts, function(layout) {
       if (layout) {
@@ -221,6 +225,10 @@ GenealogyTree.prototype = {
         arr.push(length);
       }
     });
+
+    if (arr.length <= 0) {
+      return 0;
+    }
 
     var maxCount = _.max(arr, function(length) {
       return length;
@@ -231,7 +239,7 @@ GenealogyTree.prototype = {
     return width;
   },
 
-  calcContainerWidth: function() {
+  calcWidthСontainer: function() {
     var layoutWidth = this.widthCalculationLayout();
     var frame = this.options.frame.width * 2;
     var indent = this.options.indents.indentX * 2;

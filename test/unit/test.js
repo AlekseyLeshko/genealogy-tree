@@ -287,20 +287,21 @@ describe("Genealogy tree", function() {
     expect(answer).toBe(true);
   });
 
-  // it('calculation container width for empty layout', function() {
-  //   GenealogyTree.prototype.options = getDefaultOptions();
-  //   var width = GenealogyTree.prototype.calcContainerWidth();
+  it('calculation container width for empty layout', function() {
+    GenealogyTree.prototype.layouts = [];
+    GenealogyTree.prototype.options = getDefaultOptions();
+    var width = GenealogyTree.prototype.calcWidthСontainer();
 
-  //   expect(width).toEqual(700);
-  // });
+    expect(width).toEqual(700);
+  });
 
-  // it('calculation container width for layout', function() {
-  //   GenealogyTree.prototype.layouts = [getNodes()];
-  //   GenealogyTree.prototype.options = getDefaultOptions();
-  //   var width = GenealogyTree.prototype.calcContainerWidth();
+  it('calculation container width for layout', function() {
+    GenealogyTree.prototype.layouts = [getNodes()];
+    GenealogyTree.prototype.options = getDefaultOptions();
+    var width = GenealogyTree.prototype.calcWidthСontainer();
 
-  //   expect(width).toEqual();
-  // });
+    expect(width).toEqual(1120);
+  });
 
   it('width calculation layout', function() {
     GenealogyTree.prototype.layouts = [undefined, [], getNodes()];
@@ -308,6 +309,22 @@ describe("Genealogy tree", function() {
     var width = GenealogyTree.prototype.widthCalculationLayout();
 
     expect(width).toEqual(420);
+  });
+
+  it('width calculation layout when layouts is empty', function() {
+    GenealogyTree.prototype.layouts = [];
+    GenealogyTree.prototype.options = getDefaultOptions();
+    var width = GenealogyTree.prototype.widthCalculationLayout();
+
+    expect(width).toEqual(0);
+  });
+
+  it('width calculation layout when layout is undefined', function() {
+    GenealogyTree.prototype.layouts = [undefined];
+    GenealogyTree.prototype.options = getDefaultOptions();
+    var width = GenealogyTree.prototype.widthCalculationLayout();
+
+    expect(width).toEqual(0);
   });
 });
 

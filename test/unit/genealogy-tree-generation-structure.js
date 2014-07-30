@@ -4,10 +4,8 @@ describe('Generation structure of genealogy tree: ', function() {
   it('create tree without parameters', function() {
     var gTree = new GenealogyTree();
 
+    expect(gTree).not.toBeUndefined();
     expect(gTree).not.toBeNull();
-    expect(gTree.options).toEqual(getDefaultOptions());
-    expect(gTree.nodes).toBeUndefined();
-    expect(gTree.relationships).toBeUndefined();
   });
 
   it('create tree with parameters', function() {
@@ -17,9 +15,21 @@ describe('Generation structure of genealogy tree: ', function() {
 
     var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
 
+    expect(gTree).not.toBeUndefined();
+    expect(gTree).not.toBeNull();
+
     expect(gTree.options).toEqual(getDefaultOptions());
     expect(gTree.nodes.length).toEqual(nodes.length);
     expect(gTree.relationships.length).toEqual(relationships.length);
+  });
+
+  it('init tree craete structure', function() {
+    GenealogyTree.prototype.init();
+
+    expect(GenealogyTree.prototype.options).toEqual(getDefaultOptions());
+    expect(GenealogyTree.prototype.level).toEqual(1);
+    expect(GenealogyTree.prototype.dataLayouts.length).toEqual(0);
+    expect(GenealogyTree.prototype.layouts.length).toEqual(0);
   });
 
   it('generation layouts', function() {

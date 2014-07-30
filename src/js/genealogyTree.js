@@ -3,13 +3,17 @@ GenealogyTree = function(nodes, relationships, rootRelationships) {
   this.relationships = relationships;
   this.rootRelationships = rootRelationships;
 
-  this.options = this.getDefaultOptions();
-  this.level = 1;
-  this.dataLayouts = [];
-  this.layouts = [];
+  this.init();
 };
 
 GenealogyTree.prototype = {
+  init: function() {
+    this.options = this.getDefaultOptions();
+    this.level = 1;
+    this.dataLayouts = [];
+    this.layouts = [];
+  },
+
   getDefaultOptions: function() {
     var defaultOptions = {
       frame: {

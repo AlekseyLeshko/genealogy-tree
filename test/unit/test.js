@@ -308,15 +308,15 @@ describe('Calculation coordinates for genealogy tree', function() {
   });
 
   it('calculation layout level x', function() {
+    var gTree = getCreatedGenealogyTree();
     var level = 2;
 
-    GenealogyTree.prototype.level = level;
-    GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
-    var x = GenealogyTree.prototype.calcValX();
+    gTree.level = level;
 
-    var answer = (level * GenealogyTree.prototype.options.stepX) +
-      GenealogyTree.prototype.options.indents.indentX +
-      GenealogyTree.prototype.options.frame.height;
+    var x = gTree.calcValX();
+
+    var answer = (level * gTree.options.stepX) +
+      gTree.options.frame.height;
 
     expect(x).toEqual(answer);
   });
@@ -326,7 +326,7 @@ describe('Calculation coordinates for genealogy tree', function() {
     GenealogyTree.prototype.options = getDefaultOptions();
     var width = GenealogyTree.prototype.calcWidthСontainer();
 
-    expect(width).toEqual(700);
+    expect(width).toEqual(500);
   });
 
   it('calculation width container for layout', function() {
@@ -334,7 +334,7 @@ describe('Calculation coordinates for genealogy tree', function() {
     GenealogyTree.prototype.options = getDefaultOptions();
     var width = GenealogyTree.prototype.calcWidthСontainer();
 
-    expect(width).toEqual(1120);
+    expect(width).toEqual(920);
   });
 
   it('width calculation layout', function() {
@@ -365,7 +365,7 @@ describe('Calculation coordinates for genealogy tree', function() {
     GenealogyTree.prototype.layouts = [1];
     var height = GenealogyTree.prototype.calcHeightСontainer();
 
-    expect(height).toEqual(800);
+    expect(height).toEqual(600);
   });
 });
 
@@ -435,10 +435,6 @@ function getDefaultOptions() {
       width: 250,
       height: 250
     },
-    indents: {
-      indentX: 100,
-      indentY: 100
-    },
     stepX: 75,
     stepY: 100,
     nodeWidth: 30
@@ -456,10 +452,6 @@ function getOptions() {
       width: 250,
       height: 250
     },
-    indents: {
-      indentX: 100,
-      indentY: 100
-    },
     stepX: 75,
     stepY: 100,
     nodeWidth: 30
@@ -467,12 +459,18 @@ function getOptions() {
   return defaultOptions;
 };
 
-
 function getGenealogyTree() {
   var nodes = getNodes();
   var relationships = getRelationships();
   var rootRelationships = getRootRelationships();
 
   var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
+  return gTree;
+};
+
+function getCreatedGenealogyTree() {
+  var gTree = getGenealogyTree();
+  gTree.generationLayouts();
+
   return gTree;
 };

@@ -10,6 +10,19 @@ GenealogyTree = function(nodes, relationships, rootRelationships) {
 };
 
 GenealogyTree.prototype = {
+  getDefaultOptions: function() {
+    var defaultOptions = {
+      frame: {
+        width: 250,
+        height: 250
+      },
+      stepX: 75,
+      stepY: 100,
+      nodeWidth: 30
+    };
+    return defaultOptions;
+  },
+
   getStartLevel: function () {
     var startlevel = 1;
     return startlevel;
@@ -87,23 +100,6 @@ GenealogyTree.prototype = {
     this.layouts[this.level] = layout;
   },
 
-  getDefaultOptions: function() {
-    var defaultOptions = {
-      frame: {
-        width: 250,
-        height: 250
-      },
-      indents: {
-        indentX: 100,
-        indentY: 100
-      },
-      stepX: 75,
-      stepY: 100,
-      nodeWidth: 30
-    };
-    return defaultOptions;
-  },
-
   calcContainerParameters: function() {
     this.options.container = {
       width: this.calcWidthСontainer(),
@@ -141,8 +137,9 @@ GenealogyTree.prototype = {
   },
 
   calcValX: function() {
-    var indent = this.options.indents.indentX + this.options.frame.height;
-    var x = this.level * this.options.stepX + indent;
+    var frame = this.options.frame.height;
+    var width = this.level * this.options.stepX;
+    var x =  frame + width;
     return x;
   },
 
@@ -253,19 +250,18 @@ GenealogyTree.prototype = {
   },
 
   calcWidthСontainer: function() {
-    var layoutWidth = this.widthCalculationLayout();
+    var widthLayout = this.widthCalculationLayout();
     var frame = this.options.frame.width * 2;
-    var indent = this.options.indents.indentX * 2;
+    var width = widthLayout + frame;
 
-    return layoutWidth + frame + indent;
+    return width;
   },
 
   calcHeightСontainer: function() {
-    var layoutHeight = this.layouts.length;
+    var heightLayouts = (this.layouts.length * this.options.stepY);
     var frame = this.options.frame.height * 2;
-    var indent = this.options.indents.indentY * 2;
+    var height = heightLayouts + frame;
 
-    return (layoutHeight * this.options.stepY) +
-      frame + indent;
+    return height;
   }
 };

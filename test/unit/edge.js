@@ -23,4 +23,20 @@ describe('Edge: ', function() {
 
     expect(true).toBeTruthy();
   });
+
+  it('edge coordinates', function() {
+    var gTree = getCreatedGenealogyTree();
+    gTree.calcContainerParameters();
+    gTree.calcCoordinatesForLayouts();
+
+    var nodes = gTree.nodes;
+    var typeRelationship = 'marriage';
+    var edge = new Edge(nodes[0], nodes[1], typeRelationship);
+    edge.calcCoordinates();
+
+    expect(edge.x1).toEqual(nodes[0].y + 5);
+    expect(edge.y1).toEqual(nodes[0].x + 12);
+    expect(edge.x2).toEqual(nodes[1].y + 15);
+    expect(edge.y2).toEqual(nodes[1].x + 12);
+  });
 });

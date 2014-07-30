@@ -138,7 +138,7 @@ GenealogyTree.prototype = {
     var y = this.calcStartY(arr.length);
     var x = this.calcValX();
     for (var i = 0; i < arr.length; i++) {
-      var node = this.clone(arr[i]);
+      var node = arr[i];
       node.x = x;
       node.y = y;
       layout.push(node);

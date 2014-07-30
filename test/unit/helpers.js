@@ -38,17 +38,23 @@ function getNodes() {
 
 function getRelationships() {
   var relationships = [{
-    'id': 1,
-    'husband': 1,
-    'wife': 2,
-    'isLegitimateRelationships': true,
-    'children': [3, 4]
+    "id": 1,
+    "husband": 1,
+    "wife": 2,
+    "isLegitimateRelationships": true,
+    "children": [3, 4],
+    "level": 1,
+    "type": "marriage",
+    "childrenType": "of_marriage"
   }, {
-    'id': 2,
-    'husband': 4,
-    'wife': 3,
-    'isLegitimateRelationships': true,
-    'children': []
+    "id": 2,
+    "husband": 4,
+    "wife": 3,
+    "isLegitimateRelationships": true,
+    "children": [],
+    "level": 2,
+    "type": "marriage",
+    "childrenType": "of_marriage"
   }];
   return relationships;
 }

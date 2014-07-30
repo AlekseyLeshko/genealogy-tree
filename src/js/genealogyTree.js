@@ -12,6 +12,7 @@ GenealogyTree.prototype = {
     this.level = this.options.startLevel;
     this.dataLayouts = [];
     this.layouts = [];
+    this.edges = [];
   },
 
   getDefaultOptions: function() {
@@ -41,7 +42,7 @@ GenealogyTree.prototype = {
 
   preparationNextLayout: function() {
     this.level++;
-    var nodeArr = this.findNodesById(this.dataLayouts[this.level]);
+    var nodeArr = this.findNodesByIds(this.dataLayouts[this.level]);
     this.rootRelationships = this.getRelationships(nodeArr);
   },
 
@@ -77,7 +78,7 @@ GenealogyTree.prototype = {
   preparationRelationship: function(relationship) {
     this.addSpousesNodeToLayout(relationship);
     this.addNodesForLayoutData(relationship.children)
-    this.createEdge();
+    // this.createEdges(relationship);
 
     this.unsetRelationship(relationship);
   },
@@ -192,7 +193,7 @@ GenealogyTree.prototype = {
     return arr;
   },
 
-  findNodesById: function(ids) {
+  findNodesByIds: function(ids) {
     var key = 'id';
     var arr = [];
     for (var i = 0; i < ids.length; i++) {
@@ -203,8 +204,19 @@ GenealogyTree.prototype = {
     return arr;
   },
 
-  createEdge: function() {
-    // console.error('Implementation!');
+  createEdges: function(relationship) {
+    var wifeNode = this.getNodeOfRelationship(relationship.wife);
+    var husbandNode = this.getNodeOfRelationship(relationship.husband);
+
+    var parentEdge = new Edge(husbandNode, wifeNode, relationship.type);
+    this.edges.push(parentEdge);
+
+    var nodeArr = this.findNodesByIds(relationship.children);
+
+    _.each(nodeArr, function(node) {
+      var edge = new Edge(parentEdge, node, relationship.childrenType);
+      this.edges.push(edge);
+    }, this);
   },
 
   getNodeOfRelationship: function(val) {

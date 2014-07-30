@@ -30,6 +30,7 @@ describe('Generation structure of genealogy tree: ', function() {
     expect(GenealogyTree.prototype.level).toEqual(0);
     expect(GenealogyTree.prototype.dataLayouts.length).toEqual(0);
     expect(GenealogyTree.prototype.layouts.length).toEqual(0);
+    expect(GenealogyTree.prototype.edges.length).toEqual(0);
   });
 
   it('generation layouts', function() {
@@ -139,7 +140,7 @@ describe('Generation structure of genealogy tree: ', function() {
     var arrIds = [1, 2 ,3];
 
     GenealogyTree.prototype.nodes = getNodes()
-    var nodes = GenealogyTree.prototype.findNodesById(arrIds);
+    var nodes = GenealogyTree.prototype.findNodesByIds(arrIds);
 
     expect(nodes.length).toEqual(arrIds.length);
   });
@@ -270,5 +271,19 @@ describe('Generation structure of genealogy tree: ', function() {
     var answer = GenealogyTree.prototype.nextLayoutIsExists();
 
     expect(answer).toBeTruthy();
+  });
+
+  it('create edges of relationship', function() {
+    var relationship = getRelationships().slice(0, 1)[0];
+
+    GenealogyTree.prototype.nodes = getNodes();
+    GenealogyTree.prototype.edges = [];
+    GenealogyTree.prototype.createEdges(relationship);
+    var edges = GenealogyTree.prototype.edges;
+
+    expect(edges.length).toEqual(3);
+    expect(edges[0].typeRelationship).toEqual(1);
+    expect(edges[1].typeRelationship).toEqual(2);
+    expect(edges[2].typeRelationship).toEqual(2);
   });
 });

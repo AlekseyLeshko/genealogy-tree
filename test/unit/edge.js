@@ -15,7 +15,7 @@ describe('Edge: ', function() {
 
     expect(edge.parent).toEqual(nodes[0]);
     expect(edge.child).toEqual(nodes[1]);
-    expect(edge.typeRelationship).toEqual(typesRelationship[typeRelationship]);
+    expect(edge.typeRelationship).toEqual(typeRelationship);
   });
 
   it('init edge', function() {

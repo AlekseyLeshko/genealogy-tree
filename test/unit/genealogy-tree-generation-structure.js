@@ -275,15 +275,16 @@ describe('Generation structure of genealogy tree: ', function() {
 
   it('create edges of relationship', function() {
     var relationship = getRelationships().slice(0, 1)[0];
-
+    var type = 'marriage'
+    var childrenType = 'of_marriage';
     GenealogyTree.prototype.nodes = getNodes();
     GenealogyTree.prototype.edges = [];
     GenealogyTree.prototype.createEdges(relationship);
     var edges = GenealogyTree.prototype.edges;
 
     expect(edges.length).toEqual(3);
-    expect(edges[0].typeRelationship).toEqual(1);
-    expect(edges[1].typeRelationship).toEqual(2);
-    expect(edges[2].typeRelationship).toEqual(2);
+    expect(edges[0].typeRelationship).toEqual(type);
+    expect(edges[1].typeRelationship).toEqual(childrenType);
+    expect(edges[2].typeRelationship).toEqual(childrenType);
   });
 });

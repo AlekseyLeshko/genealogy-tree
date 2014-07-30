@@ -1,7 +1,7 @@
 Edge = function (parent, child, type) {
   this.parent = parent;
   this.child = child;
-  this.typeRelationship = typesRelationship[type];
+  this.typeRelationship = type;
 
   this.init();
 };
@@ -9,9 +9,4 @@ Edge = function (parent, child, type) {
 Edge.prototype = {
   init: function() {
   }
-};
-
-typesRelationship = {
-  'marriage': 1,
-  'of_marriage': 2
 };

@@ -78,7 +78,7 @@ GenealogyTree.prototype = {
   preparationRelationship: function(relationship) {
     this.addSpousesNodeToLayout(relationship);
     this.addNodesForLayoutData(relationship.children);
-    // this.createEdges(relationship);
+    this.createEdges(relationship);
 
     this.unsetRelationship(relationship);
   },

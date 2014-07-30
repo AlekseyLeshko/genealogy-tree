@@ -247,4 +247,28 @@ describe('Generation structure of genealogy tree: ', function() {
 
     expect(val).toEqual(str);
   });
+
+  it('next layout is exists when next layout is undefined', function() {
+    GenealogyTree.prototype.level = 0;
+    GenealogyTree.prototype.dataLayouts = [];
+    var answer = GenealogyTree.prototype.nextLayoutIsExists();
+
+    expect(answer).toBeFalsy();
+  });
+
+  it('next layout is exists when next layout is empty', function() {
+    GenealogyTree.prototype.level = 0;
+    GenealogyTree.prototype.dataLayouts = [[], []];
+    var answer = GenealogyTree.prototype.nextLayoutIsExists();
+
+    expect(answer).toBeFalsy();
+  });
+
+  it('next layout is exists when next layout is not empty', function() {
+    GenealogyTree.prototype.level = 0;
+    GenealogyTree.prototype.dataLayouts = [[], [1, 2]];
+    var answer = GenealogyTree.prototype.nextLayoutIsExists();
+
+    expect(answer).toBeTruthy();
+  });
 });

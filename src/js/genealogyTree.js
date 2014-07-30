@@ -47,11 +47,27 @@ GenealogyTree.prototype = {
 
   needToCreateNextLayout: function() {
     var answer = false;
-    var nextLeval = this.level + 1;
-    if (this.dataLayouts[nextLeval] && this.dataLayouts[nextLeval].length > 0) {
+
+    if (this.nextLayoutIsExists()) {
       answer = true;
     }
     return answer;
+  },
+
+  nextLayoutIsExists: function() {
+    var nextLeval = this.level + 1;
+
+    var layoutIsExists = this.dataLayouts[nextLeval];
+    if (!layoutIsExists) {
+      return false;
+    }
+
+    var layoutIsEmpty = this.dataLayouts[nextLeval].length > 0;
+    if (!layoutIsEmpty) {
+      return false;
+    }
+
+    return true;
   },
 
   generationLayout: function() {

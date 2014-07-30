@@ -104,11 +104,17 @@ GenealogyTree.prototype = {
     return defaultOptions;
   },
 
-  calc: function() {
+  calcContainerParameters: function() {
     this.options.container = {
       width: this.calcWidthСontainer(),
       height: this.calcHeightСontainer()
     };
+  },
+
+  calcCoordinatesForLayouts: function() {
+    _.each(this.layouts, function(layout) {
+      layout = this.calcCoordinatesForLayout(layout);
+    }, this);
   },
 
   calcCoordinatesForLayout: function(arr) {

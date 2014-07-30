@@ -249,24 +249,39 @@ describe('Generation structure of genealogy tree: ', function() {
 });
 
 describe('Calculation coordinates for genealogy tree', function() {
-  it('calculation all data', function() {
+  it('calculation of the container parameters', function() {
     var gTree = getGenealogyTree();
 
     gTree.generationLayouts();
 
     expect(gTree.options.container).toBeUndefined();
 
-    gTree.calc();
+    gTree.calcContainerParameters();
 
     expect(gTree.options.container.width).not.toBeUndefined();
     expect(gTree.options.container.height).not.toBeUndefined();
+  });
+
+  it('calculation coordinates for all layouts', function() {
+    var gTree = getGenealogyTree();
+
+    expect(gTree.layouts).not.toBeUndefined();
+    gTree.calcCoordinatesForLayouts();
+    var layouts = gTree.layouts;
+
+    _.each(layouts, function(layout) {
+      _.each(layout, function(node) {
+        expect(node.x).not.toBeUndefined();
+        expect(node.y).not.toBeUndefined()
+      });
+    });
   });
 
   it('calculation coordinates for layout', function() {
     var gTree = getGenealogyTree();
 
     gTree.generationLayouts();
-    gTree.calc();
+    gTree.calcContainerParameters();
     var nodeArr = gTree.layouts[1];
     var layout = gTree.calcCoordinatesForLayout(nodeArr);
 

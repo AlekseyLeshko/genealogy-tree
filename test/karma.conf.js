@@ -10,6 +10,7 @@ module.exports = function(config){
     ],
 
     autoWatch : true,
+    usePolling: true,
 
     frameworks: ['jasmine'],
 

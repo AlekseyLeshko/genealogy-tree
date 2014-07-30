@@ -13,10 +13,19 @@ module.exports = function(config){
 
     frameworks: ['jasmine'],
 
-    browsers : ['Chrome'],
+    browsers : [
+      // 'Chrome',
+      'PhantomJS'
+      // 'PhantomJS_custom',
+      // 'Firefox',
+      // 'FirefoxAurora',
+      // 'FirefoxNightly'
+    ],
 
     plugins : [
       'karma-chrome-launcher',
+      'karma-phantomjs-launcher',
+      'karma-firefox-launcher',
       'karma-jasmine',
       'karma-junit-reporter',
       'karma-coverage'
@@ -36,6 +45,19 @@ module.exports = function(config){
     coverageReporter: {
       type : 'html',
       dir : 'coverage/'
+    },
+
+    customLaunchers: {
+      'PhantomJS_custom': {
+        base: 'PhantomJS',
+        options: {
+          windowName: 'my-window',
+          settings: {
+            webSecurityEnabled: false
+          }
+        },
+        flags: ['--remote-debugger-port=9000']
+      }
     }
   });
 };

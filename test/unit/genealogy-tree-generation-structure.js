@@ -202,7 +202,7 @@ describe('Generation structure of genealogy tree: ', function() {
 
     var res = GenealogyTree.prototype.comparison(x, y);
 
-    expect(res).toBe(true);
+    expect(res).toBeTruthy();
   });
 
   it('add spouses node to layout', function() {
@@ -226,7 +226,7 @@ describe('Generation structure of genealogy tree: ', function() {
 
     var answer = GenealogyTree.prototype.needToCreateNextLayout();
 
-    expect(answer).toBe(false);
+    expect(answer).toBeFalsy();
   });
 
   it('need craete next layout when data layout is not empty', function() {
@@ -236,7 +236,7 @@ describe('Generation structure of genealogy tree: ', function() {
     GenealogyTree.prototype.level = level;
     var answer = GenealogyTree.prototype.needToCreateNextLayout();
 
-    expect(answer).toBe(true);
+    expect(answer).toBeTruthy();
   });
 
   it('clone string', function() {

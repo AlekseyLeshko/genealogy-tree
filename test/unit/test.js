@@ -264,16 +264,20 @@ describe('Calculation coordinates for genealogy tree', function() {
 
   it('calculation coordinates for all layouts', function() {
     var gTree = getGenealogyTree();
+    gTree.generationLayouts();
+    gTree.calcContainerParameters();
 
     expect(gTree.layouts).not.toBeUndefined();
     gTree.calcCoordinatesForLayouts();
     var layouts = gTree.layouts;
 
     _.each(layouts, function(layout) {
-      _.each(layout, function(node) {
-        expect(node.x).not.toBeUndefined();
-        expect(node.y).not.toBeUndefined()
-      });
+      if (layout) {
+        _.each(layout, function(node) {
+          expect(node.x).not.toBeUndefined();
+          expect(node.y).not.toBeUndefined()
+        });
+      }
     });
   });
 

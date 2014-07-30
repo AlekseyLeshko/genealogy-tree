@@ -112,9 +112,12 @@ GenealogyTree.prototype = {
   },
 
   calcCoordinatesForLayouts: function() {
-    _.each(this.layouts, function(layout) {
-      layout = this.calcCoordinatesForLayout(layout);
-    }, this);
+    for (var i = 0; i < this.layouts.length; i++) {
+      if (this.layouts[i]) {
+        this.level = i;
+        this.layouts[i] = this.calcCoordinatesForLayout(this.layouts[i]);
+      }
+    };
   },
 
   calcCoordinatesForLayout: function(arr) {

@@ -238,40 +238,50 @@ describe('Generation structure of genealogy tree: ', function() {
 
     expect(answer).toBe(true);
   });
+
+  it('clone string', function() {
+    var str = 'test';
+
+    var val = GenealogyTree.prototype.clone(str);
+
+    expect(val).toEqual(str);
+  });
 });
 
 describe('Calculation coordinates for genealogy tree', function() {
+  it('calculation all data', function() {
+    var gTree = getGenealogyTree();
+
+    gTree.generationLayouts();
+
+    expect(gTree.options.container).toBeUndefined();
+
+    gTree.calc();
+
+    expect(gTree.options.container.width).not.toBeUndefined();
+    expect(gTree.options.container.height).not.toBeUndefined();
+  });
+
   it('calculation coordinates for layout', function() {
-    var level = 2;
-    var width = 30;
-    var nodeArr = [{
-      id: 1,
-      width: width
-    }, {
-      id: 2,
-      width: width
-    }];
-    var level = 2;
+    var gTree = getGenealogyTree();
 
-    GenealogyTree.prototype.level = level;
-    GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
-    var layout = GenealogyTree.prototype.calcCoordinatesForLayout(nodeArr, level);
+    gTree.generationLayouts();
+    gTree.calc();
+    var nodeArr = gTree.layouts[1];
+    var layout = gTree.calcCoordinatesForLayout(nodeArr);
 
-    var x = GenealogyTree.prototype.calcValX();
-    var y = GenealogyTree.prototype.calcStartY(nodeArr.length);
-
-    for (var i = 0; i < layout.length - 1; i++) {
-      expect(layout[i].x).toEqual(x);
-      expect(layout[i].y).toEqual(y);
-      y += GenealogyTree.prototype.options.stepY;
-    }
+    expect(layout).not.toBeUndefined();
+    _.each(layout, function(node) {
+      expect(node.x).not.toBeUndefined();
+      expect(node.y).not.toBeUndefined()
+    });
   });
 
   it('calculation start y', function() {
     var countNode = 2;
     var widthNode = 30;
 
-    GenealogyTree.prototype.options = GenealogyTree.prototype.getDefaultOptions();
+    GenealogyTree.prototype.options = getOptions();
     var y = GenealogyTree.prototype.calcStartY(countNode);
 
     var answer = 185;
@@ -402,6 +412,23 @@ function getRootRelationships(){
 
 function getDefaultOptions() {
   var defaultOptions = {
+    frame: {
+      width: 250,
+      height: 250
+    },
+    indents: {
+      indentX: 100,
+      indentY: 100
+    },
+    stepX: 75,
+    stepY: 100,
+    nodeWidth: 30
+  };
+  return defaultOptions;
+};
+
+function getOptions() {
+  var defaultOptions = {
     container: {
       width: 500,
       height: 500
@@ -419,4 +446,14 @@ function getDefaultOptions() {
     nodeWidth: 30
   };
   return defaultOptions;
+};
+
+
+function getGenealogyTree() {
+  var nodes = getNodes();
+  var relationships = getRelationships();
+  var rootRelationships = getRootRelationships();
+
+  var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
+  return gTree;
 };

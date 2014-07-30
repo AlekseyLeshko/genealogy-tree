@@ -89,10 +89,6 @@ GenealogyTree.prototype = {
 
   getDefaultOptions: function() {
     var defaultOptions = {
-      container: {
-        width: 500,
-        height: 500
-      },
       frame: {
         width: 250,
         height: 250
@@ -109,8 +105,10 @@ GenealogyTree.prototype = {
   },
 
   calc: function() {
-    this.options.container.width = this.calcWidthСontainer();
-    this.options.container.height = this.calcHeightСontainer();
+    this.options.container = {
+      width: this.calcWidthСontainer(),
+      height: this.calcHeightСontainer()
+    };
   },
 
   calcCoordinatesForLayout: function(arr) {

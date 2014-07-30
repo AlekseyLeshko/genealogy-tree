@@ -9,7 +9,7 @@ GenealogyTree = function(nodes, relationships, rootRelationships) {
 GenealogyTree.prototype = {
   init: function() {
     this.options = this.getDefaultOptions();
-    this.level = 1;
+    this.level = this.options.startLevel;
     this.dataLayouts = [];
     this.layouts = [];
   },
@@ -22,14 +22,10 @@ GenealogyTree.prototype = {
       },
       stepX: 75,
       stepY: 100,
-      nodeWidth: 30
+      nodeWidth: 30,
+      startLevel: 0
     };
     return defaultOptions;
-  },
-
-  getStartLevel: function () {
-    var startlevel = 1;
-    return startlevel;
   },
 
   generationLayouts: function() {

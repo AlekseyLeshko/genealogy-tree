@@ -27,7 +27,7 @@ describe('Generation structure of genealogy tree: ', function() {
     GenealogyTree.prototype.init();
 
     expect(GenealogyTree.prototype.options).toEqual(getDefaultOptions());
-    expect(GenealogyTree.prototype.level).toEqual(1);
+    expect(GenealogyTree.prototype.level).toEqual(0);
     expect(GenealogyTree.prototype.dataLayouts.length).toEqual(0);
     expect(GenealogyTree.prototype.layouts.length).toEqual(0);
   });
@@ -42,9 +42,9 @@ describe('Generation structure of genealogy tree: ', function() {
     gTree.generationLayouts();
     var layouts = gTree.layouts;
 
-    expect(layouts.length).toEqual(3);
+    expect(layouts.length).toEqual(2);
+    expect(layouts[0].length).toEqual(2);
     expect(layouts[1].length).toEqual(2);
-    expect(layouts[2].length).toEqual(2);
   });
 
   it('generation layout', function() {
@@ -59,24 +59,16 @@ describe('Generation structure of genealogy tree: ', function() {
 
     expect(gTree.relationships.length).toEqual(length);
 
-    expect(layouts.length).toEqual(2);
-    expect(layouts[0]).toBeUndefined();
-    expect(layouts[1].length).toEqual(2);
-    expect(gTree.dataLayouts.length).toEqual(3);
-    expect(gTree.dataLayouts[2].length).toEqual(2);
+    expect(layouts.length).toEqual(1);
+    expect(layouts[0].length).toEqual(2);
+    expect(gTree.dataLayouts.length).toEqual(2);
+    expect(gTree.dataLayouts[1].length).toEqual(2);
   });
 
   it('get default options', function() {
     var options = GenealogyTree.prototype.getDefaultOptions();
 
     expect(options).toEqual(getDefaultOptions());
-  });
-
-  it('get start level', function() {
-    var startLevel = 1;
-    var level = GenealogyTree.prototype.getStartLevel();
-
-    expect(level).toEqual(startLevel);
   });
 
   it('add nodes for current layout', function() {
@@ -225,9 +217,8 @@ describe('Generation structure of genealogy tree: ', function() {
     gTree.addSpousesNodeToLayout(val);
     var layouts = gTree.layouts;
 
-    expect(layouts.length).toEqual(2);
-    expect(layouts[0]).toBeUndefined();
-    expect(layouts[1].length).toEqual(2);
+    expect(layouts.length).toEqual(1);
+    expect(layouts[0].length).toEqual(2);
   });
 
   it('need create next layout when data layout is empty', function() {

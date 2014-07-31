@@ -102,17 +102,6 @@ describe('Generation structure of genealogy tree: ', function() {
     expect(arr[2].length).toEqual(2);
   });
 
-  it('clone object', function() {
-    var node = {
-      id: 1,
-      width: 20
-    };
-
-    var copy = GenealogyTree.prototype.clone(node);
-
-    expect(copy).toEqual(node);
-  });
-
   it('find element by id', function() {
     var arr = [{
       id: 1
@@ -239,14 +228,6 @@ describe('Generation structure of genealogy tree: ', function() {
     var answer = GenealogyTree.prototype.needToCreateNextLayout();
 
     expect(answer).toBeTruthy();
-  });
-
-  it('clone string', function() {
-    var str = 'test';
-
-    var val = GenealogyTree.prototype.clone(str);
-
-    expect(val).toEqual(str);
   });
 
   it('next layout is exists when next layout is undefined', function() {

@@ -1,0 +1,35 @@
+{
+ "people": [{
+    "id": 1,
+    "name": "Adam",
+    "gender": "male",
+    "isConcubine": false,
+    "isUnnamed": false,
+    "isDeid": false,
+    "relationship": 1
+  }, {
+    "id": 2,
+    "name": "Eve",
+    "gender": "female",
+    "isConcubine": false,
+    "isUnnamed": false,
+    "isDeid": true,
+    "relationship": 1
+  }, {
+    "id": 3,
+    "name": "Wife Seth",
+    "gender": "female",
+    "isConcubine": false,
+    "isUnnamed": true,
+    "isDeid": false,
+    "relationship": 2
+  }, {
+    "id": 4,
+    "name": "Seth",
+    "gender": "male",
+    "isConcubine": true,
+    "isUnnamed": false,
+    "isDeid": false,
+    "relationship": 2
+  }]
+}

@@ -7,6 +7,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var clean = require('gulp-clean');
 var _ = require('lodash');
 var karma = require('karma').server;
+var connect = require('gulp-connect');
 
 var paths = {
   scripts: ['src/js/**/*.js']
@@ -20,7 +21,8 @@ gulp.task('scripts', ['clean'], function() {
     .pipe(uglify())
     .pipe(concat('all.min.js'))
     .pipe(sourcemaps.write('../maps'))
-    .pipe(gulp.dest('dist/js/'));
+    .pipe(gulp.dest('dist/js/'))
+    .pipe(connect.reload());
 });
 
 gulp.task('clean', function () {
@@ -32,7 +34,14 @@ gulp.task('watch', function() {
   gulp.watch(paths.scripts, ['scripts']);
 });
 
-gulp.task('default', ['watch', 'scripts']);
+gulp.task('connect', function() {
+  connect.server({
+    root: 'www',
+    livereload: true
+  });
+});
+
+// gulp.task('default', ['watch', 'scripts']);
 
 var karmaCommonConf = {
   basePath : '',
@@ -92,4 +101,4 @@ gulp.task('tdd', function (done) {
   karma.start(karmaCommonConf, done);
 });
 
-gulp.task('default', ['tdd']);
+gulp.task('default', ['scripts', 'connect', 'watch', 'tdd']);

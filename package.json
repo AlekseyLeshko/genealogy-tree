@@ -6,6 +6,7 @@
   "repository": "https://github.com/AlekseyLeshko/genealogy-tree",
   "license": "MIT",
   "devDependencies": {
+    "codeclimate-test-reporter": "0.0.3",
     "gulp": "^3.8.6",
     "gulp-clean": "^0.3.1",
     "gulp-concat": "^2.3.4",

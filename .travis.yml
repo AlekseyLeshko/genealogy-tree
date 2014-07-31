@@ -4,6 +4,11 @@ node_js:
 before_install:
   - 'npm install -g karma-cli'
 
+branches:
+  only:
+    - master
+    - develop
+
 addons:
   code_climate:
     repo_token: efac7105df04fc5f52d145bdfa16fe21ad403d48c9cfbfe5e3bfdb4ac318f252

@@ -65,6 +65,34 @@ function data() {
   var edges = gTree.edges;
 
   createTree(arr, edges);
+  paintPolyline();
+};
+
+function paintPolyline() {
+var lineData = [ { "x": 1,   "y": 5},  { "x": 20,  "y": 20},
+  { "x": 40,  "y": 10}, { "x": 60,  "y": 40},
+  { "x": 80,  "y": 5},  { "x": 100, "y": 60}];
+var data = [1, 2, 20, 20, 40, 40, 60, 40, 80, 5, 100, 60];
+
+var lineFunction = d3.svg.line()
+  .x(function(d) { return d.x; })
+  .y(function(d) { return d.y; })
+  .interpolate("linear");
+
+var lineGraph = main.append('g')
+  .on("mouseover", function() {
+    d3.select(this).selectAll("polyline").style("stroke", "red");
+    main.selectAll("line").style("stroke", "red");
+  })
+  .on("mouseout", function() {
+    d3.select(this).selectAll("polyline").style("stroke", "blue");
+    main.selectAll("line").style("stroke", "black");
+  })
+  .append("polyline")
+  .attr("points", data)
+  .attr("stroke", "blue")
+  .attr("stroke-width", 2)
+  .attr("fill", "none");
 };
 
 function createNode(nodes) {

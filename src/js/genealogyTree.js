@@ -1,9 +1,9 @@
 GenealogyTree = function(nodes, relationships, rootRelationships) {
+  this.init();
+
   this.nodes = nodes;
   this.relationships = relationships;
-  this.rootRelationships = rootRelationships;
-
-  this.init();
+  this.dataLayouts[this.level] = rootRelationships;
 };
 
 GenealogyTree.prototype = {
@@ -43,7 +43,7 @@ GenealogyTree.prototype = {
   preparationNextLayout: function() {
     this.level++;
     var nodeArr = this.findNodesByIds(this.dataLayouts[this.level]);
-    this.rootRelationships = this.getRelationships(nodeArr);
+    this.dataLayouts[this.level] = this.getRelationships(nodeArr);
   },
 
   needToCreateNextLayout: function() {
@@ -72,7 +72,7 @@ GenealogyTree.prototype = {
   },
 
   generationLayout: function() {
-    _.each(this.rootRelationships, this.preparationRelationship, this);
+    _.each(this.dataLayouts[this.level], this.preparationRelationship, this);
   },
 
   preparationRelationship: function(relationship) {

@@ -25,9 +25,25 @@ Edge.prototype = {
 
     this.x2 = this.child.y + 15;
     this.y2 = this.child.x + 12;
+
+    this.middle = this.x2 + ((this.x1 - this.x2) / 2);
   },
 
   calcCoordinatesTypeOfMarrige: function() {
+    this.points = [];
+    this.points.push(this.child.y + 9);
+    this.points.push(this.child.x + 7);
 
+    this.points.push(this.child.y + 9);
+    this.points.push(this.child.x - 25);
+
+    var dy = 50;
+    dy *= this.child.y <= this.parent.middle ? 1 : -1;
+
+    this.points.push(this.child.y + dy + 9);
+    this.points.push(this.child.x - 25);
+
+    this.points.push(this.child.y + dy + 9);
+    this.points.push(this.child.x - 63);
   }
 };

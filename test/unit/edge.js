@@ -24,13 +24,13 @@ describe('Edge: ', function() {
     expect(true).toBeTruthy();
   });
 
-  it('edge coordinates', function() {
+  it('calculation edge coordinates for marriage type', function() {
     var gTree = getCreatedGenealogyTree();
     gTree.calcContainerParameters();
     gTree.calcCoordinatesForLayouts();
-
     var nodes = gTree.nodes;
     var typeRelationship = 'marriage';
+
     var edge = new Edge(nodes[0], nodes[1], typeRelationship);
     edge.calcCoordinates();
 
@@ -38,5 +38,21 @@ describe('Edge: ', function() {
     expect(edge.y1).toEqual(nodes[0].x + 12);
     expect(edge.x2).toEqual(nodes[1].y + 15);
     expect(edge.y2).toEqual(nodes[1].x + 12);
+  });
+
+  it('calculation edge coordinates for of_marriage type', function() {
+    var gTree = getCreatedGenealogyTree();
+    gTree.calcContainerParameters();
+    gTree.calcCoordinatesForLayouts();
+    var nodes = gTree.nodes;
+    var parentType = 'marriage';
+    var typeRelationship = 'of_marriage';
+
+    var parentEdge = new Edge(nodes[0], nodes[1], parentType);
+    var edge = new Edge(parentEdge, nodes[2], typeRelationship);
+
+    edge.calcCoordinates();
+
+    expect(edge.points.length).toEqual(8);
   });
 });

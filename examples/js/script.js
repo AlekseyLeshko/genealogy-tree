@@ -65,34 +65,23 @@ function data() {
   var edges = gTree.edges;
 
   createTree(arr, edges);
-  paintPolyline();
 };
 
-function paintPolyline() {
-var lineData = [ { "x": 1,   "y": 5},  { "x": 20,  "y": 20},
-  { "x": 40,  "y": 10}, { "x": 60,  "y": 40},
-  { "x": 80,  "y": 5},  { "x": 100, "y": 60}];
-var data = [1, 2, 20, 20, 40, 40, 60, 40, 80, 5, 100, 60];
-
-var lineFunction = d3.svg.line()
-  .x(function(d) { return d.x; })
-  .y(function(d) { return d.y; })
-  .interpolate("linear");
-
+function paintPolyline(edge) {
 var lineGraph = main.append('g')
   .on("mouseover", function() {
     d3.select(this).selectAll("polyline").style("stroke", "red");
-    main.selectAll("line").style("stroke", "red");
   })
   .on("mouseout", function() {
-    d3.select(this).selectAll("polyline").style("stroke", "blue");
-    main.selectAll("line").style("stroke", "black");
+    d3.select(this).selectAll("polyline").style("stroke", "black");
   })
   .append("polyline")
-  .attr("points", data)
-  .attr("stroke", "blue")
-  .attr("stroke-width", 2)
+  .attr("points", edge.points)
+  .attr("stroke", "black")
+  .attr("stroke-width", 1)
   .attr("fill", "none");
+
+  return lineGraph;
 };
 
 function createNode(nodes) {
@@ -114,29 +103,32 @@ function createTree(nodes, edges) {
 };
 
 function createEdges(edges) {
-  // var line = main.selectAll("line")
-  //   .data(edges)
-    // .attr("x1", function(d) { d.x1 })
-    // .attr("y1", function(d) { d.y1 })
-    // .attr("x2", function(d) { d.x2 })
-    // .attr("y2", function(d) { d.y2 })
-  //   .attr("stroke-width", 2)
-  //   .attr("stroke", "black");
   var lines = [];
   for (var i = 0; i < edges.length; i++) {
     var edge = edges[i];
     edge.calcCoordinates();
-    var line = main.append("line")
-      // .data(edges[i])
-      .attr("x1", edge.x1)
-      .attr("y1", edge.y1)
-      .attr("x2", edge.x2)
-      .attr("y2", edge.y2)
-      .attr("stroke-width", 1)
-      .attr("stroke", "black");
-    lines.push(line);
+
+    if (edge.typeRelationship == 'marriage') {
+      lines.push(createLine(edge));
+    } else {
+      lines.push(paintPolyline(edge));
+    }
   }
   console.log(lines);
+};
+
+function createLine(edge) {
+  var line = main
+    .append('g')
+    .append("line")
+    .attr("x1", edge.x1)
+    .attr("y1", edge.y1)
+    .attr("x2", edge.x2)
+    .attr("y2", edge.y2)
+    .attr("stroke-width", 1)
+    .attr("stroke", "black");
+
+  return line;
 };
 
 function calc(val, halfSide, scale) {

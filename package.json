@@ -7,6 +7,7 @@
   "license": "MIT",
   "devDependencies": {
     "gulp": "^3.8.6",
+    "gulp-clean": "^0.3.1",
     "gulp-concat": "^2.3.4",
     "gulp-jshint": "^1.8.2",
     "gulp-rename": "^1.2.0",

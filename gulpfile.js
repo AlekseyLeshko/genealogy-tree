@@ -78,19 +78,6 @@ var karmaCommonConf = {
   coverageReporter: {
     type : 'html',
     dir : 'coverage/'
-  },
-
-  customLaunchers: {
-    'PhantomJS_custom': {
-      base: 'PhantomJS',
-      options: {
-        windowName: 'my-window',
-        settings: {
-          webSecurityEnabled: false
-        }
-      },
-      flags: ['--remote-debugger-port=9000']
-    }
   }
 };
 

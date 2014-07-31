@@ -27,7 +27,7 @@
     "underscore": "^1.6.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
+    "test": "karma start test/karma.conf.js --single-run --browsers PhantomJS"
   },
   "dependencies": {
     "underscore": "^1.6.0"

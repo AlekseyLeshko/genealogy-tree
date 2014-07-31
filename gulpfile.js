@@ -8,6 +8,7 @@ var clean = require('gulp-clean');
 var _ = require('lodash');
 var karma = require('karma').server;
 var connect = require('gulp-connect');
+var runSequence = require('run-sequence');
 
 var paths = {
   scripts: ['src/js/**/*.js']
@@ -36,12 +37,11 @@ gulp.task('watch', function() {
 
 gulp.task('connect', function() {
   connect.server({
-    root: 'www',
+    root: '',
+    port: 9001,
     livereload: true
   });
 });
-
-// gulp.task('default', ['watch', 'scripts']);
 
 var karmaCommonConf = {
   basePath : '',
@@ -101,4 +101,6 @@ gulp.task('tdd', function (done) {
   karma.start(karmaCommonConf, done);
 });
 
-gulp.task('default', ['scripts', 'connect', 'watch', 'tdd']);
+gulp.task('default', function(callback) {
+  runSequence('scripts', ['connect', 'watch', 'tdd'], callback);
+});

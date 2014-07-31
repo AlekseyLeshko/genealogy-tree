@@ -33,6 +33,7 @@ gulp.task('clean', function () {
 
 gulp.task('watch', function() {
   gulp.watch(paths.scripts, ['scripts']);
+  gulp.watch('examples/**/*.*', ['scripts']);
 });
 
 gulp.task('connect', function() {

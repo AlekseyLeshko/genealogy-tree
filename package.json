@@ -6,6 +6,7 @@
   "repository": "https://github.com/AlekseyLeshko/genealogy-tree",
   "license": "MIT",
   "devDependencies": {
+    "gulp": "^3.8.6",
     "karma": "^0.12.19",
     "karma-chrome-launcher": "^0.1.4",
     "karma-coverage": "^0.2.5",

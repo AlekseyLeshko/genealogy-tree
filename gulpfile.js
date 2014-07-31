@@ -18,7 +18,7 @@ gulp.task('scripts', ['clean'], function() {
     .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(concat('all.min.js'))
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write('../maps'))
     .pipe(gulp.dest('dist/js/'))
 });
 

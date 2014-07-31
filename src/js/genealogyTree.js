@@ -1,10 +1,12 @@
-GenealogyTree = function(nodes, relationships, rootRelationships) {
+function GenealogyTree(nodes, relationships, rootRelationships) {
+  'use strict';
+
   this.init();
 
   this.nodes = nodes;
   this.relationships = relationships;
   this.dataLayouts[this.level] = rootRelationships;
-};
+}
 
 GenealogyTree.prototype = {
   init: function() {
@@ -130,7 +132,7 @@ GenealogyTree.prototype = {
         this.level = i;
         this.layouts[i] = this.calcCoordinatesForLayout(this.layouts[i]);
       }
-    };
+    }
   },
 
   calcCoordinatesForLayout: function(arr) {

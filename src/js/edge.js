@@ -1,11 +1,11 @@
-function Edge(parent, child, type) {
+var Edge = function(parent, child, type) {
   'use strict';
   this.parent = parent;
   this.child = child;
   this.typeRelationship = type;
 
   this.init();
-}
+};
 
 Edge.prototype = {
   init: function() {

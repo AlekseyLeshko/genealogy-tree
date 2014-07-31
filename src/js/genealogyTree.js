@@ -1,4 +1,4 @@
-function GenealogyTree(nodes, relationships, rootRelationships) {
+var GenealogyTree = function(nodes, relationships, rootRelationships) {
   'use strict';
 
   this.init();
@@ -6,7 +6,7 @@ function GenealogyTree(nodes, relationships, rootRelationships) {
   this.nodes = nodes;
   this.relationships = relationships;
   this.dataLayouts[this.level] = rootRelationships;
-}
+};
 
 GenealogyTree.prototype = {
   init: function() {

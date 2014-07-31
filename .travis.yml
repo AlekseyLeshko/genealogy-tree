@@ -9,4 +9,4 @@ addons:
     repo_token: efac7105df04fc5f52d145bdfa16fe21ad403d48c9cfbfe5e3bfdb4ac318f252
 
 after_script:
-  - cat coverage/PhantomJS\ 1.9.7\ \(Linux\)/lcov.info | codeclimate
+  - codeclimate < ./coverage/PhantomJS\ 1.9.7\ \(Linux\)/lcov.info

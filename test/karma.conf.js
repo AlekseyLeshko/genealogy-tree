@@ -40,8 +40,16 @@ module.exports = function(config){
     },
 
     coverageReporter: {
-      type : 'lcov',
-      dir : 'coverage/'
+      reporters:[
+        {
+          type: 'html',
+          dir:'coverage/'
+        },
+        {
+          type: 'lcov',
+          dir:'coverage/'
+        }
+      ]
     },
 
     customLaunchers: {

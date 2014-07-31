@@ -3,3 +3,10 @@ node_js:
   - 0.11.13
 before_install:
   - 'npm install -g karma-cli'
+
+addons:
+  code_climate:
+    repo_token: efac7105df04fc5f52d145bdfa16fe21ad403d48c9cfbfe5e3bfdb4ac318f252
+
+after_script:
+  - cat lcov.info | codeclimate

@@ -4,7 +4,9 @@ var stylish = require('jshint-stylish');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
-var clean = require('gulp-clean')
+var clean = require('gulp-clean');
+var _ = require('lodash');
+var karma = require('karma').server;
 
 var paths = {
   scripts: ['src/js/**/*.js']
@@ -18,7 +20,7 @@ gulp.task('scripts', ['clean'], function() {
     .pipe(uglify())
     .pipe(concat('all.min.js'))
     .pipe(sourcemaps.write('../maps'))
-    .pipe(gulp.dest('dist/js/'))
+    .pipe(gulp.dest('dist/js/'));
 });
 
 gulp.task('clean', function () {
@@ -31,3 +33,63 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', ['watch', 'scripts']);
+
+var karmaCommonConf = {
+  basePath : '',
+  browsers: ['Chrome'],
+  frameworks: ['jasmine'],
+  files: [
+    'src/js/**/*.js',
+    'test/unit/**/*.js',
+    'node_modules/underscore/underscore-min.js'
+  ],
+  autoWatch : true,
+  usePolling: true,
+  plugins : [
+    'karma-chrome-launcher',
+    'karma-phantomjs-launcher',
+    'karma-firefox-launcher',
+    'karma-jasmine',
+    'karma-junit-reporter',
+    'karma-coverage'
+  ],
+
+  junitReporter : {
+    outputFile: 'test_out/unit.xml',
+    suite: 'unit'
+  },
+
+  reporters: ['progress', 'coverage'],
+
+  preprocessors: {
+    'src/js/**/*.js': ['coverage']
+  },
+
+  coverageReporter: {
+    type : 'html',
+    dir : 'coverage/'
+  },
+
+  customLaunchers: {
+    'PhantomJS_custom': {
+      base: 'PhantomJS',
+      options: {
+        windowName: 'my-window',
+        settings: {
+          webSecurityEnabled: false
+        }
+      },
+      flags: ['--remote-debugger-port=9000']
+    }
+  }
+};
+
+gulp.task('test-single-run', function (done) {
+  karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
+});
+
+gulp.task('tdd', function (done) {
+  karma.start(karmaCommonConf, done);
+});
+
+gulp.task('default', ['tdd']);

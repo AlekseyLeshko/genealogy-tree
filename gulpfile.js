@@ -3,7 +3,6 @@ var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var rename = require("gulp-rename");
 var sourcemaps = require('gulp-sourcemaps');
 var clean = require('gulp-clean')
 

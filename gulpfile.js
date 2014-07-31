@@ -25,3 +25,9 @@ gulp.task('clean', function () {
   return gulp.src('dist')
     .pipe(clean());
 });
+
+gulp.task('watch', function() {
+  gulp.watch(paths.scripts, ['scripts']);
+});
+
+gulp.task('default', ['watch', 'scripts']);

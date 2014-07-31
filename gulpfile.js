@@ -4,6 +4,7 @@ var stylish = require('jshint-stylish');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require("gulp-rename");
+var sourcemaps = require('gulp-sourcemaps');
 
 var paths = {
   scripts: ['src/js/**/*.js']
@@ -16,5 +17,7 @@ gulp.task('scripts', function() {
     .pipe(uglify())
     .pipe(concat('all.min.js'))
     .pipe(gulp.dest('dist/js/'))
-    .pipe(rename('all.min.map.js'));
+    .pipe(rename('all.min.map.js'))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('dist/js/'));
 });

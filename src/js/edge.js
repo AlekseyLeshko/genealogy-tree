@@ -1,4 +1,5 @@
-Edge = function (parent, child, type) {
+var Edge = function(parent, child, type) {
+  'use strict';
   this.parent = parent;
   this.child = child;
   this.typeRelationship = type;
@@ -12,7 +13,7 @@ Edge.prototype = {
     this.calcCoordinatesOfType = {
       'marriage': function() { self.calcCoordinatesTypeMarrige(); },
       'of_marriage': function() { self.calcCoordinatesTypeOfMarrige(); }
-    }
+    };
   },
 
   calcCoordinates: function() {

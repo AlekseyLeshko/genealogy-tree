@@ -1,0 +1,57 @@
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node {
+  font: 10px sans-serif;
+}
+
+.node.active {
+  font: 10px sans-serif;
+  color: red;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+#tree {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -250px;
+  width: 500px;
+  height: 500px;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.people {
+  width: 40px;
+  height: 40px;
+}
+
+.people.male {
+  background-position: 0 0;
+  background-image: url('img/icons.png');
+}
+
+.people.female {
+  background-position: 0 -55px;
+  background-image: url('img/icons.png');
+}
+
+.people.isDeid {
+  background-position: 0 50px;
+  background-image: url('img/icons.png');
+}

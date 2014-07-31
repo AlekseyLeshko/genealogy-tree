@@ -15,12 +15,11 @@ gulp.task('scripts', ['clean'], function() {
   return gulp.src(paths.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(concat('all.min.js'))
-    .pipe(gulp.dest('dist/js/'))
-    .pipe(rename('all.min.map.js'))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist/js/'));
+    .pipe(gulp.dest('dist/js/'))
 });
 
 gulp.task('clean', function () {

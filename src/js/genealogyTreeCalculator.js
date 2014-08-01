@@ -72,7 +72,7 @@ GenealogyTreeCalculator.prototype = {
 
   calcValY: function() {
     var frame = this.options.frame.height;
-    var heightLayouts = this.level * this.options.stepX;
+    var heightLayouts = this.level * this.options.stepY;
     var y =  frame + heightLayouts;
     return y;
   },

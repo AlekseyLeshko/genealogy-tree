@@ -47,16 +47,14 @@ describe('Genealogy tree calculator', function() {
     expect(gtCalc.options.container.height).toEqual(600);
   });
 
-//   it('calculation start y', function() {
-//     var countNode = 2;
-//     var widthNode = 30;
-// gtCalc.level = 2;
-//     GenealogyTree.prototype.options = getOptions();
-//     var y = GenealogyTree.prototype.calcStartY(countNode);
+  it('calculation start y', function() {
+    var gtCalc = getGenealogyTreeCalculator();
+    gtCalc.level = 2;
 
-//     var answer = 185;
-//     expect(y).toEqual(answer);
-//   });
+    var y = gtCalc.calcValY();
+
+    expect(y).toEqual(450);
+  });
 
   it('calculation layout level x', function() {
     var gtCalc = getGenealogyTreeCalculator();

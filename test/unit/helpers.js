@@ -166,3 +166,17 @@ function getCreatedGenealogyTree() {
 
   return gTree;
 };
+
+function timer(label, f) {
+  var data = {
+    time: -1,
+    f: function(arg) {
+      var dataStart = Date.now();
+      f(arg);
+      var dataEnd = Date.now();
+      data.time = dataEnd - dataStart;
+    }
+  };
+
+  return data;
+};

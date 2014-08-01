@@ -77,17 +77,17 @@ GenealogyTree.prototype = {
   },
 
   getRelationships: function(nodes) {
-    var key = 'id';
     var arr = [];
-    for (var i = 0; i < nodes.length; i++) {
-      var node = nodes[i];
-      var relationship = this.findElementInArr(key, node.relationship, this.relationships);
+    _.each(this.relationships, function(relationship) {
+      _.each(nodes, function(node) {
+        if (_.contains(relationship.spouses, node.id)) {
+          arr.push(relationship);
+        }
+      });
+    });
 
-      if (!this.findElementInArr(key, relationship.id, arr)) {
-        arr.push(relationship);
-      }
-    }
-    return arr;
+    var relationships = _.uniq(arr);
+    return relationships;
   },
 
   findNodesByIds: function(ids) {

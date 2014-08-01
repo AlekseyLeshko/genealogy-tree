@@ -69,14 +69,24 @@ describe('Genealogy tree: ', function() {
     expect(layouts[0].length).toEqual(nodes.length);
   });
 
-  // it('get relationships', function() {
-  //   var nodes = getNodes().slice(0, 2);
+  it('get relationships', function() {
+    var nodes = getNodes().slice(0, 2);
 
-  //   GenealogyTree.prototype.relationships = getRelationships();
-  //   var arr = GenealogyTree.prototype.getRelationships(nodes);
+    GenealogyTree.prototype.relationships = getRelationships();
+    var arr = GenealogyTree.prototype.getRelationships(nodes);
 
-  //   expect(arr.length).toEqual(1);
-  // });
+    expect(arr.length).toEqual(1);
+  });
+
+  it('time: get relationships', function() {
+    var nodes = getNodes();
+
+    GenealogyTree.prototype.relationships = getRelationships();
+    var data = timer('getRelationships', GenealogyTree.prototype.getRelationships);
+    data.f(nodes);
+
+    expect(data.time < 300).toBeTruthy();
+  });
 
   it('get nodes by id', function() {
     var arrIds = getRelationships()[0].spouses;

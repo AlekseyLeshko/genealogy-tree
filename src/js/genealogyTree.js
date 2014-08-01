@@ -16,23 +16,19 @@ GenealogyTree.prototype = {
 
   generationTree: function() {
     this.layouts.length = 3;
+
+    this.generationLayouts();
   },
 
   generationLayouts: function() {
-    // do {
-    //   this.generationLayout();
-    //   if (this.needToCreateNextLayout()) {
-    //     this.preparationNextLayout();
-    //   } else {
-    //     break;
-    //   }
-    // } while(true);
-
-    this.layouts.length = 3;
+    _.each(this.dataLayouts, function(dataLayout) {
+      this.generationLayout(dataLayout);
+    }, this);
   },
 
-  generationLayout: function() {
-    // _.each(this.dataLayouts[this.level], this.preparationRelationship, this);
+  generationLayout: function(dataLayout) {
+    console.log(dataLayout);
+    _.each(dataLayout, this.preparationRelationship, this);
   },
 
   preparationNextLayout: function() {
@@ -59,7 +55,7 @@ GenealogyTree.prototype = {
   preparationRelationship: function(relationship) {
     this.addSpousesNodeToLayout(relationship);
     this.addNodesForLayoutData(relationship.children);
-    this.createEdges(relationship);
+    // this.createEdges(relationship);
 
     this.unsetRelationship(relationship);
   },
@@ -67,10 +63,10 @@ GenealogyTree.prototype = {
   addSpousesNodeToLayout: function(relationship) {
     var layout = [];
 
-    var wifeNode = this.getNodeOfRelationship(relationship.wife);
-    var husbandNode = this.getNodeOfRelationship(relationship.husband);
-    layout.push(wifeNode);
-    layout.push(husbandNode);
+    _.each(relationship.spouses, function(id) {
+      var node = this.getNodeOfRelationship(id);
+      layout.push(node);
+    });
 
     this.addNodesForCurrentLayout(layout);
   },
@@ -98,14 +94,6 @@ GenealogyTree.prototype = {
     this.layouts[this.level] = layout;
   },
 
-  findElementInArr: function(key, val, arr) {
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i][key] === val) {
-        return arr[i];
-      }
-    }
-  },
-
   getRelationships: function(nodes) {
     var key = 'id';
     var arr = [];
@@ -121,14 +109,14 @@ GenealogyTree.prototype = {
   },
 
   findNodesByIds: function(ids) {
-    var key = 'id';
-    var arr = [];
-    for (var i = 0; i < ids.length; i++) {
-      var val = ids[i];
-      var node = this.findElementInArr(key, val, this.nodes);
-      arr.push(node);
-    }
-    return arr;
+    var nodes = [];
+
+    _.each(ids, function(id) {
+      var node = _.where(this.nodes, {id: id});
+      nodes.push(node);
+    });
+
+    return nodes;
   },
 
   createEdges: function(relationship) {

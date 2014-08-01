@@ -94,20 +94,6 @@ describe('Genealogy tree: ', function() {
   //   expect(arr[2].length).toEqual(2);
   // });
 
-  // it('find element by id', function() {
-  //   var arr = [{
-  //     id: 1
-  //   }, {
-  //     id: 2
-  //   }];
-
-  //   var val = 2;
-  //   var key = 'id';
-  //   var obj = GenealogyTree.prototype.findElementInArr(key, val, arr);
-
-  //   expect(obj[key]).toEqual(val);
-  // });
-
   // it('get relationships', function() {
   //   var nodes = getNodes().slice(0, 2);
 
@@ -117,56 +103,43 @@ describe('Genealogy tree: ', function() {
   //   expect(arr.length).toEqual(1);
   // });
 
-  // it('get nodes by id', function() {
-  //   var arrIds = [1, 2 ,3];
+  it('get nodes by id', function() {
+    var arrIds = getRelationships()[0].spouses;
 
-  //   GenealogyTree.prototype.nodes = getNodes()
-  //   var nodes = GenealogyTree.prototype.findNodesByIds(arrIds);
+    GenealogyTree.prototype.nodes = getNodes()
+    var nodes = GenealogyTree.prototype.findNodesByIds(arrIds);
 
-  //   expect(nodes.length).toEqual(arrIds.length);
-  // });
+    expect(nodes.length).toEqual(arrIds.length);
+  });
 
-  // it('not finded element by id', function() {
-  //   var arr = [{
-  //     id: 1
-  //   }, {
-  //     id: 2
-  //   }];
+  it('get node of relationship', function() {
+    var id = getRelationships()[0].spouses[1];
 
-  //   var val = 3;
-  //   var key = 'id';
-  //   var obj = GenealogyTree.prototype.findElementInArr(key, val, arr);
+    GenealogyTree.prototype.nodes = getNodes();
+    var node = GenealogyTree.prototype.getNodeOfRelationship(id);
 
-  //   expect(obj).toBeUndefined();
-  // });
+    expect(node).toEqual(getNodes()[1]);
+  });
 
-  // it('get node of relationship', function() {
-  //   var key = 'wife';
+  it('get node of relationship not finded node', function() {
+    var val = '-1';
+    var node = GenealogyTree.prototype.getNodeOfRelationship(val, getNodes());
 
-  //   var node = GenealogyTree.prototype.getNodeOfRelationship(getRelationships()[0][key]);
+    expect(node).toBeUndefined();
+  });
 
-  //   expect(node).toEqual(getNodes()[1]);
-  // });
+  it('unset val in relationships', function() {
+    var relationships = getRelationships();
+    var length = relationships.length;
+    var val = relationships[0];
 
-  // it('get node of relationship not finded node', function() {
-  //   var val = '-1';
-  //   var node = GenealogyTree.prototype.getNodeOfRelationship(val, getNodes());
+    GenealogyTree.prototype.relationships = relationships;
+    var el = GenealogyTree.prototype.unsetRelationship(val);
+    var arr = GenealogyTree.prototype.relationships;
 
-  //   expect(node).toBeUndefined();
-  // });
-
-  // it('unset val in relationships', function() {
-  //   var relationships = getRelationships();
-  //   var length = relationships.length;
-  //   var val = relationships[0];
-
-  //   GenealogyTree.prototype.relationships = relationships;
-  //   var el = GenealogyTree.prototype.unsetRelationship(val);
-  //   var arr = GenealogyTree.prototype.relationships;
-
-  //   expect(el).toEqual([val]);
-  //   expect(arr.length).toEqual(length - 1);
-  // });
+    expect(el).toEqual([val]);
+    expect(arr.length).toEqual(length - 1);
+  });
 
   // it('get nodes', function() {
   //   var nodes = getNodes();
@@ -189,19 +162,19 @@ describe('Genealogy tree: ', function() {
   //   expect(res).toBeTruthy();
   // });
 
-  // it('add spouses node to layout', function() {
-  //   var nodes = getNodes();
-  //   var relationships = getRelationships();
-  //   var val = relationships[0];
-  //   var rootRelationships = getRootRelationships();
+  it('add spouses node to layout', function() {
+    var nodes = getNodes();
+    var relationships = getRelationships();
+    var val = relationships[0];
+    var rootRelationships = getRootRelationships();
 
-  //   var gTree = new GenealogyTree(nodes, relationships, rootRelationships)
-  //   gTree.addSpousesNodeToLayout(val);
-  //   var layouts = gTree.layouts;
+    var gTree = new GenealogyTree(nodes, relationships, rootRelationships)
+    gTree.addSpousesNodeToLayout(val);
+    var layouts = gTree.layouts;
 
-  //   expect(layouts.length).toEqual(1);
-  //   expect(layouts[0].length).toEqual(2);
-  // });
+    expect(layouts.length).toEqual(1);
+    expect(layouts[0].length).toEqual(2);
+  });
 
   it('need create next layout when data layout is empty', function() {
     var level = 1;

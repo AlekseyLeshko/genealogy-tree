@@ -21,6 +21,15 @@ GenealogyTreeCalculator.prototype = {
     return defaultOptions;
   },
 
+  calcCoordinatesForLayouts: function() {
+    for (var i = 0; i < this.layouts.length; i++) {
+      if (this.layouts[i]) {
+        this.layouts[i] = this.calcCoordinatesForLayout(this.layouts[i]);
+        this.level++;
+      }
+    }
+  },
+
   calcCoordinatesForLayout: function(nodes) {
     var layout = [];
     var y = this.calcValY();
@@ -98,12 +107,3 @@ GenealogyTreeCalculator.prototype = {
     return res;
   }
 };
-
-//   calcCoordinatesForLayouts: function() {
-//     for (var i = 0; i < this.layouts.length; i++) {
-//       if (this.layouts[i]) {
-//         this.level = i;
-//         this.layouts[i] = this.calcCoordinatesForLayout(this.layouts[i]);
-//       }
-//     }
-//   },

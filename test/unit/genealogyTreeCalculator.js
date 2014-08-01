@@ -16,26 +16,25 @@ describe('Genealogy tree calculator', function() {
     expect(options).toEqual(getGCalcOptions());
   });
 
-  // it('calculation coordinates for all layouts', function() {
-  //   var gTree = getGenealogyTree();
-  //   gTree.generationLayouts();
-  //   var gtCalc = new GenealogyTreeCalculator(gTree.layouts, gTree.edges);
+  it('calculation coordinates for all layouts', function() {
+    var gTree = getGenealogyTree();
+    gTree.generationLayouts();
+    var gtCalc = new GenealogyTreeCalculator(gTree.layouts, gTree.edges);
+    gtCalc.calcContainerParameters();
+    expect(gTree.layouts).not.toBeUndefined();
 
-  //   gtCalc.calcContainerParameters();
+    gtCalc.calcCoordinatesForLayouts();
+    var layouts = gTree.layouts;
 
-  //   expect(gTree.layouts).not.toBeUndefined();
-  //   gTree.calcCoordinatesForLayouts();
-  //   var layouts = gTree.layouts;
-
-  //   _.each(layouts, function(layout) {
-  //     if (layout) {
-  //       _.each(layout, function(node) {
-  //         expect(node.x).not.toBeUndefined();
-  //         expect(node.y).not.toBeUndefined()
-  //       });
-  //     }
-  //   });
-  // });
+    _.each(layouts, function(layout) {
+      if (layout) {
+        _.each(layout, function(node) {
+          expect(node.x).not.toBeUndefined();
+          expect(node.y).not.toBeUndefined()
+        });
+      }
+    });
+  });
 
   it('calculation coordinates for layout', function() {
     var gtCalc = getGenealogyTreeCalculator();

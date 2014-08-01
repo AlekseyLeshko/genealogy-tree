@@ -126,9 +126,7 @@ GenealogyTree.prototype = {
       self.comparison(obj, value);
     });
 
-    if(!index) {
-      return this.relationships.splice(index, 1);
-    }
+    return this.relationships.splice(index, 1);
   },
 
   getNodes: function() {

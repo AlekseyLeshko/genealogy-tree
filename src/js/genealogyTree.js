@@ -1,9 +1,9 @@
-var GenealogyTree = function(nodes, relationships, rootRelationships) {
+var GenealogyTree = function(nodes, relationships, rootIds) {
   this.init();
 
   this.nodes = nodes;
   this.relationships = relationships;
-  this.dataLayouts[this.level] = rootRelationships;
+  this.dataLayouts[this.level] = rootIds;
 };
 
 GenealogyTree.prototype = {
@@ -15,8 +15,6 @@ GenealogyTree.prototype = {
   },
 
   generationTree: function() {
-    this.layouts.length = 3;
-
     this.generationLayouts();
   },
 
@@ -32,14 +30,14 @@ GenealogyTree.prototype = {
     } while(true);
   },
 
-  generationLayout: function(dataLayout) {
-    _.each(dataLayout, this.preparationRelationship, this);
+  generationLayout: function(data) {
+    _.each(data.relationships, this.preparationRelationship, this);
+    this.addNodesForLayout(data.nodes, this.layouts, this.level);
   },
 
   preparationLayout: function() {
     var ids = this.dataLayouts[this.level];
-    // var children = this.findNodesByIds(ids);
-    // this.dataLayouts[this.level] = this.getRelationshipsAndNodes(ids);
+    this.dataLayouts[this.level] = this.getRelationshipsAndNodes(ids);
   },
 
   needToCreateNextLayout: function() {
@@ -50,7 +48,7 @@ GenealogyTree.prototype = {
     var nextLeval = this.level + 1;
 
     if (!this.dataLayouts[nextLeval] ||
-      !(this.dataLayouts[nextLeval].length > 0)) {
+      this.dataLayouts[nextLeval].length === 0) {
       return false;
     }
 

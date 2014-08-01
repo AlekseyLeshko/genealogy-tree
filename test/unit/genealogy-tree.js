@@ -29,16 +29,18 @@ describe('Genealogy tree: ', function() {
     expect(GenealogyTree.prototype.edges.length).toEqual(0);
   });
 
-  // it('generation tree', function() {
-  //   var gTree = getGenealogyTree();
+  it('generation tree', function() {
+    var gTree = getGenealogyTree();
 
-  //   gTree.generationTree();
-  //   var layouts = gTree.layouts;
+    gTree.generationTree();
+    var layouts = gTree.layouts;
 
-  //   expect(layouts.length).toEqual(3);
-  //   expect(layouts[0].length).toEqual(2);
-  //   expect(layouts[1].length).toEqual(2);
-  // });
+    expect(layouts.length).toEqual(4);
+    expect(layouts[0].length).toEqual(2);
+    expect(layouts[1].length).toEqual(5);
+    expect(layouts[2].length).toEqual(2);
+    expect(layouts[3].length).toEqual(1);
+  });
 
   it('generation layouts', function() {
     var gTree = getGenealogyTree();
@@ -68,19 +70,22 @@ describe('Genealogy tree: ', function() {
     expect(gTree.dataLayouts[1].length).toEqual(5);
   });
 
-  // it('generation layout with relationships and nodes', function() {
-  //   var length = getRelationships().length - 1;
+  it('generation layout with relationships and nodes', function() {
+    var nodes = getNodes();
+    var relationships = getRelationships();
+    var rootRelationships = [3, 4, 5, 6, 7];
+    var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
+    gTree.preparationLayout();
 
-  //   var gTree = getGenealogyTree();
-  //   gTree.generationLayout(gTree.dataLayouts[0]);
-  //   var layouts = gTree.layouts;
+    gTree.generationLayout(gTree.dataLayouts[0]);
+    var layouts = gTree.layouts;
 
-  //   expect(gTree.relationships.length).toEqual(length);
-  //   expect(layouts.length).toEqual(1);
-  //   expect(layouts[0].length).toEqual(2);
-  //   expect(gTree.dataLayouts.length).toEqual(2);
-  //   expect(gTree.dataLayouts[1].length).toEqual(5);
-  // });
+    expect(gTree.relationships.length).toEqual(2);
+    expect(layouts.length).toEqual(1);
+    expect(layouts[0].length).toEqual(5);
+    expect(gTree.dataLayouts.length).toEqual(2);
+    expect(gTree.dataLayouts[1].length).toEqual(2);
+  });
 
   it('preparationLayout', function() {
 
@@ -146,7 +151,7 @@ describe('Genealogy tree: ', function() {
 
     var nodes = gTree.getNodes();
 
-    expect(nodes.length).toEqual(7);
+    expect(nodes.length).toEqual(getNodes().length);
   });
 
   it('comparison objects', function() {

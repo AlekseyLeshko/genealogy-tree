@@ -137,6 +137,6 @@ GenealogyTree.prototype = {
   },
 
   comparison: function(x, y) {
-    return  JSON.stringify(x) === JSON.stringify(y) ;
+    return JSON.stringify(x) === JSON.stringify(y) ;
   }
 };

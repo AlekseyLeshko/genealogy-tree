@@ -27,12 +27,10 @@ describe('Genealogy tree calculator', function() {
     var layouts = gTree.layouts;
 
     _.each(layouts, function(layout) {
-      if (layout) {
-        _.each(layout, function(node) {
-          expect(node.x).not.toBeUndefined();
-          expect(node.y).not.toBeUndefined()
+      _.each(layout, function(node) {
+        expect(node.x).not.toBeUndefined();
+        expect(node.y).not.toBeUndefined()
         });
-      }
     });
   });
 

@@ -12,7 +12,7 @@ peopleJson.complete(function() {
   );
   json.complete(function() {
     createD3(width, height);
-    // data();
+    data();
   });
 });
 
@@ -24,8 +24,8 @@ var width;
 var height;
 
 function createD3(width, height) {
-  width = 500;
-  height = 500;
+  width = 1000;
+  height = 1000;
 
   svg = d3.select("#tree").append("svg")
     .attr("width", width)
@@ -51,11 +51,14 @@ function data() {
 
   gTree = new GenealogyTree(nodes, relationships, rootRelationships);
   gTree.generationLayouts();
-  gTree.calcContainerParameters();
-  gTree.calcCoordinatesForLayouts();
 
-  width = gTree.options.container.width;
-  height = gTree.options.container.height;
+  gtClal = new GenealogyTreeCalculator(gTree.layouts, gTree.edges);
+  gtClal.calcContainerParameters();
+  gtClal.calcCoordinatesForLayouts();
+
+  width = gtClal.options.container.width;
+  height = gtClal.options.container.height;
+
   main.append("rect")
     .attr("class", "overlay")
     .attr("width", width)
@@ -63,6 +66,8 @@ function data() {
 
   var arr = gTree.getNodes();
   var edges = gTree.edges;
+
+  console.log(arr);
 
   createTree(arr, edges);
 };
@@ -78,7 +83,7 @@ var lineGraph = main.append('g')
   .append("polyline")
   .attr("points", edge.points)
   .attr("stroke", "black")
-  .attr("stroke-width", 1)
+  .attr("stroke-width", 2)
   .attr("fill", "none");
 
   return lineGraph;
@@ -95,6 +100,7 @@ function createNode(nodes) {
 
 function createTree(nodes, edges) {
   var svgNodes = createNode(nodes);
+  console.log(svgNodes);
   createCircle(svgNodes);
 
   createNodelabel(svgNodes);
@@ -125,7 +131,7 @@ function createLine(edge) {
     .attr("y1", edge.y1)
     .attr("x2", edge.x2)
     .attr("y2", edge.y2)
-    .attr("stroke-width", 1)
+    .attr("stroke-width", 2)
     .attr("stroke", "black");
 
   return line;

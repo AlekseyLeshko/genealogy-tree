@@ -23,17 +23,21 @@ GenealogyTreeCalculator.prototype = {
 
   calcCoordinatesForLayouts: function() {
     for (var i = 0; i < this.layouts.length; i++) {
-      if (this.layouts[i]) {
-        this.layouts[i] = this.calcCoordinatesForLayout(this.layouts[i]);
-        this.level++;
-      }
+      var layout = this.layouts[i];
+      var sortLauout = _.sortBy(layout, this.sort);
+      this.layouts[i] = this.calcCoordinatesForLayout(sortLauout);
+      this.level++;
     }
+  },
+
+  sort: function(node) {
+    return node.weight * (-1);
   },
 
   calcCoordinatesForLayout: function(nodes) {
     var layout = [];
-    var y = this.calcValY();
-    var x = this.calcValX(nodes.length);
+    var x = this.calcValY();
+    var y = this.calcValX(nodes.length);
 
     _.each(nodes, function(node) {
       node.x = x;

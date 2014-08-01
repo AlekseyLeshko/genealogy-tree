@@ -29,19 +29,6 @@ describe('Genealogy tree: ', function() {
     expect(GenealogyTree.prototype.edges.length).toEqual(0);
   });
 
-  it('generation tree', function() {
-    var gTree = getGenealogyTree();
-
-    gTree.generationTree();
-    var layouts = gTree.layouts;
-
-    expect(layouts.length).toEqual(4);
-    expect(layouts[0].length).toEqual(2);
-    expect(layouts[1].length).toEqual(5);
-    expect(layouts[2].length).toEqual(2);
-    expect(layouts[3].length).toEqual(1);
-  });
-
   it('generation layouts', function() {
     var gTree = getGenealogyTree();
 
@@ -88,7 +75,15 @@ describe('Genealogy tree: ', function() {
   });
 
   it('preparationLayout', function() {
+    var nodes = getNodes();
+    var relationships = getRelationships();
+    var rootRelationships = [3, 4, 5, 6, 7];
+    var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
+    gTree.preparationLayout();
 
+    expect(gTree.dataLayouts.length).toEqual(1);
+    expect(gTree.dataLayouts[0].relationships.length).toEqual(2);
+    expect(gTree.dataLayouts[0].nodes.length).toEqual(1);
   });
 
   it('add nodes for layout', function() {

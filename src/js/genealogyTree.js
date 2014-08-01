@@ -14,10 +14,6 @@ GenealogyTree.prototype = {
     this.edges = [];
   },
 
-  generationTree: function() {
-    this.generationLayouts();
-  },
-
   generationLayouts: function() {
     do {
       this.preparationLayout();

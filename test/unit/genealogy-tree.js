@@ -105,7 +105,7 @@ describe('Genealogy tree: ', function() {
 
     var nodes = gTree.getNodes();
 
-    expect(nodes.length).toEqual(2);
+    expect(nodes.length).toEqual(0);
   });
 
   it('comparison objects', function() {

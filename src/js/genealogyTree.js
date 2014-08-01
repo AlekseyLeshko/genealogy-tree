@@ -21,9 +21,21 @@ GenealogyTree.prototype = {
   },
 
   generationLayouts: function() {
-    _.each(this.dataLayouts, function(dataLayout) {
+    var i = 0;
+    do {
+      var dataLayout = this.dataLayouts[i];
       this.generationLayout(dataLayout);
-    }, this);
+      if (this.needToCreateNextLayout()) {
+        this.preparationNextLayout();
+      } else {
+        break;
+      }
+      i++;
+    } while(true);
+
+    // _.each(this.dataLayouts, function(dataLayout) {
+    //   this.generationLayout(dataLayout);
+    // }, this);
   },
 
   generationLayout: function(dataLayout) {
@@ -32,8 +44,9 @@ GenealogyTree.prototype = {
 
   preparationNextLayout: function() {
     this.level++;
-    // var children = this.findNodesByIds(this.dataLayouts[this.level]);
-    // this.dataLayouts[this.level] = this.getRelationships(children);
+    var ids = this.dataLayouts[this.level];
+    var children = this.findNodesByIds(ids);
+    this.dataLayouts[this.level] = this.getRelationships(children);
   },
 
   needToCreateNextLayout: function() {
@@ -93,10 +106,9 @@ GenealogyTree.prototype = {
     var nodes = [];
 
     _.each(ids, function(id) {
-      var node = _.where(this.nodes, { id: id });
+      var node = _.where(this.nodes, {'id': id});
       nodes.push(node);
-    });
-
+    }, this);
     return nodes;
   },
 

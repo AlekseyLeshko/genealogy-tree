@@ -40,18 +40,33 @@ describe('Genealogy tree: ', function() {
   //   expect(layouts[1].length).toEqual(2);
   // });
 
-  it('generation layout', function() {
-    var length = getRelationships().length - 1;
+  // it('generation layouts', function() {
+  //   var nodes = getNodes();
+  //   var relationships = getRelationships();
+  //   var rootRelationships = getRootRelationships();
 
-    var gTree = getCreatedGenealogyTree();
-    var layouts = gTree.layouts;
+  //   var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
 
-    expect(gTree.relationships.length).toEqual(length);
-    expect(layouts.length).toEqual(1);
-    expect(layouts[0].length).toEqual(2);
-    expect(gTree.dataLayouts.length).toEqual(2);
-    expect(gTree.dataLayouts[1].length).toEqual(5);
-  });
+  //   gTree.generationLayouts();
+  //   var layouts = gTree.layouts;
+
+  //   expect(layouts.length).toEqual(2);
+  //   expect(layouts[0].length).toEqual(2);
+  //   expect(layouts[1].length).toEqual(2);
+  // });
+
+  // it('generation layout', function() {
+  //   var length = getRelationships().length - 1;
+
+  //   var gTree = getCreatedGenealogyTree();
+  //   var layouts = gTree.layouts;
+
+  //   expect(gTree.relationships.length).toEqual(length);
+  //   expect(layouts.length).toEqual(1);
+  //   expect(layouts[0].length).toEqual(2);
+  //   expect(gTree.dataLayouts.length).toEqual(2);
+  //   expect(gTree.dataLayouts[1].length).toEqual(5);
+  // });
 
   it('add nodes for layout', function() {
     var nodes = getNodes().slice(0, 2);
@@ -85,11 +100,12 @@ describe('Genealogy tree: ', function() {
 
   it('get nodes by id', function() {
     var arrIds = getRelationships()[0].spouses;
+    var gTree = getGenealogyTree();
 
-    GenealogyTree.prototype.nodes = getNodes()
-    var nodes = GenealogyTree.prototype.findNodesByIds(arrIds);
+    var nodes = gTree.findNodesByIds(arrIds);
 
     expect(nodes.length).toEqual(arrIds.length);
+    expect(nodes[0]).not.toEqual([]);
   });
 
   it('unset val in relationships', function() {
@@ -110,7 +126,7 @@ describe('Genealogy tree: ', function() {
 
     var nodes = gTree.getNodes();
 
-    expect(nodes.length).toEqual(0);
+    expect(nodes.length).toEqual(2);
   });
 
   it('comparison objects', function() {

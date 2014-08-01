@@ -67,21 +67,21 @@ describe('Genealogy tree calculator', function() {
     expect(x).toEqual(340);
   });
 
-//   it('calculation width container for empty layout', function() {
-//     GenealogyTree.prototype.layouts = [];
-//     GenealogyTree.prototype.options = getDefaultOptions();
-//     var width = GenealogyTree.prototype.calcWidthСontainer();
+  it('calculation width container for empty layout', function() {
+    GenealogyTreeCalculator.prototype.layouts = [];
+    GenealogyTreeCalculator.prototype.options = getGCalcOptions();
+    var width = GenealogyTreeCalculator.prototype.calcWidthСontainer();
 
-//     expect(width).toEqual(500);
-//   });
+    expect(width).toEqual(500);
+  });
 
-//   it('calculation width container for layout', function() {
-//     GenealogyTree.prototype.layouts = [getNodes()];
-//     GenealogyTree.prototype.options = getDefaultOptions();
-//     var width = GenealogyTree.prototype.calcWidthСontainer();
+  it('calculation width container for layout', function() {
+    GenealogyTreeCalculator.prototype.layouts = [getNodes()];
+    GenealogyTreeCalculator.prototype.options = getGCalcOptions();
+    var width = GenealogyTreeCalculator.prototype.calcWidthСontainer();
 
-//     expect(width).toEqual(920);
-//   });
+    expect(width).toEqual(1700);
+  });
 
   it('width calculation layout', function() {
     var gtCalc = getGenealogyTreeCalculator();

@@ -27,7 +27,6 @@ GenealogyTree.prototype = {
   },
 
   generationLayout: function(dataLayout) {
-    // console.log(dataLayout);
     _.each(dataLayout, this.preparationRelationship, this);
   },
 
@@ -55,7 +54,7 @@ GenealogyTree.prototype = {
   preparationRelationship: function(relationship) {
     this.addSpousesNodeToLayout(relationship);
     this.addNodesForLayout(relationship.children, this.dataLayouts, this.level + 1);
-    // this.createEdges(relationship);
+    this.createEdges(relationship);
 
     this.unsetRelationship(relationship);
   },

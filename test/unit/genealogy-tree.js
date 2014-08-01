@@ -181,18 +181,19 @@ describe('Genealogy tree: ', function() {
     expect(answer).toBeTruthy();
   });
 
-  // it('create edges of relationship', function() {
-  //   var relationship = getRelationships().slice(0, 1)[0];
-  //   var type = 'marriage'
-  //   var childrenType = 'of_marriage';
-  //   GenealogyTree.prototype.nodes = getNodes();
-  //   GenealogyTree.prototype.edges = [];
-  //   GenealogyTree.prototype.createEdges(relationship);
-  //   var edges = GenealogyTree.prototype.edges;
+  it('create edges of relationship', function() {
+    var relationship = getRelationships().slice(0, 1)[0];
+    var type = 'marriage'
+    var childrenType = 'of_marriage';
+    GenealogyTree.prototype.nodes = getNodes();
+    GenealogyTree.prototype.edges = [];
 
-  //   expect(edges.length).toEqual(3);
-  //   expect(edges[0].typeRelationship).toEqual(type);
-  //   expect(edges[1].typeRelationship).toEqual(childrenType);
-  //   expect(edges[2].typeRelationship).toEqual(childrenType);
-  // });
+    GenealogyTree.prototype.createEdges(relationship);
+    var edges = GenealogyTree.prototype.edges;
+
+    expect(edges.length).toEqual(6);
+    expect(edges[0].typeRelationship).toEqual(type);
+    expect(edges[1].typeRelationship).toEqual(childrenType);
+    expect(edges[2].typeRelationship).toEqual(childrenType);
+  });
 });

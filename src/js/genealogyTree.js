@@ -33,8 +33,8 @@ GenealogyTree.prototype = {
 
   preparationNextLayout: function() {
     this.level++;
-    // var nodeArr = this.findNodesByIds(this.dataLayouts[this.level]);
-    // this.dataLayouts[this.level] = this.getRelationships(nodeArr);
+    // var children = this.findNodesByIds(this.dataLayouts[this.level]);
+    // this.dataLayouts[this.level] = this.getRelationships(children);
   },
 
   needToCreateNextLayout: function() {
@@ -102,15 +102,15 @@ GenealogyTree.prototype = {
   },
 
   createEdges: function(relationship) {
-    var wifeNode = this.getNodeOfRelationship(relationship.wife);
-    var husbandNode = this.getNodeOfRelationship(relationship.husband);
+    var parents = this.findNodesByIds(relationship.spouses);
 
-    var parentEdge = new Edge(husbandNode, wifeNode, relationship.type);
+    var parentEdge = new Edge(_.first(parents),
+      _.last(parents), relationship.type);
     this.edges.push(parentEdge);
 
-    var nodeArr = this.findNodesByIds(relationship.children);
+    var children = this.findNodesByIds(relationship.children);
 
-    _.each(nodeArr, function(node) {
+    _.each(children, function(node) {
       var edge = new Edge(parentEdge, node, relationship.childrenType);
       this.edges.push(edge);
     }, this);

@@ -21,17 +21,18 @@ GenealogyTreeCalculator.prototype = {
     return defaultOptions;
   },
 
-  calcCoordinatesForLayout: function(arr) {
+  calcCoordinatesForLayout: function(nodes) {
     var layout = [];
     var y = this.calcValY();
-    var x = this.calcValX(arr.length);
-    for (var i = 0; i < arr.length; i++) {
-      var node = arr[i];
+    var x = this.calcValX(nodes.length);
+
+    _.each(nodes, function(node) {
       node.x = x;
       node.y = y;
       layout.push(node);
       y += this.options.stepY;
-    }
+    }, this);
+
     return layout;
   },
 

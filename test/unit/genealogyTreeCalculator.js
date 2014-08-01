@@ -39,6 +39,20 @@ describe('Genealogy tree calculator', function() {
 
   it('calculation coordinates for layout', function() {
     var gtCalc = getGenealogyTreeCalculator();
+    var nodeArr = getNodes();
+    gtCalc.calcContainerParameters();
+
+    var layout = gtCalc.calcCoordinatesForLayout(nodeArr);
+
+    expect(layout).not.toBeUndefined();
+    _.each(layout, function(node) {
+      expect(node.x).not.toBeUndefined();
+      expect(node.y).not.toBeUndefined()
+    });
+  });
+
+  it('calculation container parameters', function() {
+    var gtCalc = getGenealogyTreeCalculator();
     gtCalc.layouts = [getNodes()];
 
     gtCalc.calcContainerParameters();

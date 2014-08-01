@@ -79,6 +79,7 @@ describe('Genealogy tree: ', function() {
     var relationships = getRelationships();
     var rootRelationships = [3, 4, 5, 6, 7];
     var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
+
     gTree.preparationLayout();
 
     expect(gTree.dataLayouts.length).toEqual(1);

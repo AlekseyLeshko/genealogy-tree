@@ -10,6 +10,12 @@ describe('Genealogy tree calculator', function() {
     expect(gCalc.edges).not.toBeUndefined();
   });
 
+  it('get default options', function() {
+    var options = GenealogyTreeCalculator.prototype.getDefaultOptions();
+
+    expect(options).toEqual(getGCalcOptions());
+  });
+
 //   it('calculation coordinates for all layouts', function() {
 //     var gTree = getGenealogyTree();
 //     gTree.generationLayouts();

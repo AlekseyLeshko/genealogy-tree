@@ -3,24 +3,22 @@ var GenealogyTreeCalculator = function(layouts, edges) {
 
   this.layouts = layouts;
   this.edges = edges;
+  this.options = this.getDefaultOptions();
 };
 
-// GenealogyTreeCalculator.prototype = {
-//   init: function() {
-//     this.options = this.getDefaultOptions();
-//   },
-
-//   getDefaultOptions: function() {
-//     var defaultOptions = {
-//       frame: {
-//         width: 250,
-//         height: 250
-//       },
-//       stepX: 75,
-//       stepY: 100,
-//     };
-//     return defaultOptions;
-//   },
+GenealogyTreeCalculator.prototype = {
+  getDefaultOptions: function() {
+    var defaultOptions = {
+      frame: {
+        width: 250,
+        height: 250
+      },
+      stepX: 75,
+      stepY: 100,
+    };
+    return defaultOptions;
+  }
+};
 
 //   calcContainerParameters: function() {
 //     this.options.container = {

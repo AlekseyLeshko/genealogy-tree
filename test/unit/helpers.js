@@ -133,20 +133,14 @@ function getDefaultGenealogyTreeOptions() {
   return defaultOptions;
 };
 
-function getOptions() {
+function getGCalcOptions() {
   var defaultOptions = {
-    container: {
-      width: 500,
-      height: 500
-    },
     frame: {
       width: 250,
       height: 250
     },
     stepX: 75,
-    stepY: 100,
-    nodeWidth: 30,
-    startLevel: 0
+    stepY: 100
   };
   return defaultOptions;
 };

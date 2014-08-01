@@ -18,10 +18,10 @@ gulp.task('scripts', ['clean'], function() {
   return gulp.src(paths.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(sourcemaps.init())
-    .pipe(uglify())
+    // .pipe(sourcemaps.init())
+    // .pipe(uglify())
     .pipe(concat('all.min.js'))
-    .pipe(sourcemaps.write('../maps'))
+    // .pipe(sourcemaps.write('../maps'))
     .pipe(gulp.dest('dist/js/'))
     .pipe(connect.reload());
 });

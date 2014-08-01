@@ -47,7 +47,7 @@ function zoom() {
 };
 
 function data() {
-  var rootRelationships = relationships.slice(0, 1);
+  var rootRelationships = [1];
 
   gTree = new GenealogyTree(nodes, relationships, rootRelationships);
   gTree.generationLayouts();

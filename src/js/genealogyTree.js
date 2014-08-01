@@ -21,32 +21,25 @@ GenealogyTree.prototype = {
   },
 
   generationLayouts: function() {
-    var i = 0;
     do {
-      var dataLayout = this.dataLayouts[i];
+      this.preparationLayout();
+      var dataLayout = this.dataLayouts[this.level];
       this.generationLayout(dataLayout);
-      if (this.needToCreateNextLayout()) {
-        this.preparationNextLayout();
-      } else {
+      if (!this.needToCreateNextLayout()) {
         break;
       }
-      i++;
+      this.level++;
     } while(true);
-
-    // _.each(this.dataLayouts, function(dataLayout) {
-    //   this.generationLayout(dataLayout);
-    // }, this);
   },
 
   generationLayout: function(dataLayout) {
     _.each(dataLayout, this.preparationRelationship, this);
   },
 
-  preparationNextLayout: function() {
-    this.level++;
+  preparationLayout: function() {
     var ids = this.dataLayouts[this.level];
-    var children = this.findNodesByIds(ids);
-    this.dataLayouts[this.level] = this.getRelationships(children);
+    // var children = this.findNodesByIds(ids);
+    // this.dataLayouts[this.level] = this.getRelationshipsAndNodes(ids);
   },
 
   needToCreateNextLayout: function() {
@@ -77,36 +70,42 @@ GenealogyTree.prototype = {
     this.addNodesForLayout(nodes, this.layouts, this.level);
   },
 
-  addNodesForLayout: function(nods, arr, level) {
+  addNodesForLayout: function(nodes, arr, level) {
     var layout = arr[level];
     if (!layout) {
       layout = [];
     }
 
-    layout = layout.concat(nods);
+    layout = layout.concat(nodes);
 
     arr[level] = layout;
   },
 
-  getRelationships: function(nodes) {
+  getRelationshipsAndNodes: function(ids) {
     var arr = [];
     _.each(this.relationships, function(relationship) {
-      _.each(nodes, function(node) {
-        if (_.contains(relationship.spouses, node.id)) {
+      for (var i = 0; i < relationship.spouses.length; i++) {
+        var spouseId = relationship.spouses[i];
+        if (_.contains(ids, spouseId)) {
           arr.push(relationship);
+          ids = _.without(ids, spouseId);
         }
-      });
+      }
     });
 
-    var relationships = _.uniq(arr);
-    return relationships;
+    var data = {
+      relationships: _.uniq(arr),
+      nodes: this.findNodesByIds(ids)
+    };
+
+    return data;
   },
 
   findNodesByIds: function(ids) {
     var nodes = [];
 
     _.each(ids, function(id) {
-      var node = _.where(this.nodes, {'id': id});
+      var node = _.findWhere(this.nodes, {'id': id});
       nodes.push(node);
     }, this);
     return nodes;

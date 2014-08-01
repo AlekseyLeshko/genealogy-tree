@@ -40,25 +40,39 @@ describe('Genealogy tree: ', function() {
   //   expect(layouts[1].length).toEqual(2);
   // });
 
-  // it('generation layouts', function() {
-  //   var nodes = getNodes();
-  //   var relationships = getRelationships();
-  //   var rootRelationships = getRootRelationships();
+  it('generation layouts', function() {
+    var gTree = getGenealogyTree();
 
-  //   var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
+    gTree.generationLayouts();
+    var layouts = gTree.layouts;
 
-  //   gTree.generationLayouts();
-  //   var layouts = gTree.layouts;
+    expect(layouts.length).toEqual(4);
+    expect(layouts[0].length).toEqual(2);
+    expect(layouts[1].length).toEqual(5);
+    expect(layouts[2].length).toEqual(2);
+    expect(layouts[3].length).toEqual(1);
+  });
 
-  //   expect(layouts.length).toEqual(2);
-  //   expect(layouts[0].length).toEqual(2);
-  //   expect(layouts[1].length).toEqual(2);
-  // });
+  it('generation layout with relationships', function() {
+    var length = getRelationships().length - 1;
 
-  // it('generation layout', function() {
+    var gTree = getGenealogyTree();
+    gTree.preparationLayout();
+    gTree.generationLayout(gTree.dataLayouts[0]);
+    var layouts = gTree.layouts;
+
+    expect(gTree.relationships.length).toEqual(length);
+    expect(layouts.length).toEqual(1);
+    expect(layouts[0].length).toEqual(2);
+    expect(gTree.dataLayouts.length).toEqual(2);
+    expect(gTree.dataLayouts[1].length).toEqual(5);
+  });
+
+  // it('generation layout with relationships and nodes', function() {
   //   var length = getRelationships().length - 1;
 
-  //   var gTree = getCreatedGenealogyTree();
+  //   var gTree = getGenealogyTree();
+  //   gTree.generationLayout(gTree.dataLayouts[0]);
   //   var layouts = gTree.layouts;
 
   //   expect(gTree.relationships.length).toEqual(length);
@@ -67,6 +81,10 @@ describe('Genealogy tree: ', function() {
   //   expect(gTree.dataLayouts.length).toEqual(2);
   //   expect(gTree.dataLayouts[1].length).toEqual(5);
   // });
+
+  it('preparationLayout', function() {
+
+  });
 
   it('add nodes for layout', function() {
     var nodes = getNodes().slice(0, 2);
@@ -80,20 +98,22 @@ describe('Genealogy tree: ', function() {
   });
 
   it('get relationships', function() {
-    var nodes = getNodes().slice(0, 2);
+    var ids = [3, 4, 5, 6, 7];
 
+    GenealogyTree.prototype.nodes = getNodes();
     GenealogyTree.prototype.relationships = getRelationships();
-    var arr = GenealogyTree.prototype.getRelationships(nodes);
+    var obj = GenealogyTree.prototype.getRelationshipsAndNodes(ids);
 
-    expect(arr.length).toEqual(1);
+    expect(obj.relationships.length).toEqual(2);
+    expect(obj.nodes.length).toEqual(1);
   });
 
   it('time: get relationships', function() {
-    var nodes = getNodes();
+    var ids = [3, 4, 5, 6, 7];
 
-    GenealogyTree.prototype.relationships = getRelationships();
-    var data = timer('getRelationships', GenealogyTree.prototype.getRelationships);
-    data.f(nodes);
+    var gTree = getGenealogyTree();
+    var data = timer(gTree, 'getRelationshipsAndNodes');
+    data.f(ids);
 
     expect(data.time < 300).toBeTruthy();
   });
@@ -105,7 +125,7 @@ describe('Genealogy tree: ', function() {
     var nodes = gTree.findNodesByIds(arrIds);
 
     expect(nodes.length).toEqual(arrIds.length);
-    expect(nodes[0]).not.toEqual([]);
+    expect(nodes[0].length).toBeUndefined();
   });
 
   it('unset val in relationships', function() {
@@ -126,7 +146,7 @@ describe('Genealogy tree: ', function() {
 
     var nodes = gTree.getNodes();
 
-    expect(nodes.length).toEqual(2);
+    expect(nodes.length).toEqual(7);
   });
 
   it('comparison objects', function() {

@@ -122,7 +122,7 @@ function getRelationships() {
 }
 
 function getRootRelationships(){
-  var rootRelationships = getRelationships().slice(0, 1);
+  var rootRelationships = [1];
   return rootRelationships;
 };
 
@@ -167,14 +167,15 @@ function getCreatedGenealogyTree() {
   return gTree;
 };
 
-function timer(label, f) {
+function timer(obj, fun) {
   var data = {
     time: -1,
     f: function(arg) {
       var dataStart = Date.now();
-      f(arg);
+      obj[fun](arg);
       var dataEnd = Date.now();
       data.time = dataEnd - dataStart;
+      console.log(fun + ' time: ' + data.time);
     }
   };
 

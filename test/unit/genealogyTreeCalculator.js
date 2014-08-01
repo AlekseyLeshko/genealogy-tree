@@ -115,10 +115,12 @@ describe('Genealogy tree calculator', function() {
 //     expect(width).toEqual(0);
 //   });
 
-//   it('calculation height container', function() {
-//     GenealogyTree.prototype.layouts = [1];
-//     var height = GenealogyTree.prototype.calcHeightСontainer();
+  it('calculation height container', function() {
+    var gtCalc = getGenealogyTreeCalculator();
 
-//     expect(height).toEqual(600);
-//   });
+    gtCalc.layouts = [1];
+    var height = gtCalc.calcHeightСontainer();
+
+    expect(height).toEqual(600);
+  });
 });

@@ -17,8 +17,7 @@ GenealogyTreeCalculator.prototype = {
       stepY: 100,
     };
     return defaultOptions;
-  }
-};
+  },
 
 //   calcContainerParameters: function() {
 //     this.options.container = {
@@ -26,6 +25,52 @@ GenealogyTreeCalculator.prototype = {
 //       height: this.calcHeightСontainer()
 //     };
 //   },
+
+
+  widthCalculationLayout: function() {
+    if (this.layouts.length <= 0) {
+      return 0;
+    }
+
+    var arr = [];
+    _.each(this.layouts, function(layout) {
+      if (layout) {
+        var length = layout.length;
+        arr.push(length);
+      }
+    });
+
+    if (arr.length <= 0) {
+      return 0;
+    }
+
+    var maxCount = _.max(arr, function(length) {
+      return length;
+    });
+
+    var width = (this.options.nodeWidth * maxCount) + ((maxCount - 1) * this.options.stepY);
+
+    return width;
+  },
+
+  calcWidthСontainer: function() {
+    var widthLayout = this.widthCalculationLayout();
+    var frame = this.options.frame.width * 2;
+    var width = widthLayout + frame;
+
+    return width;
+  },
+
+  calcHeightСontainer: function() {
+    var heightLayouts = (this.layouts.length * this.options.stepY);
+    var frame = this.options.frame.height * 2;
+    var height = heightLayouts + frame;
+
+    return height;
+  }
+};
+
+
 
 //   calcCoordinatesForLayouts: function() {
 //     for (var i = 0; i < this.layouts.length; i++) {
@@ -63,46 +108,6 @@ GenealogyTreeCalculator.prototype = {
 //     return x;
 //   },
 
-//   widthCalculationLayout: function() {
-//     if (this.layouts.length <= 0) {
-//       return 0;
-//     }
 
-//     var arr = [];
-//     _.each(this.layouts, function(layout) {
-//       if (layout) {
-//         var length = layout.length;
-//         arr.push(length);
-//       }
-//     });
-
-//     if (arr.length <= 0) {
-//       return 0;
-//     }
-
-//     var maxCount = _.max(arr, function(length) {
-//       return length;
-//     });
-
-//     var width = (this.options.nodeWidth * maxCount) + ((maxCount - 1) * this.options.stepY);
-
-//     return width;
-//   },
-
-//   calcWidthСontainer: function() {
-//     var widthLayout = this.widthCalculationLayout();
-//     var frame = this.options.frame.width * 2;
-//     var width = widthLayout + frame;
-
-//     return width;
-//   },
-
-//   calcHeightСontainer: function() {
-//     var heightLayouts = (this.layouts.length * this.options.stepY);
-//     var frame = this.options.frame.height * 2;
-//     var height = heightLayouts + frame;
-
-//     return height;
-//   }
 // };
 

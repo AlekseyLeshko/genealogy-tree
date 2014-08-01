@@ -154,6 +154,14 @@ function getGenealogyTree() {
   return gTree;
 };
 
+function getGenealogyTreeCalculator() {
+  var layouts = [];
+  var edges = [];
+
+  var gtCalc = new GenealogyTreeCalculator(layouts, edges);
+  return gtCalc;
+};
+
 function getCreatedGenealogyTree() {
   var gTree = getGenealogyTree();
   gTree.generationLayouts();

@@ -12,7 +12,7 @@ peopleJson.complete(function() {
   );
   json.complete(function() {
     createD3(width, height);
-    data();
+    // data();
   });
 });
 

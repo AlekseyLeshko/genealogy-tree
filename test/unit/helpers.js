@@ -139,8 +139,9 @@ function getGCalcOptions() {
       width: 250,
       height: 250
     },
-    stepX: 75,
-    stepY: 100
+    stepX: 80,
+    stepY: 100,
+    nodeWidth: 30
   };
   return defaultOptions;
 };

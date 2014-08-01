@@ -16,44 +16,41 @@ describe('Genealogy tree calculator', function() {
     expect(options).toEqual(getGCalcOptions());
   });
 
-//   it('calculation coordinates for all layouts', function() {
-//     var gTree = getGenealogyTree();
-//     gTree.generationLayouts();
-//     gTree.calcContainerParameters();
+  // it('calculation coordinates for all layouts', function() {
+  //   var gTree = getGenealogyTree();
+  //   gTree.generationLayouts();
+  //   var gtCalc = new GenealogyTreeCalculator(gTree.layouts, gTree.edges);
 
-//     expect(gTree.layouts).not.toBeUndefined();
-//     gTree.calcCoordinatesForLayouts();
-//     var layouts = gTree.layouts;
+  //   gtCalc.calcContainerParameters();
 
-//     _.each(layouts, function(layout) {
-//       if (layout) {
-//         _.each(layout, function(node) {
-//           expect(node.x).not.toBeUndefined();
-//           expect(node.y).not.toBeUndefined()
-//         });
-//       }
-//     });
-//   });
+  //   expect(gTree.layouts).not.toBeUndefined();
+  //   gTree.calcCoordinatesForLayouts();
+  //   var layouts = gTree.layouts;
 
-//   it('calculation coordinates for layout', function() {
-//     var gTree = getGenealogyTree();
+  //   _.each(layouts, function(layout) {
+  //     if (layout) {
+  //       _.each(layout, function(node) {
+  //         expect(node.x).not.toBeUndefined();
+  //         expect(node.y).not.toBeUndefined()
+  //       });
+  //     }
+  //   });
+  // });
 
-//     gTree.generationLayouts();
-//     gTree.calcContainerParameters();
-//     var nodeArr = gTree.layouts[1];
-//     var layout = gTree.calcCoordinatesForLayout(nodeArr);
+  it('calculation coordinates for layout', function() {
+    var gtCalc = getGenealogyTreeCalculator();
+    gtCalc.layouts = [getNodes()];
 
-//     expect(layout).not.toBeUndefined();
-//     _.each(layout, function(node) {
-//       expect(node.x).not.toBeUndefined();
-//       expect(node.y).not.toBeUndefined()
-//     });
-//   });
+    gtCalc.calcContainerParameters();
+
+    expect(gtCalc.options.container.width).toEqual(1700);
+    expect(gtCalc.options.container.height).toEqual(600);
+  });
 
 //   it('calculation start y', function() {
 //     var countNode = 2;
 //     var widthNode = 30;
-
+// gtCalc.level = 2;
 //     GenealogyTree.prototype.options = getOptions();
 //     var y = GenealogyTree.prototype.calcStartY(countNode);
 
@@ -61,19 +58,16 @@ describe('Genealogy tree calculator', function() {
 //     expect(y).toEqual(answer);
 //   });
 
-//   it('calculation layout level x', function() {
-//     var gTree = getCreatedGenealogyTree();
-//     var level = 2;
+  it('calculation layout level x', function() {
+    var gtCalc = getGenealogyTreeCalculator();
+    gtCalc.layouts = [[1, 2, 3]]
+    var countNode = 2;
+    gtCalc.calcContainerParameters();
 
-//     gTree.level = level;
+    var x = gtCalc.calcValX(countNode);
 
-//     var x = gTree.calcValX();
-
-//     var answer = (level * gTree.options.stepX) +
-//       gTree.options.frame.height;
-
-//     expect(x).toEqual(answer);
-//   });
+    expect(x).toEqual(340);
+  });
 
 //   it('calculation width container for empty layout', function() {
 //     GenealogyTree.prototype.layouts = [];
@@ -91,29 +85,32 @@ describe('Genealogy tree calculator', function() {
 //     expect(width).toEqual(920);
 //   });
 
-//   it('width calculation layout', function() {
-//     GenealogyTree.prototype.layouts = [undefined, [], getNodes()];
-//     GenealogyTree.prototype.options = getDefaultOptions();
-//     var width = GenealogyTree.prototype.widthCalculationLayout();
+  it('width calculation layout', function() {
+    var gtCalc = getGenealogyTreeCalculator();
+    gtCalc.layouts = [undefined, [], getNodes()];
 
-//     expect(width).toEqual(420);
-//   });
+    var width = gtCalc.widthCalculationLayout();
 
-//   it('width calculation layout when layouts is empty', function() {
-//     GenealogyTree.prototype.layouts = [];
-//     GenealogyTree.prototype.options = getDefaultOptions();
-//     var width = GenealogyTree.prototype.widthCalculationLayout();
+    expect(width).toEqual(1200);
+  });
 
-//     expect(width).toEqual(0);
-//   });
+  it('width calculation layout when layouts is empty', function() {
+    var gtCalc = getGenealogyTreeCalculator();
+    gtCalc.layouts = [];
 
-//   it('width calculation layout when layout is undefined', function() {
-//     GenealogyTree.prototype.layouts = [undefined];
-//     GenealogyTree.prototype.options = getDefaultOptions();
-//     var width = GenealogyTree.prototype.widthCalculationLayout();
+    var width = gtCalc.widthCalculationLayout();
 
-//     expect(width).toEqual(0);
-//   });
+    expect(width).toEqual(0);
+  });
+
+  it('width calculation layout when layout is undefined', function() {
+    var gtCalc = getGenealogyTreeCalculator();
+    gtCalc.layouts = [undefined];
+
+    var width = gtCalc.widthCalculationLayout();
+
+    expect(width).toEqual(0);
+  });
 
   it('calculation height container', function() {
     var gtCalc = getGenealogyTreeCalculator();

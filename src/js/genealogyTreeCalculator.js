@@ -4,6 +4,7 @@ var GenealogyTreeCalculator = function(layouts, edges) {
   this.layouts = layouts;
   this.edges = edges;
   this.options = this.getDefaultOptions();
+  this.level = 0;
 };
 
 GenealogyTreeCalculator.prototype = {
@@ -13,19 +14,19 @@ GenealogyTreeCalculator.prototype = {
         width: 250,
         height: 250
       },
-      stepX: 75,
+      stepX: 80,
       stepY: 100,
+      nodeWidth: 30
     };
     return defaultOptions;
   },
 
-//   calcContainerParameters: function() {
-//     this.options.container = {
-//       width: this.calcWidthСontainer(),
-//       height: this.calcHeightСontainer()
-//     };
-//   },
-
+  calcContainerParameters: function() {
+    this.options.container = {
+      width: this.calcWidthСontainer(),
+      height: this.calcHeightСontainer()
+    };
+  },
 
   widthCalculationLayout: function() {
     if (this.layouts.length <= 0) {
@@ -67,10 +68,21 @@ GenealogyTreeCalculator.prototype = {
     var height = heightLayouts + frame;
 
     return height;
+  },
+
+  calcValY: function() {
+    var frame = this.options.frame.height;
+    var heightLayouts = this.level * this.options.stepX;
+    var y =  frame + heightLayouts;
+    return y;
+  },
+
+  calcValX: function(countNode) {
+    var x = (((countNode / 2) * this.options.nodeWidth) + ((countNode - 1) * this.options.stepX)) / 2;
+    var res = (this.options.container.width / 2) - x;
+    return res;
   }
 };
-
-
 
 //   calcCoordinatesForLayouts: function() {
 //     for (var i = 0; i < this.layouts.length; i++) {
@@ -94,20 +106,3 @@ GenealogyTreeCalculator.prototype = {
 //     }
 //     return layout;
 //   },
-
-//   calcStartY: function(countNode) {
-//     var y = (((countNode / 2) * this.options.nodeWidth) + ((countNode - 1) * this.options.stepY)) / 2;
-//     var res = (this.options.container.width / 2) - y;
-//     return res;
-//   },
-
-//   calcValX: function() {
-//     var frame = this.options.frame.height;
-//     var width = this.level * this.options.stepX;
-//     var x =  frame + width;
-//     return x;
-//   },
-
-
-// };
-

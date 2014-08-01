@@ -1,16 +1,14 @@
-// describe('Calculation coordinates for genealogy tree', function() {
-//   it('calculation of the container parameters', function() {
-//     var gTree = getGenealogyTree();
+describe('Genealogy tree calculator', function() {
+  it('create genealogy tree calculator without parameters', function() {
+    var layouts = [];
+    var edges = [];
+    var gCalc = new GenealogyTreeCalculator(layouts, edges);
 
-//     gTree.generationLayouts();
-
-//     expect(gTree.options.container).toBeUndefined();
-
-//     gTree.calcContainerParameters();
-
-//     expect(gTree.options.container.width).not.toBeUndefined();
-//     expect(gTree.options.container.height).not.toBeUndefined();
-//   });
+    expect(gCalc).not.toBeUndefined();
+    expect(gCalc).not.toBeNull();
+    expect(gCalc.layouts).not.toBeUndefined();
+    expect(gCalc.edges).not.toBeUndefined();
+  });
 
 //   it('calculation coordinates for all layouts', function() {
 //     var gTree = getGenealogyTree();
@@ -117,4 +115,4 @@
 
 //     expect(height).toEqual(600);
 //   });
-// });
+});

@@ -1,8 +1,9 @@
-// var GenealogyTreeCalculator = function() {
-//   'use strict';
+var GenealogyTreeCalculator = function(layouts, edges) {
+  'use strict';
 
-//   this.init();
-// };
+  this.layouts = layouts;
+  this.edges = edges;
+};
 
 // GenealogyTreeCalculator.prototype = {
 //   init: function() {

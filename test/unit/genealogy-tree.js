@@ -58,41 +58,16 @@ describe('Genealogy tree: ', function() {
   //   expect(gTree.dataLayouts[1].length).toEqual(2);
   // });
 
-  // it('get default options', function() {
-  //   var options = GenealogyTree.prototype.getDefaultOptions();
+  it('add nodes for layout', function() {
+    var nodes = getNodes().slice(0, 2);
+    var level = 0;
+    var layouts = [];
 
-  //   expect(options).toEqual(getDefaultOptions());
-  // });
+    GenealogyTree.prototype.addNodesForLayout(nodes, layouts, level);
 
-  // it('add nodes for current layout', function() {
-  //   var nodes = getNodes().slice(0, 2);
-  //   var level = 1;
-
-  //   GenealogyTree.prototype.level = level;
-  //   GenealogyTree.prototype.layouts = [];
-
-  //   GenealogyTree.prototype.addNodesForCurrentLayout(nodes);
-
-  //   var arr = GenealogyTree.prototype.layouts;
-
-  //   expect(arr.length).toEqual(2);
-  //   expect(arr[1].length).toEqual(2);
-  // });
-
-  // it('add nodes for next layout', function() {
-  //   var nodes = getNodes().slice(0, 2);
-  //   var level = 1;
-
-  //   GenealogyTree.prototype.level = level;
-  //   GenealogyTree.prototype.dataLayouts = [];
-
-  //   GenealogyTree.prototype.addNodesForLayoutData(nodes);
-
-  //   var arr = GenealogyTree.prototype.dataLayouts;
-
-  //   expect(arr.length).toEqual(3);
-  //   expect(arr[2].length).toEqual(2);
-  // });
+    expect(layouts.length).toEqual(level + 1);
+    expect(layouts[0].length).toEqual(nodes.length);
+  });
 
   // it('get relationships', function() {
   //   var nodes = getNodes().slice(0, 2);
@@ -110,22 +85,6 @@ describe('Genealogy tree: ', function() {
     var nodes = GenealogyTree.prototype.findNodesByIds(arrIds);
 
     expect(nodes.length).toEqual(arrIds.length);
-  });
-
-  it('get node of relationship', function() {
-    var id = getRelationships()[0].spouses[1];
-
-    GenealogyTree.prototype.nodes = getNodes();
-    var node = GenealogyTree.prototype.getNodeOfRelationship(id);
-
-    expect(node).toEqual(getNodes()[1]);
-  });
-
-  it('get node of relationship not finded node', function() {
-    var val = '-1';
-    var node = GenealogyTree.prototype.getNodeOfRelationship(val, getNodes());
-
-    expect(node).toBeUndefined();
   });
 
   it('unset val in relationships', function() {
@@ -163,12 +122,9 @@ describe('Genealogy tree: ', function() {
   // });
 
   it('add spouses node to layout', function() {
-    var nodes = getNodes();
-    var relationships = getRelationships();
-    var val = relationships[0];
-    var rootRelationships = getRootRelationships();
+    var val = getRelationships()[0];
+    var gTree = getGenealogyTree();
 
-    var gTree = new GenealogyTree(nodes, relationships, rootRelationships)
     gTree.addSpousesNodeToLayout(val);
     var layouts = gTree.layouts;
 

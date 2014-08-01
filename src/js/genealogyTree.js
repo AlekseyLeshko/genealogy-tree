@@ -54,44 +54,26 @@ GenealogyTree.prototype = {
 
   preparationRelationship: function(relationship) {
     this.addSpousesNodeToLayout(relationship);
-    this.addNodesForLayoutData(relationship.children);
+    this.addNodesForLayout(relationship.children, this.dataLayouts, this.level + 1);
     // this.createEdges(relationship);
 
     this.unsetRelationship(relationship);
   },
 
   addSpousesNodeToLayout: function(relationship) {
-    var layout = [];
-
-    _.each(relationship.spouses, function(id) {
-      var node = this.getNodeOfRelationship(id);
-      layout.push(node);
-    });
-
-    this.addNodesForCurrentLayout(layout);
+    var nodes = this.findNodesByIds(relationship.spouses);
+    this.addNodesForLayout(nodes, this.layouts, this.level);
   },
 
-  addNodesForLayoutData: function(arr) {
-    var nextLeval = this.level + 1;
-    var layout = this.dataLayouts[nextLeval];
+  addNodesForLayout: function(nods, arr, level) {
+    var layout = arr[level];
     if (!layout) {
       layout = [];
     }
 
-    layout = layout.concat(arr);
+    layout = layout.concat(nods);
 
-    this.dataLayouts[nextLeval] = layout;
-  },
-
-  addNodesForCurrentLayout: function(arr) {
-    var layout = this.layouts[this.level];
-    if (!layout) {
-      layout = [];
-    }
-
-    layout = layout.concat(arr);
-
-    this.layouts[this.level] = layout;
+    arr[level] = layout;
   },
 
   getRelationships: function(nodes) {
@@ -112,7 +94,7 @@ GenealogyTree.prototype = {
     var nodes = [];
 
     _.each(ids, function(id) {
-      var node = _.where(this.nodes, {id: id});
+      var node = _.where(this.nodes, { id: id });
       nodes.push(node);
     });
 
@@ -132,12 +114,6 @@ GenealogyTree.prototype = {
       var edge = new Edge(parentEdge, node, relationship.childrenType);
       this.edges.push(edge);
     }, this);
-  },
-
-  getNodeOfRelationship: function(val) {
-    var key = 'id';
-    var node = this.findElementInArr(key, val, this.nodes);
-    return node;
   },
 
   unsetRelationship: function(value) {

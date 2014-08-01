@@ -213,6 +213,18 @@ describe('Genealogy tree: ', function() {
     expect(answer).toBeTruthy();
   });
 
+  it('preparation relationship', function () {
+    var gTree = getGenealogyTree();
+    var relationship = getRelationships().slice(0, 1)[0];
+
+    gTree.preparationRelationship(relationship);
+
+    expect(gTree.relationships.length).toEqual(getRelationships().length - 1);
+    expect(gTree.edges.length).toEqual(6);
+    expect(gTree.dataLayouts[gTree.level + 1].length).toEqual(relationship.children.length);
+    expect(gTree.layouts[gTree.level].length).toEqual(2);
+  });
+
   it('create edges of relationship', function() {
     var relationship = getRelationships().slice(0, 1)[0];
     var type = 'marriage'

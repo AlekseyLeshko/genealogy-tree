@@ -126,15 +126,8 @@ function getRootRelationships(){
   return rootRelationships;
 };
 
-function getDefaultOptions() {
+function getDefaultGenealogyTreeOptions() {
   var defaultOptions = {
-    frame: {
-      width: 250,
-      height: 250
-    },
-    stepX: 75,
-    stepY: 100,
-    nodeWidth: 30,
     startLevel: 0
   };
   return defaultOptions;

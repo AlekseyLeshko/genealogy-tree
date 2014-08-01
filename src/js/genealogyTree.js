@@ -1,6 +1,4 @@
 var GenealogyTree = function(nodes, relationships, rootRelationships) {
-  'use strict';
-
   this.init();
 
   this.nodes = nodes;
@@ -10,71 +8,52 @@ var GenealogyTree = function(nodes, relationships, rootRelationships) {
 
 GenealogyTree.prototype = {
   init: function() {
-    this.options = this.getDefaultOptions();
-    this.level = this.options.startLevel;
+    this.level = 0;
     this.dataLayouts = [];
     this.layouts = [];
     this.edges = [];
   },
 
-  getDefaultOptions: function() {
-    var defaultOptions = {
-      frame: {
-        width: 250,
-        height: 250
-      },
-      stepX: 75,
-      stepY: 100,
-      nodeWidth: 30,
-      startLevel: 0
-    };
-    return defaultOptions;
+  generationTree: function() {
+    this.layouts.length = 3;
   },
 
   generationLayouts: function() {
-    do {
-      this.generationLayout();
-      if (this.needToCreateNextLayout()) {
-        this.preparationNextLayout();
-      } else {
-        break;
-      }
-    } while(true);
+    // do {
+    //   this.generationLayout();
+    //   if (this.needToCreateNextLayout()) {
+    //     this.preparationNextLayout();
+    //   } else {
+    //     break;
+    //   }
+    // } while(true);
+
+    this.layouts.length = 3;
+  },
+
+  generationLayout: function() {
+    // _.each(this.dataLayouts[this.level], this.preparationRelationship, this);
   },
 
   preparationNextLayout: function() {
     this.level++;
-    var nodeArr = this.findNodesByIds(this.dataLayouts[this.level]);
-    this.dataLayouts[this.level] = this.getRelationships(nodeArr);
+    // var nodeArr = this.findNodesByIds(this.dataLayouts[this.level]);
+    // this.dataLayouts[this.level] = this.getRelationships(nodeArr);
   },
 
   needToCreateNextLayout: function() {
-    var answer = false;
-
-    if (this.nextLayoutIsExists()) {
-      answer = true;
-    }
-    return answer;
+    return this.nextLayoutIsExists();
   },
 
   nextLayoutIsExists: function() {
     var nextLeval = this.level + 1;
 
-    var layoutIsExists = this.dataLayouts[nextLeval];
-    if (!layoutIsExists) {
-      return false;
-    }
-
-    var layoutIsEmpty = this.dataLayouts[nextLeval].length > 0;
-    if (!layoutIsEmpty) {
+    if (!this.dataLayouts[nextLeval] ||
+      !(this.dataLayouts[nextLeval].length > 0)) {
       return false;
     }
 
     return true;
-  },
-
-  generationLayout: function() {
-    _.each(this.dataLayouts[this.level], this.preparationRelationship, this);
   },
 
   preparationRelationship: function(relationship) {
@@ -117,49 +96,6 @@ GenealogyTree.prototype = {
     layout = layout.concat(arr);
 
     this.layouts[this.level] = layout;
-  },
-
-  calcContainerParameters: function() {
-    this.options.container = {
-      width: this.calcWidthСontainer(),
-      height: this.calcHeightСontainer()
-    };
-  },
-
-  calcCoordinatesForLayouts: function() {
-    for (var i = 0; i < this.layouts.length; i++) {
-      if (this.layouts[i]) {
-        this.level = i;
-        this.layouts[i] = this.calcCoordinatesForLayout(this.layouts[i]);
-      }
-    }
-  },
-
-  calcCoordinatesForLayout: function(arr) {
-    var layout = [];
-    var y = this.calcStartY(arr.length);
-    var x = this.calcValX();
-    for (var i = 0; i < arr.length; i++) {
-      var node = arr[i];
-      node.x = x;
-      node.y = y;
-      layout.push(node);
-      y += this.options.stepY;
-    }
-    return layout;
-  },
-
-  calcStartY: function(countNode) {
-    var y = (((countNode / 2) * this.options.nodeWidth) + ((countNode - 1) * this.options.stepY)) / 2;
-    var res = (this.options.container.width / 2) - y;
-    return res;
-  },
-
-  calcValX: function() {
-    var frame = this.options.frame.height;
-    var width = this.level * this.options.stepX;
-    var x =  frame + width;
-    return x;
   },
 
   findElementInArr: function(key, val, arr) {
@@ -240,47 +176,5 @@ GenealogyTree.prototype = {
 
   comparison: function(x, y) {
     return  JSON.stringify(x) === JSON.stringify(y) ;
-  },
-
-  widthCalculationLayout: function() {
-    if (this.layouts.length <= 0) {
-      return 0;
-    }
-
-    var arr = [];
-    _.each(this.layouts, function(layout) {
-      if (layout) {
-        var length = layout.length;
-        arr.push(length);
-      }
-    });
-
-    if (arr.length <= 0) {
-      return 0;
-    }
-
-    var maxCount = _.max(arr, function(length) {
-      return length;
-    });
-
-    var width = (this.options.nodeWidth * maxCount) + ((maxCount - 1) * this.options.stepY);
-
-    return width;
-  },
-
-  calcWidthСontainer: function() {
-    var widthLayout = this.widthCalculationLayout();
-    var frame = this.options.frame.width * 2;
-    var width = widthLayout + frame;
-
-    return width;
-  },
-
-  calcHeightСontainer: function() {
-    var heightLayouts = (this.layouts.length * this.options.stepY);
-    var frame = this.options.frame.height * 2;
-    var height = heightLayouts + frame;
-
-    return height;
   }
 };

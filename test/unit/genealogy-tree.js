@@ -100,26 +100,22 @@ describe('Genealogy tree: ', function() {
     expect(arr.length).toEqual(length - 1);
   });
 
-  // it('get nodes', function() {
-  //   var nodes = getNodes();
-  //   var relationships = getRelationships();
-  //   var rootRelationships = getRootRelationships();
+  it('get nodes', function() {
+    var gTree = getCreatedGenealogyTree();
 
-  //   var gTree = new GenealogyTree(nodes, relationships, rootRelationships);
-  //   gTree.generationLayouts();
-  //   var nodes = gTree.getNodes();
+    var nodes = gTree.getNodes();
 
-  //   expect(nodes.length).toEqual(4);
-  // });
+    expect(nodes.length).toEqual(2);
+  });
 
-  // it('comparison objects', function() {
-  //   var x = { a: 1, b: 2};
-  //   var y = { a: 1, b: 2};
+  it('comparison objects', function() {
+    var x = { a: 1, b: 2};
+    var y = { a: 1, b: 2};
 
-  //   var res = GenealogyTree.prototype.comparison(x, y);
+    var res = GenealogyTree.prototype.comparison(x, y);
 
-  //   expect(res).toBeTruthy();
-  // });
+    expect(res).toBeTruthy();
+  });
 
   it('add spouses node to layout', function() {
     var val = getRelationships()[0];
@@ -151,29 +147,29 @@ describe('Genealogy tree: ', function() {
     expect(answer).toBeTruthy();
   });
 
-  // it('next layout is exists when next layout is undefined', function() {
-  //   GenealogyTree.prototype.level = 0;
-  //   GenealogyTree.prototype.dataLayouts = [];
-  //   var answer = GenealogyTree.prototype.nextLayoutIsExists();
+  it('next layout is exists when next layout is undefined', function() {
+    GenealogyTree.prototype.level = 0;
+    GenealogyTree.prototype.dataLayouts = [];
+    var answer = GenealogyTree.prototype.nextLayoutIsExists();
 
-  //   expect(answer).toBeFalsy();
-  // });
+    expect(answer).toBeFalsy();
+  });
 
-  // it('next layout is exists when next layout is empty', function() {
-  //   GenealogyTree.prototype.level = 0;
-  //   GenealogyTree.prototype.dataLayouts = [[], []];
-  //   var answer = GenealogyTree.prototype.nextLayoutIsExists();
+  it('next layout is exists when next layout is empty', function() {
+    GenealogyTree.prototype.level = 0;
+    GenealogyTree.prototype.dataLayouts = [[], []];
+    var answer = GenealogyTree.prototype.nextLayoutIsExists();
 
-  //   expect(answer).toBeFalsy();
-  // });
+    expect(answer).toBeFalsy();
+  });
 
-  // it('next layout is exists when next layout is not empty', function() {
-  //   GenealogyTree.prototype.level = 0;
-  //   GenealogyTree.prototype.dataLayouts = [[], [1, 2]];
-  //   var answer = GenealogyTree.prototype.nextLayoutIsExists();
+  it('next layout is exists when next layout is not empty', function() {
+    GenealogyTree.prototype.level = 0;
+    GenealogyTree.prototype.dataLayouts = [[], [1, 2]];
+    var answer = GenealogyTree.prototype.nextLayoutIsExists();
 
-  //   expect(answer).toBeTruthy();
-  // });
+    expect(answer).toBeTruthy();
+  });
 
   // it('create edges of relationship', function() {
   //   var relationship = getRelationships().slice(0, 1)[0];

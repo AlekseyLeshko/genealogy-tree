@@ -27,7 +27,7 @@ GenealogyTree.prototype = {
   },
 
   generationLayout: function(dataLayout) {
-    console.log(dataLayout);
+    // console.log(dataLayout);
     _.each(dataLayout, this.preparationRelationship, this);
   },
 
@@ -128,13 +128,7 @@ GenealogyTree.prototype = {
   },
 
   getNodes: function() {
-    var nodes = [];
-    for (var i = 0; i < this.layouts.length; i++) {
-      if (this.layouts[i]) {
-        nodes = nodes.concat(this.layouts[i]);
-      }
-    }
-
+    var nodes = _.flatten(this.layouts);
     return nodes;
   },
 

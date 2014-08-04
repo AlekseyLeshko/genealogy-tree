@@ -51,7 +51,8 @@ var karmaCommonConf = {
   files: [
     'src/js/**/*.js',
     'test/unit/**/*.js',
-    'node_modules/underscore/underscore-min.js'
+    'node_modules/underscore/underscore-min.js',
+    'node_modules/d3/d3.min.js'
   ],
   autoWatch : true,
   usePolling: true,

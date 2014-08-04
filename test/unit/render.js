@@ -85,14 +85,14 @@ describe('Render: ', function() {
     expect(render.wrapper.attr('transform')).toEqual('translate(220, 220)scale(2)');
   });
 
-  it('tree', function() {
-    var gTree = getGenealogyTree();
-    var render = new Render();
+  // it('tree', function() {
+  //   var gTree = getGenealogyTree();
+  //   var render = new Render();
 
-    render.tree(gTree);
+  //   render.tree(gTree);
 
-    expect(render.gTree).not.toBeUndefined();
-  });
+  //   expect(render.gTree).not.toBeUndefined();
+  // });
 
   it('config container', function() {
     var options = {container: {id: 'body'}};
@@ -123,5 +123,30 @@ describe('Render: ', function() {
 
     expect(render.main.attr('transform')).not.toBeNull();
     expect(render.main.attr('transform')).toEqual('translate(10,10)scale(1)');
+  });
+
+  it('render node containers', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+    render.gTree = gTree;
+    render.configContainer();
+    render.renderNodeContainers();
+
+    expect(render.main.selectAll('.node')[0].length).toEqual(10);
+  });
+
+  it('render node containers', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+    render.gTree = gTree;
+    render.configContainer();
+    render.renderNodeContainers();
+    render.renderNodeImgs();
+
+    expect(render.main.selectAll('image')[0].length).toEqual(10);
   });
 });

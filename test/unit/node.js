@@ -31,8 +31,8 @@ describe('Node: ', function() {
     node.updateToParentNode(children, edges);
 
     expect(node.parents.length).toEqual(0);
-    expect(node.children).not.toBeUndefined();
-    expect(node.edges).not.toBeUndefined();
+    expect(node.children.length).toEqual(children.length);
+    expect(node.edges.length).toEqual(edges.length);
   });
 
   it('update data to child node', function() {
@@ -46,8 +46,8 @@ describe('Node: ', function() {
 
     node.updateToChildNode(parents, edges);
 
-    expect(node.parents).not.toBeUndefined();
+    expect(node.parents.length).toEqual(parents.length);
     expect(node.children.length).toEqual(0);
-    expect(node.edges).not.toBeUndefined();
+    expect(node.edges.length).toEqual(edges.length);
   });
 });

@@ -106,18 +106,31 @@ GenealogyTree.prototype = {
   },
 
   createEdges: function(relationship) {
+    var edgeArr = [];
     var parents = this.findNodesByIds(relationship.spouses);
 
     var parentEdge = new Edge(_.first(parents),
       _.last(parents), relationship.type);
-    this.edges.push(parentEdge);
+    edgeArr.push(parentEdge);
 
     var children = this.findNodesByIds(relationship.children);
 
     _.each(children, function(node) {
       var edge = new Edge(parentEdge, node, relationship.childrenType);
-      this.edges.push(edge);
+      edgeArr.push(edge);
+      node.updateToChildNode(parents, edge);
     }, this);
+
+    this.edges = this.edges.concat(edgeArr);
+
+    _.first(parents).updateToParentNode(children, edgeArr);
+    _.last(parents).updateToParentNode(children, edgeArr);
+  },
+
+  updateNode: function(node, parents, children, edges) {
+    node.parents = parents;
+    node.children = children;
+    node.edges = edges;
   },
 
   unsetRelationship: function(value) {

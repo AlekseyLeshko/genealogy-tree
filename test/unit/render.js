@@ -104,10 +104,24 @@ describe('Render: ', function() {
       }
     };
     render.configContainer();
-    console.log(render.main.select('rect'));
 
     expect(render.main.select('rect').attr('class')).toEqual('overlay');
     expect(render.main.select('rect').attr('width')).toEqual('500');
     expect(render.main.select('rect').attr('height')).toEqual('500');
+  });
+
+  it('zoom-zoom mazda', function() {
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+    d3.event = {
+      translate: [10, 10],
+      scale: 1
+    };
+
+    var zoom = render.zoom();
+    zoom();
+
+    expect(render.main.attr('transform')).not.toBeNull();
+    expect(render.main.attr('transform')).toEqual('translate(10,10)scale(1)');
   });
 });

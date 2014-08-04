@@ -266,4 +266,14 @@ describe('Genealogy tree: ', function() {
     expect(nodes.length).toEqual(getNodes().length);
     expect(_.first(nodes).getType()).toEqual('Node');
   });
+
+  it('get container parameters', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+
+    var parameters = gTree.getContainerParameters();
+
+    expect(parameters.width).toEqual(1050);
+    expect(parameters.height).toEqual(900);
+  });
 });

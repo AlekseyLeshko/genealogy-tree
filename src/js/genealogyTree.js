@@ -22,6 +22,15 @@ GenealogyTree.prototype = {
     this.gtClal.calcCoordinatesForLayouts();
   },
 
+  getContainerParameters: function() {
+    var parameters = {
+      width: this.gtClal.options.container.width,
+      height: this.gtClal.options.container.height
+    };
+
+    return parameters;
+  },
+
   generationLayouts: function() {
     do {
       this.preparationLayout();

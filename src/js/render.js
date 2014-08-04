@@ -49,17 +49,16 @@ Render.prototype = {
   },
 
   configContainer: function() {
-    var width = this.gTree.gtClal.options.container.width;
-    var height = this.gTree.gtClal.options.container.height;
+    var parameters = this.gTree.getContainerParameters();
 
-    this.main.append("rect")
+    this.main
+      .append("rect")
       .attr("class", "overlay")
-      .attr("width", width)
-      .attr("height", height);
+      .attr("width", parameters.width)
+      .attr("height", parameters.height);
   },
 
   renderTree: function() {
-    this.renderNodeContainers();
   },
 
   zoom: function() {

@@ -229,7 +229,7 @@ describe('Genealogy tree: ', function() {
     var relationship = getRelationships().slice(0, 1)[0];
     var type = 'marriage'
     var childrenType = 'of_marriage';
-    GenealogyTree.prototype.nodes = getNodes();
+    GenealogyTree.prototype.nodes = GenealogyTree.prototype.createNodes(getNodes());
     GenealogyTree.prototype.edges = [];
 
     GenealogyTree.prototype.createEdges(relationship);

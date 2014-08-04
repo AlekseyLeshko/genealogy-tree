@@ -7,6 +7,9 @@ describe('Node: ', function() {
 
     expect(node).not.toBeUndefined();
     expect(node).not.toBeNull();
+    expect(node.parents.length).toEqual(0);
+    expect(node.children.length).toEqual(0);
+    expect(node.edges.length).toEqual(0);
   });
 
   it('get type', function() {
@@ -21,12 +24,13 @@ describe('Node: ', function() {
     var children = getNodes().slice(2, 7);
     var edges = [new Edge(), new Edge()]
 
-    expect(node.parents).toBeUndefined();
-    expect(node.children).toBeUndefined();
-    expect(node.edges).toBeUndefined();
+    expect(node.parents.length).toEqual(0);
+    expect(node.children.length).toEqual(0);
+    expect(node.edges.length).toEqual(0);
 
     node.updateToParentNode(children, edges);
 
+    expect(node.parents.length).toEqual(0);
     expect(node.children).not.toBeUndefined();
     expect(node.edges).not.toBeUndefined();
   });
@@ -36,12 +40,14 @@ describe('Node: ', function() {
     var parents = getNodes().splice(0, 1);
     var edges = [new Edge(), new Edge()]
 
-    expect(node.parents).toBeUndefined();
-    expect(node.edges).toBeUndefined();
+    expect(node.parents.length).toEqual(0);
+    expect(node.children.length).toEqual(0);
+    expect(node.edges.length).toEqual(0);
 
     node.updateToChildNode(parents, edges);
 
     expect(node.parents).not.toBeUndefined();
+    expect(node.children.length).toEqual(0);
     expect(node.edges).not.toBeUndefined();
   });
 });

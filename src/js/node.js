@@ -7,6 +7,10 @@ var Node = function(data) {
   this.isDeid = data.isDeid;
   this.weight = data.weight;
 
+  this.parents = [];
+  this.children = [];
+  this.edges = [];
+
   this.type = 'Node';
 };
 

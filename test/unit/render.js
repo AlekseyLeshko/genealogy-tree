@@ -61,12 +61,27 @@ describe('Render: ', function() {
   it('calculation new coordinate', function() {
     var options = {container: {id: 'body'}};
     var render = new Render(options);
-    console.log(render.options);
 
-    var val = 100;
-    var side = 80;
-    var newVal = render.calcNewCoordinate(val, side);
+    var coordinate = 100;
+    var nodeSide = 80;
+    var containerSide = 1000;
+    var newCoordinate = render.calcNewCoordinate(coordinate, nodeSide, containerSide);
 
-    expect(newVal).toEqual(260);
+    expect(newCoordinate).toEqual(220);
+  });
+
+  it('focus to node', function() {
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+
+    var node = {
+      x: 100,
+      y: 100,
+      width: 80,
+      height: 80
+    };
+    render.focusToNode(node);
+
+    expect(render.wrapper.attr('transform')).toEqual('translate(220, 220)scale(2)');
   });
 });

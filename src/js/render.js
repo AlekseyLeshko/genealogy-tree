@@ -69,20 +69,17 @@ Render.prototype = {
     };
   },
 
-  calcNewCoordinate: function(coordinate, side) {
+  calcNewCoordinate: function(coordinate, nodeSide, containerSide) {
     var newCoordinate = coordinate * this.options.focus.scale;
-    newCoordinate += side / 2;
+    newCoordinate += (nodeSide * this.options.focus.scale) / 2;
 
-    var newCoordinateAlignCenter = (this.options.container.width / 2) - newCoordinate;
-    console.log(this.options.container.width);
+    var newCoordinateAlignCenter = (containerSide / 2) - newCoordinate;
     return newCoordinateAlignCenter;
   },
 
   focusToNode: function(node) {
-    var halfNodeWidth = 44;
-    var halfNodeHeight = 32;
-    var x = this.calc(node.x, halfNodeWidth);
-    var y = this.calc(node.y, halfNodeHeight);
+    var x = this.calcNewCoordinate(node.x, node.width, this.options.container.width);
+    var y = this.calcNewCoordinate(node.y, node.height, this.options.container.height);
 
     this.focus(x, y);
   },
@@ -91,7 +88,7 @@ Render.prototype = {
     this.cleanTransform(this.main);
     this.cleanTransform(this.wrapper);
 
-    var val = 'translate(' + y + ', ' +  x +')scale(' +
+    var val = 'translate(' + x + ', ' +  y +')scale(' +
       this.options.focus.scale + ')';
 
     this.wrapper.attr('transform', val);

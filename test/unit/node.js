@@ -74,4 +74,27 @@ describe('Node: ', function() {
     var magicNum = 30;
     expect(node.width).not.toEqual(magicNum);
   });
+
+  it('get height', function() {
+    var node = new Node(getNodes().slice(0, 1)[0]);
+
+    expect(node.height).toBeUndefined();
+
+    node.getHeight();
+
+    var magicNum = 30;
+    expect(node.height).toEqual(magicNum);
+  });
+
+  it('start get height the second time', function() {
+    var node = new Node(getNodes().slice(0, 1)[0]);
+
+    node.height = 40;
+    expect(node.height).toEqual(40);
+
+    node.getHeight();
+
+    var magicNum = 30;
+    expect(node.height).not.toEqual(magicNum);
+  });
 });

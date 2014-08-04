@@ -37,5 +37,15 @@ Node.prototype = {
     }
 
     return this.width;
+  },
+
+  getHeight: function() {
+    var magicNum = 30;
+
+    if (!this.height) {
+      this.height = magicNum;
+    }
+
+    return this.height;
   }
 };

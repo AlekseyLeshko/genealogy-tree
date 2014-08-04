@@ -26,6 +26,6 @@ Node.prototype = {
 
   updateToChildNode: function(parents, edges) {
     this.parents = parents;
-    this.edges = edges;
+    this.edges = this.edges.concat(edges);
   }
 };

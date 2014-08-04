@@ -69,13 +69,13 @@ Render.prototype = {
     };
   },
 
-  calc: function(val, halfSide) {
-    var sum = ((val * scale) + halfSide);
-    console.log('sum = ' + sum);
+  calcNewCoordinate: function(coordinate, side) {
+    var newCoordinate = coordinate * this.options.focus.scale;
+    newCoordinate += side / 2;
 
-    var res = (this.width / 2) - sum;
-    console.log('res = ' + res);
-    return res;
+    var newCoordinateAlignCenter = (this.options.container.width / 2) - newCoordinate;
+    console.log(this.options.container.width);
+    return newCoordinateAlignCenter;
   },
 
   focusToNode: function(node) {
@@ -84,7 +84,7 @@ Render.prototype = {
     var x = this.calc(node.x, halfNodeWidth);
     var y = this.calc(node.y, halfNodeHeight);
 
-    this.focus(x, y, scale);
+    this.focus(x, y);
   },
 
   focus: function(x, y) {

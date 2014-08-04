@@ -3,11 +3,12 @@
 describe('Node: ', function() {
   it('create node', function() {
     var data = getNodes().splice(0, 1);
-    var node = new Node(data);
+    var parents = getNodes().splice(1, 2);
+    var children = getNodes().splice(2, 4);
+    var node = new Node(data, parents, children);
 
     expect(node).not.toBeUndefined();
     expect(node).not.toBeNull();
-    expect(node.data).not.toBeNull();
   });
 
   it('get type', function() {

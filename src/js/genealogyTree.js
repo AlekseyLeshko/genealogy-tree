@@ -14,6 +14,14 @@ GenealogyTree.prototype = {
     this.edges = [];
   },
 
+  generation: function() {
+    this.generationLayouts();
+
+    this.gtClal = new GenealogyTreeCalculator(this.layouts, this.edges);
+    this.gtClal.calcContainerParameters();
+    this.gtClal.calcCoordinatesForLayouts();
+  },
+
   generationLayouts: function() {
     do {
       this.preparationLayout();

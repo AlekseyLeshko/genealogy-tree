@@ -93,4 +93,21 @@ describe('Render: ', function() {
 
     expect(render.gTree).not.toBeUndefined();
   });
+
+  it('config container', function() {
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+
+    Render.prototype.gTree = {
+      getContainerParameters: function() {
+        return { width: 500, height: 500 };
+      }
+    };
+    render.configContainer();
+    console.log(render.main.select('rect'));
+
+    expect(render.main.select('rect').attr('class')).toEqual('overlay');
+    expect(render.main.select('rect').attr('width')).toEqual('500');
+    expect(render.main.select('rect').attr('height')).toEqual('500');
+  });
 });

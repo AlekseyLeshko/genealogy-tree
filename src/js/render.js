@@ -45,7 +45,6 @@ Render.prototype = {
     this.gTree.generation();
 
     this.configContainer();
-    this.renderTree();
   },
 
   configContainer: function() {
@@ -56,9 +55,6 @@ Render.prototype = {
       .attr("class", "overlay")
       .attr("width", parameters.width)
       .attr("height", parameters.height);
-  },
-
-  renderTree: function() {
   },
 
   zoom: function() {

@@ -10,6 +10,8 @@ describe('Node: ', function() {
     expect(node.parents.length).toEqual(0);
     expect(node.children.length).toEqual(0);
     expect(node.edges.length).toEqual(0);
+    expect(node.width).not.toBeUndefined();
+    expect(node.height).not.toBeUndefined();
   });
 
   it('get type', function() {
@@ -53,14 +55,12 @@ describe('Node: ', function() {
   });
 
   it('get width', function() {
-    var node = new Node(getNodes().slice(0, 1)[0]);
+    expect(Node.prototype.width).toBeUndefined();
 
-    expect(node.width).toBeUndefined();
-
-    node.getWidth();
+    Node.prototype.getWidth();
 
     var magicNum = 30;
-    expect(node.width).toEqual(magicNum);
+    expect(Node.prototype.width).toEqual(magicNum);
   });
 
   it('start get width the second time', function() {
@@ -76,14 +76,12 @@ describe('Node: ', function() {
   });
 
   it('get height', function() {
-    var node = new Node(getNodes().slice(0, 1)[0]);
+    expect(Node.prototype.height).toBeUndefined();
 
-    expect(node.height).toBeUndefined();
-
-    node.getHeight();
+    Node.prototype.getHeight();
 
     var magicNum = 30;
-    expect(node.height).toEqual(magicNum);
+    expect(Node.prototype.height).toEqual(magicNum);
   });
 
   it('start get height the second time', function() {

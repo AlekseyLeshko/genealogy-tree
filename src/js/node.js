@@ -6,6 +6,8 @@ var Node = function(data) {
   this.isUnnamed = data.isUnnamed;
   this.isDeid = data.isDeid;
   this.weight = data.weight;
+  this.width = this.getWidth();
+  this.height = this.getHeight();
 
   this.parents = [];
   this.children = [];

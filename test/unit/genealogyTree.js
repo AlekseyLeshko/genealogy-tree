@@ -1,6 +1,25 @@
 'use strict';
 
 describe('Genealogy tree: ', function() {
+  it('generation', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+
+    var layouts = gTree.layouts;
+
+    expect(layouts.length).toEqual(4);
+    expect(layouts[0].length).toEqual(2);
+    expect(layouts[1].length).toEqual(5);
+    expect(layouts[2].length).toEqual(2);
+    expect(layouts[3].length).toEqual(1);
+    _.each(layouts, function(layout) {
+      _.each(layout, function(node) {
+        expect(node.x).not.toBeUndefined();
+        expect(node.y).not.toBeUndefined()
+        });
+    });
+  });
+
   it('create tree without parameters', function() {
     var gTree = new GenealogyTree();
 

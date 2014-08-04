@@ -1,5 +1,5 @@
 var Render = function(options) {
-  this.options = _.extend(this.getDefaultOptions(), options);
+  this.options = $.extend(true, this.getDefaultOptions(), options);
 
   this.createContainer();
 };

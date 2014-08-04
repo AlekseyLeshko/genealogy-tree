@@ -57,4 +57,16 @@ describe('Render: ', function() {
     expect(render.main.attr('transform')).toBeNull();
     expect(render.wrapper.attr('transform')).toEqual('translate(10, 10)scale(2)');
   });
+
+  it('calculation new coordinate', function() {
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+    console.log(render.options);
+
+    var val = 100;
+    var side = 80;
+    var newVal = render.calcNewCoordinate(val, side);
+
+    expect(newVal).toEqual(260);
+  });
 });

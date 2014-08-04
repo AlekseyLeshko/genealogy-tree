@@ -89,23 +89,17 @@ var lineGraph = main.append('g')
   return lineGraph;
 };
 
-function createNode(nodes) {
-  var svgNodes = main.selectAll(".node")
-      .data(nodes)
-    .enter().append("g")
-      .attr("class", "node")
-      .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
-  return svgNodes;
-};
-
 function createTree(nodes, edges) {
-  var svgNodes = createNode(nodes);
-  console.log(svgNodes);
-  createCircle(svgNodes);
+  var svgNodes = [];
+  var render = new Render(nodes, main);
+  render.renderTree();
+  // var svgNodes = createNode(nodes);
+  // console.log(svgNodes);
+  // createCircle(svgNodes);
 
-  createNodelabel(svgNodes);
-  addSymbol(svgNodes, symbols.unnamed);
-  createEdges(edges);
+  // createNodelabel(svgNodes);
+  // addSymbol(svgNodes, symbols.unnamed);
+  // createEdges(edges);
 };
 
 function createEdges(edges) {

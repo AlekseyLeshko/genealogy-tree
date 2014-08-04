@@ -36,14 +36,14 @@ GenealogyTreeCalculator.prototype = {
 
   calcCoordinatesForLayout: function(nodes) {
     var layout = [];
-    var x = this.calcValY();
-    var y = this.calcValX(nodes.length);
+    var x = this.calcValX(nodes.length);
+    var y = this.calcValY();
 
     _.each(nodes, function(node) {
       node.x = x;
       node.y = y;
       layout.push(node);
-      y += this.options.stepY;
+      x += this.options.stepX;
     }, this);
 
     return layout;

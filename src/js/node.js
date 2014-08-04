@@ -27,5 +27,15 @@ Node.prototype = {
   updateToChildNode: function(parents, edges) {
     this.parents = parents;
     this.edges = this.edges.concat(edges);
+  },
+
+  getWidth: function() {
+    var magicNum = 30;
+
+    if (!this.width) {
+      this.width = magicNum;
+    }
+
+    return this.width;
   }
 };

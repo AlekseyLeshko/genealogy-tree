@@ -51,4 +51,27 @@ describe('Node: ', function() {
     expect(node.children.length).toEqual(0);
     expect(node.edges.length).toEqual(4);
   });
+
+  it('get width', function() {
+    var node = new Node(getNodes().slice(0, 1)[0]);
+
+    expect(node.width).toBeUndefined();
+
+    node.getWidth();
+
+    var magicNum = 30;
+    expect(node.width).toEqual(magicNum);
+  });
+
+  it('start get width the second time', function() {
+    var node = new Node(getNodes().slice(0, 1)[0]);
+
+    node.width = 40;
+    expect(node.width).toEqual(40);
+
+    node.getWidth();
+
+    var magicNum = 30;
+    expect(node.width).not.toEqual(magicNum);
+  });
 });

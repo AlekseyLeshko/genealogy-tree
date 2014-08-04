@@ -1,4 +1,4 @@
-var Node = function(data, parents, children, edges) {
+var Node = function(data) {
   this.id = data.id;
   this.name = data.name;
   this.gender = data.gender;
@@ -7,15 +7,21 @@ var Node = function(data, parents, children, edges) {
   this.isDeid = data.isDeid;
   this.weight = data.weight;
 
-  this.parents = parents;
-  this.children = children;
-  this.edges = edges;
-
   this.type = 'Node';
 };
 
 Node.prototype = {
   getType: function() {
     return this.type;
+  },
+
+  updateToParentNode: function(children, edges) {
+    this.children = children;
+    this.edges = edges;
+  },
+
+  updateToChildNode: function(parents, edges) {
+    this.parents = parents;
+    this.edges = edges;
   }
 };

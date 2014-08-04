@@ -3,9 +3,7 @@
 describe('Node: ', function() {
   it('create node', function() {
     var data = getNodes().splice(0, 1);
-    var parents = getNodes().splice(1, 2);
-    var children = getNodes().splice(2, 4);
-    var node = new Node(data, parents, children);
+    var node = new Node(data);
 
     expect(node).not.toBeUndefined();
     expect(node).not.toBeNull();
@@ -16,5 +14,34 @@ describe('Node: ', function() {
     var node = new Node(data);
 
     expect(node.getType()).toEqual('Node');
+  });
+
+  it('update data to parent node', function() {
+    var node = new Node(getNodes().slice(0, 1));
+    var children = getNodes().slice(2, 7);
+    var edges = [new Edge(), new Edge()]
+
+    expect(node.parents).toBeUndefined();
+    expect(node.children).toBeUndefined();
+    expect(node.edges).toBeUndefined();
+
+    node.updateToParentNode(children, edges);
+
+    expect(node.children).not.toBeUndefined();
+    expect(node.edges).not.toBeUndefined();
+  });
+
+  it('update data to child node', function() {
+    var node = new Node(getNodes().slice(3, 4));
+    var parents = getNodes().splice(0, 1);
+    var edges = [new Edge(), new Edge()]
+
+    expect(node.parents).toBeUndefined();
+    expect(node.edges).toBeUndefined();
+
+    node.updateToChildNode(parents, edges);
+
+    expect(node.parents).not.toBeUndefined();
+    expect(node.edges).not.toBeUndefined();
   });
 });

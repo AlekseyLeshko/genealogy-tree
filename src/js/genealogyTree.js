@@ -127,12 +127,6 @@ GenealogyTree.prototype = {
     _.last(parents).updateToParentNode(children, edgeArr);
   },
 
-  updateNode: function(node, parents, children, edges) {
-    node.parents = parents;
-    node.children = children;
-    node.edges = edges;
-  },
-
   unsetRelationship: function(value) {
     var self = this;
     var index = _.find(this.relationships, function(obj) {

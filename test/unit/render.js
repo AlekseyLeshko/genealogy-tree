@@ -84,4 +84,13 @@ describe('Render: ', function() {
 
     expect(render.wrapper.attr('transform')).toEqual('translate(220, 220)scale(2)');
   });
+
+  it('tree', function() {
+    var gTree = getGenealogyTree();
+    var render = new Render();
+
+    render.tree(gTree);
+
+    expect(render.gTree).not.toBeUndefined();
+  });
 });

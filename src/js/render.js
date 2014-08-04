@@ -69,7 +69,7 @@ Render.prototype = {
     };
   },
 
-  calc: function(val, halfSide, scale) {
+  calc: function(val, halfSide) {
     var sum = ((val * scale) + halfSide);
     console.log('sum = ' + sum);
 
@@ -78,23 +78,23 @@ Render.prototype = {
     return res;
   },
 
-  focus: function(node) {
+  focusToNode: function(node) {
     var halfNodeWidth = 44;
     var halfNodeHeight = 32;
-    var scale = 2;
-    var x = this.calc(node.x, halfNodeWidth, scale);
-    var y = this.calc(node.y, halfNodeHeight, scale);
+    var x = this.calc(node.x, halfNodeWidth);
+    var y = this.calc(node.y, halfNodeHeight);
 
-    this._focus(x, y, scale);
+    this.focus(x, y, scale);
   },
 
-  _focus: function(x, y, scale) {
+  focus: function(x, y) {
     this.cleanTransform(this.main);
     this.cleanTransform(this.wrapper);
 
-    var str = 'translate(' + y + ', ' +  x +')scale(' + scale + ')';
+    var val = 'translate(' + y + ', ' +  x +')scale(' +
+      this.options.focus.scale + ')';
 
-    this.wrapper.attr('transform', str);
+    this.wrapper.attr('transform', val);
   },
 
   cleanTransform: function(el) {

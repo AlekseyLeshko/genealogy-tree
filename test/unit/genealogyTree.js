@@ -240,4 +240,11 @@ describe('Genealogy tree: ', function() {
     expect(edges[1].typeRelationship).toEqual(childrenType);
     expect(edges[2].typeRelationship).toEqual(childrenType);
   });
+
+  it('create nodes', function() {
+    var nodes = GenealogyTree.prototype.createNodes(getNodes());
+
+    expect(nodes.length).toEqual(getNodes().length);
+    expect(_.first(nodes).getType()).toEqual('Node');
+  });
 });

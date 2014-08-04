@@ -9,4 +9,11 @@ describe('Node: ', function() {
     expect(node).not.toBeNull();
     expect(node.data).not.toBeNull();
   });
+
+  it('get type', function() {
+    var data = getNodes().splice(0, 1);
+    var node = new Node(data);
+
+    expect(node.getType()).toEqual('Node');
+  });
 });

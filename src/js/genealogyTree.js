@@ -1,7 +1,7 @@
-var GenealogyTree = function(nodes, relationships, rootIds) {
+var GenealogyTree = function(dataNodes, relationships, rootIds) {
   this.init();
 
-  this.nodes = nodes;
+  this.nodes = this.createNodes(dataNodes);
   this.relationships = relationships;
   this.dataLayouts[this.level] = rootIds;
 };
@@ -136,5 +136,15 @@ GenealogyTree.prototype = {
 
   comparison: function(x, y) {
     return JSON.stringify(x) === JSON.stringify(y) ;
+  },
+
+  createNodes: function(dataNodes) {
+    var arr = [];
+    _.each(dataNodes, function(data) {
+      var node = new Node(data);
+      arr.push(node);
+    });
+
+    return arr;
   }
 };

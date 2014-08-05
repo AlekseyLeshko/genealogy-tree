@@ -186,11 +186,18 @@ GenealogyTree.prototype = {
   },
 
   renderNodeContainers: function() {
+    var self = this;
+    var adam = this.nodes[0];
+
     this.svgNodes = this.svgContainer
       .selectAll('.node')
       .data(this.nodes)
       .enter()
       .append('g')
+      .on("click", function(node) {
+        self.deactivatePath();
+        self.genealogyPath(node, adam);
+      })
       .attr('class', 'node')
       .attr('transform', function(d) {
         return 'translate(' + d.x + ',' + d.y + ')';
@@ -211,6 +218,28 @@ GenealogyTree.prototype = {
       .attr('height', function(node) {
         return node.height;
       });
+  },
+
+  genealogyPath: function(firstNode, lastNode) {
+    if (firstNode === lastNode) {
+      return;
+    }
+    var color = 'red';
+
+    var parent = _.first(firstNode.parents);
+    var a = _.findWhere(this.edges, { parent: parent });
+    a.setColor(color);
+
+    var b = _.findWhere(this.edges, { child: firstNode });
+    b.setColor(color);
+
+    this.genealogyPath(parent, lastNode);
+  },
+
+  deactivatePath: function() {
+    _.each(this.edges, function(edge) {
+      edge.setColor('black');
+    });
   },
 
   renderNodelabels: function() {

@@ -77,5 +77,5 @@ Node.prototype = {
   whetherDrawSymbol: function() {
     var answer = this.isConcubine || this.isUnnamed;
     return answer;
-  },
+  }
 };

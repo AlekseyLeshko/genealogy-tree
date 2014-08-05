@@ -372,4 +372,20 @@ describe('Genealogy tree: ', function() {
 
     expect(gTree.svgEdges.length).toEqual(12);
   });
+
+  it('genealogy path', function() {
+    var gTree = getGenealogyTree();
+    var render = new Render();
+    var node = gTree.nodes.slice(6, 7)[0];
+    var adam = gTree.nodes[0];
+
+    gTree.genealogyPath(node, adam);
+
+    var edges = gTree.svgEdges
+      .filter(function(edge) {
+        console.log(edge);
+        return edge;
+      });
+
+  });
 });

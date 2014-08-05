@@ -1,108 +1,158 @@
-var Edge = function(parent, child, type) {
+var Edge = (function() {
   'use strict';
-  this.parent = parent;
-  this.child = child;
-  this.typeRelationship = type;
+  var Edge = function(parent, child, type) {
+    //nodes = [], type = ''
 
-  this.init();
-};
+    this.parent = parent;
+    this.child = child;
+    this.typeRelationship = type;
 
-Edge.prototype = {
-  init: function() {
-    var self = this;
-    this.calcCoordinatesOfType = {
-      'marriage': function() { self.calcCoordinatesTypeMarrige(); },
-      'of_marriage': function() { self.calcCoordinatesTypeOfMarrige(); }
-    };
-    this.renderOfType = {
-      'marriage': function() { self.createLine(); },
-      'of_marriage': function() { self.paintPolyline(); }
-    };
-  },
+    this.init();
+  };
 
-  calcCoordinates: function() {
-    this.calcCoordinatesOfType[this.typeRelationship]();
-  },
+  Edge.prototype = {
+    calcCoordinates: function() {
+      this.methodOfType[this.typeRelationship].calculation();
+    },
 
-  calcCoordinatesTypeMarrige: function() {
-    this.x1 = this.parent.x + 5;
-    this.y1 = this.parent.y + 12;
+    render: function(svgContainer) {
+      this.drawAndSetEdgeContainer(svgContainer);
+      this.calcCoordinates();
 
-    this.x2 = this.child.x + 15;
-    this.y2 = this.child.y + 12;
+      this.methodOfType[this.typeRelationship].render();
+      return this.container;
+    },
 
-    this.middle = this.x2 + ((this.x1 - this.x2) / 2);
-  },
+    drawAndSetEdgeContainer: function(svgContainer) {
+      this.container = svgContainer
+        .append('g')
+        .attr('class', this.options.class);
+    },
 
-  calcCoordinatesTypeOfMarrige: function() {
-    this.points = [];
-    this.points.push(this.child.x + 9);
-    this.points.push(this.child.y + 7);
+    init: function() {
+      var self = this;
+      this.methodOfType = {
+        'marriage': {
+          calculation: function() {
+            return self.calcCoorTypeMarrige();
+          },
+          render: function() {
+            return self.renderTypeMarrige();
+          }
+        },
+        'of_marriage': {
+          calculation: function() {
+            return self.calcCoorTypeOfMarrige();
+          },
+          render: function() {
+            return self.renderTypeOfMarrige();
+          }
+        }
+      };
 
-    this.points.push(this.child.x + 9);
-    this.points.push(this.child.y - 25);
+      this.createOptions();
+    },
 
-    var dy = 50;
-    dy *= this.child.y <= this.parent.middle ? 1 : -1;
+    createOptions: function(options) {
+      var defaultOptions = {
+        class: 'link',
+        strokeColor: 'black',
+        strokeWidth: 1
+      };
 
-    this.points.push(this.child.x + dy + 9);
-    this.points.push(this.child.y - 25);
+      this.options = $.extend(true, defaultOptions, options);
+    },
 
-    this.points.push(this.child.x + dy + 9);
-    this.points.push(this.child.y - 63);
-  },
+    calcCoorTypeMarrige: function() {
+      var pairs = [];
+      var dx = (this.child.width / 2) + 4;
+      var dy = (this.child.height / 2) + 1;
+      var pair = {
+        x: this.parent.x + dx,
+        y: this.parent.y + dy
+      };
+      pairs.push(pair);
 
-  render: function(svgContainer) {
-    this.svgContainer = svgContainer;
-    this.calcCoordinates();
+      dx = (this.child.width / 4);
+      pair = {
+        x: this.child.x + dx,
+        y: this.child.y + dy
+      };
+      pairs.push(pair);
 
-    var svgEdge = this.renderOfType[this.typeRelationship]();
-    return svgEdge;
-  },
+      dx = (this.child.width / 2) + 4;
+      dy = (this.child.height / 2) + 4;
+      pair = {
+        x: this.parent.x + dx,
+        y: this.parent.y + dy
+      };
+      pairs.push(pair);
 
-  createLine: function() {
-    var self = this;
-    var line = this.svgContainer
-      .append('g')
-      .attr('class', 'edge')
-      .on('mouseover', function() {
-        self.setColor(this, 'red', 'line');
-      })
-      .on('mouseout', function() {
-        self.setColor(this, 'black', 'line');
-      })
-      .append('line')
-      .attr('x1', this.x1)
-      .attr('y1', this.y1)
-      .attr('x2', this.x2)
-      .attr('y2', this.y2)
-      .attr('stroke-width', 2)
-      .attr('stroke', 'black');
+      dx = (this.child.width / 4);
+      pair = {
+        x: this.child.x + dx,
+        y: this.child.y + dy
+      };
+      pairs.push(pair);
 
-    return line;
-  },
+      var middle = pairs[1].x + ((pairs[0].x - pairs[1].x) / 2);
+      pair = {
+        x: middle,
+        y: this.parent.y + dy
+      };
+      pairs.push(pair);
 
-  paintPolyline: function (edge) {
-    var self = this;
-    var lineGraph = this.svgContainer
-      .append('g')
-      .attr('class', 'edge')
-      .on('mouseover', function() {
-        self.setColor(this, 'red', 'polyline');
-      })
-      .on('mouseout', function() {
-        self.setColor(this, 'black', 'polyline');
-      })
-      .append('polyline')
-      .attr('points', this.points)
-      .attr('stroke', 'black')
-      .attr('stroke-width', 2)
-      .attr('fill', 'none');
+      dy += 25;
+      pair = {
+        x: middle,
+        y: this.child.y + dy
+      };
+      pairs.push(pair);
 
-    return lineGraph;
-  },
+      this.coordinates = {
+        pairs: pairs,
+        middle: middle
+      };
+    },
 
-  setColor: function(el, color, type) {
-    d3.select(el).selectAll(type).style('stroke', color);
-  }
-};
+    calcCoorTypeOfMarrige: function() {
+      var pairs = [];
+      var dy = -3;
+      var pair = {
+        x: this.child.x + (this.child.width / 2),
+        y: this.child.y + (this.child.height / 2) + dy
+      };
+      pairs.push(pair);
+
+      pair = _.last(this.parent.coordinates.pairs);
+      pairs.push(pair);
+
+      this.coordinates = {
+        pairs: pairs
+      };
+    },
+
+    renderTypeMarrige: function() {
+      this.drawLink(this.coordinates.pairs.slice(0, 2));
+      this.drawLink(this.coordinates.pairs.slice(2, 4));
+      this.drawLink(this.coordinates.pairs.slice(4, 6));
+    },
+
+    renderTypeOfMarrige: function() {
+      this.drawLink(this.coordinates.pairs);
+    },
+
+    drawLink: function(pairs) {
+      this.container
+        .append('line')
+        .attr('x1', pairs[0].x)
+        .attr('y1', pairs[0].y)
+        .attr('x2', pairs[1].x)
+        .attr('y2', pairs[1].y)
+        .attr('stroke-width', this.options.strokeWidth)
+        .attr('stroke', this.options.strokeColor);
+    }
+  };
+
+  return Edge;
+})();

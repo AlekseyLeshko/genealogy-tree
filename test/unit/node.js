@@ -59,7 +59,7 @@ describe('Node: ', function() {
 
     Node.prototype.getWidth();
 
-    var magicNum = 30;
+    var magicNum = 20;
     expect(Node.prototype.width).toEqual(magicNum);
   });
 
@@ -71,7 +71,7 @@ describe('Node: ', function() {
 
     node.getWidth();
 
-    var magicNum = 30;
+    var magicNum = 20;
     expect(node.width).not.toEqual(magicNum);
   });
 
@@ -80,7 +80,7 @@ describe('Node: ', function() {
 
     Node.prototype.getHeight();
 
-    var magicNum = 30;
+    var magicNum = 20;
     expect(Node.prototype.height).toEqual(magicNum);
   });
 
@@ -92,7 +92,7 @@ describe('Node: ', function() {
 
     node.getHeight();
 
-    var magicNum = 30;
+    var magicNum = 20;
     expect(node.height).not.toEqual(magicNum);
   });
 

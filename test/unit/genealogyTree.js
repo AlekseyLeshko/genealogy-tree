@@ -273,8 +273,8 @@ describe('Genealogy tree: ', function() {
 
     var parameters = gTree.getContainerParameters();
 
-    expect(parameters.width).toEqual(1050);
-    expect(parameters.height).toEqual(900);
+    expect(parameters.width).toEqual(850);
+    expect(parameters.height).toEqual(700);
   });
 
   it('render', function() {
@@ -290,7 +290,7 @@ describe('Genealogy tree: ', function() {
     expect(gTree.svgContainer.selectAll('.img')[0].length).toEqual(10);
     expect(gTree.svgContainer.selectAll('.label')[0].length).toEqual(10);
     expect(gTree.svgContainer.selectAll('.symbol')[0].length).toEqual(3);
-    expect(gTree.svgContainer.selectAll('.edge')[0].length).toEqual(12);
+    expect(gTree.svgContainer.selectAll('.link')[0].length).toEqual(12);
     expect(gTree.svgEdges.length).toEqual(12);
   });
 

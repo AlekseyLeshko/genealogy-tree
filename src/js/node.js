@@ -33,7 +33,7 @@ Node.prototype = {
   },
 
   getWidth: function() {
-    var magicNum = 30;
+    var magicNum = 20;
 
     if (!this.width) {
       this.width = magicNum;
@@ -43,7 +43,7 @@ Node.prototype = {
   },
 
   getHeight: function() {
-    var magicNum = 30;
+    var magicNum = 20;
 
     if (!this.height) {
       this.height = magicNum;

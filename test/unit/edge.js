@@ -1,83 +1,83 @@
 'use strict';
 
 describe('Edge: ', function() {
-  it('render link with type marriage', function() {
+  it('render edge with type marriage', function() {
     var container = d3.select('body').append('svg');
-    var link = new Edge({}, {}, 'marriage');
+    var edge = new Edge({}, {}, 'marriage');
 
-    var svglink = link.render(container);
+    var svgedge = edge.render(container);
 
-    expect(svglink).not.toBeUndefined();
-    expect(svglink).not.toBeNull();
-    expect(svglink.attr('class')).toEqual('link');
+    expect(svgedge).not.toBeUndefined();
+    expect(svgedge).not.toBeNull();
+    expect(svgedge.attr('class')).toEqual('link');
   });
 
-  it('render link with type of_marriage', function() {
+  it('render edge with type of_marriage', function() {
     var container = d3.select('body').append('svg');
     var gTree = getGenealogyTree();
     gTree.generationLayouts();
     var parent = gTree.edges.slice(0, 1)[0];
     parent.calcCoorTypeMarrige();
     var child = gTree.nodes.slice(3, 4)[0];
-    var link = new Edge(parent, child, 'of_marriage');
+    var edge = new Edge(parent, child, 'of_marriage');
 
-    var svglink = link.render(container);
+    var svgedge = edge.render(container);
 
-    expect(svglink).not.toBeUndefined();
-    expect(svglink).not.toBeNull();
-    expect(svglink.attr('class')).toEqual('link');
+    expect(svgedge).not.toBeUndefined();
+    expect(svgedge).not.toBeNull();
+    expect(svgedge.attr('class')).toEqual('link');
   });
 
 
   it('init', function() {
-    var link = new Edge();
-    link.options = undefined;
-    link.methodOfType = undefined;
+    var edge = new Edge();
+    edge.options = undefined;
+    edge.methodOfType = undefined;
 
-    link.init();
+    edge.init();
 
-    expect(link.methodOfType).not.toBeUndefined();
-    expect(link.options).not.toBeUndefined();
+    expect(edge.methodOfType).not.toBeUndefined();
+    expect(edge.options).not.toBeUndefined();
   });
 
   it('create options', function() {
-    var link = new Edge();
-    link.options = null;
-    expect(link.options).toBeNull();
+    var edge = new Edge();
+    edge.options = null;
+    expect(edge.options).toBeNull();
 
-    link.createOptions();
+    edge.createOptions();
 
-    expect(link.options).not.toBeNull();
-    expect(link.options.class).toEqual('link');
-    expect(link.options.strokeColor).toEqual('black');
-    expect(link.options.strokeWidth).toEqual(1);
+    expect(edge.options).not.toBeNull();
+    expect(edge.options.class).toEqual('link');
+    expect(edge.options.strokeColor).toEqual('black');
+    expect(edge.options.strokeWidth).toEqual(1);
   });
 
   it('create options with argument', function() {
-    var link = new Edge();
-    link.options = null;
-    expect(link.options).toBeNull();
+    var edge = new Edge();
+    edge.options = null;
+    expect(edge.options).toBeNull();
     var options = {
       strokeColor: 'red',
       strokeWidth: 2
     };
 
-    link.createOptions(options);
+    edge.createOptions(options);
 
-    expect(link.options).not.toBeNull();
-    expect(link.options.class).toEqual('link');
-    expect(link.options.strokeColor).toEqual('red');
-    expect(link.options.strokeWidth).toEqual(2);
+    expect(edge.options).not.toBeNull();
+    expect(edge.options.class).toEqual('link');
+    expect(edge.options.strokeColor).toEqual('red');
+    expect(edge.options.strokeWidth).toEqual(2);
   });
 
   it('draw and set edge container', function() {
-    var link = new Edge();
+    var edge = new Edge();
     var container = d3.select('body').append('svg');
 
-    link.drawAndSetEdgeContainer(container);
+    edge.drawAndSetEdgeContainer(container);
 
     expect(container.selectAll('g')[0].length).toEqual(1);
-    expect(link.container.attr('class')).toEqual('link');
+    expect(edge.container.attr('class')).toEqual('link');
   });
 
   it('create edge without parameters', function() {
@@ -142,11 +142,11 @@ describe('Edge: ', function() {
     var parent = gTree.edges.slice(0, 1)[0];
     var child = gTree.nodes.slice(1, 2)[0];
 
-    var link = new Edge(parent, child);
+    var edge = new Edge(parent, child);
 
-    link.calcCoorTypeMarrige();
+    edge.calcCoorTypeMarrige();
 
-    expect(link.coordinates.pairs.length).toEqual(6);
+    expect(edge.coordinates.pairs.length).toEqual(6);
   });
 
   it('calculation coordinatesfor node with type of_marrige', function() {
@@ -156,50 +156,50 @@ describe('Edge: ', function() {
     parent.calcCoorTypeMarrige();
     var child = gTree.nodes.slice(3, 4)[0];
 
-    var link = new Edge(parent, child);
+    var edge = new Edge(parent, child);
 
-    link.calcCoorTypeOfMarrige();
+    edge.calcCoorTypeOfMarrige();
 
-    expect(link.coordinates.pairs.length).toEqual(2);
+    expect(edge.coordinates.pairs.length).toEqual(2);
   });
 
   it('render type of_marrige', function() {
     var container = d3.select('body').append('svg');
-    var link = new Edge();
-    link.drawAndSetEdgeContainer(container);
-    link.coordinates = {
+    var edge = new Edge();
+    edge.drawAndSetEdgeContainer(container);
+    edge.coordinates = {
       pairs: [{ x: 1, y: 1 }, { x: 10, y: 10 },
         { x: 10, y: 10 }, { x: 10, y: 10 },
         { x: 10, y: 10 }, { x: 10, y: 10 }
       ]
     };
 
-    link.renderTypeMarrige();
+    edge.renderTypeMarrige();
 
-    expect(link.container.selectAll('line')[0].length).toEqual(3);
+    expect(edge.container.selectAll('line')[0].length).toEqual(3);
   });
 
   it('render type of_marrige', function() {
     var container = d3.select('body').append('svg');
-    var link = new Edge();
-    link.drawAndSetEdgeContainer(container);
-    link.coordinates = {
+    var edge = new Edge();
+    edge.drawAndSetEdgeContainer(container);
+    edge.coordinates = {
       pairs: [{ x: 1, y: 1}, { x: 10, y: 10}]
     };
 
-    link.renderTypeOfMarrige();
+    edge.renderTypeOfMarrige();
 
-    expect(link.container.selectAll('line')[0].length).toEqual(1);
+    expect(edge.container.selectAll('line')[0].length).toEqual(1);
   });
 
   it('create line', function() {
-    var link = new Edge();
+    var edge = new Edge();
     var pairs = [{ x: 1, y: 1}, { x: 10, y: 10}];
     var container = d3.select('body').append('svg');
     expect(container.selectAll('line')[0].length).toEqual(0);
 
-    link.drawAndSetEdgeContainer(container);
-    link.drawLink(pairs);
+    edge.drawAndSetEdgeContainer(container);
+    edge.drawLink(pairs);
 
     expect(container.selectAll('line')[0].length).toEqual(1);
   });

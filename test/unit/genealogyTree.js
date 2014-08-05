@@ -279,12 +279,30 @@ describe('Genealogy tree: ', function() {
 
   it('render', function() {
     var gTree = getGenealogyTree();
+    gTree.generation();
     var options = {container: {id: 'body'}};
     var render = new Render(options);
 
     gTree.render(render.main);
 
     expect(gTree.svgContainer).not.toBeUndefined();
+    expect(gTree.svgContainer.selectAll('.node')[0].length).toEqual(10);
+    expect(gTree.svgContainer.selectAll('image')[0].length).toEqual(10);
+    expect(gTree.svgContainer.selectAll('text')[0].length).toEqual(13);
+    expect(gTree.svgEdges.length).toEqual(12);
+  });
+
+  it('render nodes', function() {
+    var gTree = getGenealogyTree();
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+
+    gTree.svgContainer = render.main;
+    gTree.renderNodes();
+
+    expect(gTree.svgContainer.selectAll('.node')[0].length).toEqual(10);
+    expect(gTree.svgContainer.selectAll('image')[0].length).toEqual(10);
+    expect(gTree.svgContainer.selectAll('text')[0].length).toEqual(13);
   });
 
   it('render node containers', function() {

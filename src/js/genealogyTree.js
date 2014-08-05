@@ -174,8 +174,15 @@ GenealogyTree.prototype = {
 
   render: function(svgContainer) {
     this.svgContainer = svgContainer;
-    // this.renderNodes();
-    // this.renderEdges();
+    this.renderNodes();
+    this.renderEdges();
+  },
+
+  renderNodes: function() {
+    this.renderNodeContainers();
+    this.renderNodeImgs();
+    this.renderNodelabels();
+    this.renderSymbols();
   },
 
   renderNodeContainers: function() {
@@ -188,14 +195,6 @@ GenealogyTree.prototype = {
       .attr('transform', function(d) {
         return 'translate(' + d.x + ',' + d.y + ')';
       });
-  },
-
-  renderNodes: function() {
-    // this.renderNodeContainers();
-    // this.renderNodes();
-    // this.renderNodeImgs();
-    // this.renderNodelabels();
-    // this.renderSymbols();
   },
 
   renderNodeImgs: function() {

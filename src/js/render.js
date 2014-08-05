@@ -46,7 +46,7 @@ Render.prototype = {
     this.gTree.generation();
 
     this.configContainer();
-    gTree.render();
+    gTree.render(this.main);
   },
 
   configContainer: function() {

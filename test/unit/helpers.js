@@ -140,7 +140,7 @@ function getGCalcOptions() {
       height: 250
     },
     stepX: 80,
-    stepY: 100,
+    stepY: 50,
     nodeWidth: 30
   };
   return defaultOptions;

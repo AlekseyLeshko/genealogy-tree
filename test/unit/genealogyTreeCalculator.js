@@ -54,8 +54,8 @@ describe('Genealogy tree calculator', function() {
 
     gtCalc.calcContainerParameters();
 
-    expect(gtCalc.options.container.width).toEqual(1700);
-    expect(gtCalc.options.container.height).toEqual(600);
+    expect(gtCalc.options.container.width).toEqual(1250);
+    expect(gtCalc.options.container.height).toEqual(550);
   });
 
   it('calculation start y', function() {
@@ -64,7 +64,7 @@ describe('Genealogy tree calculator', function() {
 
     var y = gtCalc.calcValY();
 
-    expect(y).toEqual(450);
+    expect(y).toEqual(350);
   });
 
   it('calculation layout level x', function() {
@@ -75,7 +75,7 @@ describe('Genealogy tree calculator', function() {
 
     var x = gtCalc.calcValX(countNode);
 
-    expect(x).toEqual(340);
+    expect(x).toEqual(290);
   });
 
   it('calculation width container for empty layout', function() {
@@ -91,7 +91,7 @@ describe('Genealogy tree calculator', function() {
     GenealogyTreeCalculator.prototype.options = getGCalcOptions();
     var width = GenealogyTreeCalculator.prototype.calcWidthСontainer();
 
-    expect(width).toEqual(1700);
+    expect(width).toEqual(1250);
   });
 
   it('width calculation layout', function() {
@@ -100,7 +100,7 @@ describe('Genealogy tree calculator', function() {
 
     var width = gtCalc.widthCalculationLayout();
 
-    expect(width).toEqual(1200);
+    expect(width).toEqual(750);
   });
 
   it('width calculation layout when layouts is empty', function() {
@@ -127,6 +127,6 @@ describe('Genealogy tree calculator', function() {
     gtCalc.layouts = [1];
     var height = gtCalc.calcHeightСontainer();
 
-    expect(height).toEqual(600);
+    expect(height).toEqual(550);
   });
 });

@@ -1,6 +1,19 @@
 'use strict';
 
 describe('Edge: ', function() {
+  it('create options', function() {
+    var link = new Edge();
+    link.options = null;
+    expect(link.options).toBeNull();
+
+    link.createOptions();
+
+    expect(link.options).not.toBeNull();
+    expect(link.options.class).toEqual('link');
+    expect(link.options.borderColor).toEqual('black');
+    expect(link.options.strokeWidth).toEqual(1);
+  });
+
   it('create edge without parameters', function() {
     var edge = new Edge();
 

@@ -1,5 +1,7 @@
 var Edge = function(parent, child, type) {
+  //nodes = [], type = ''
   'use strict';
+
   this.parent = parent;
   this.child = child;
   this.typeRelationship = type;
@@ -15,8 +17,18 @@ Edge.prototype = {
       'of_marriage': function() { self.calcCoordinatesTypeOfMarrige(); }
     };
     this.renderOfType = {
-      'marriage': function() { self.drawEdgeTypeMarrige(); },
-      'of_marriage': function() { self.drawEdgeTypeOfMarrige(); }
+      'marriage': function() { self.renderTypeMarrige(); },
+      'of_marriage': function() { self.renderTypeOfMarrige(); }
+    };
+
+    this.createOptions();
+  },
+
+  createOptions: function() {
+    this.options = {
+      class: 'link',
+      borderColor: 'black',
+      strokeWidth: 1
     };
   },
 
@@ -78,7 +90,6 @@ Edge.prototype = {
     pairs.push(pair);
 
     pair = _.last(this.parent.coordinates.pairs);
-    // pair.x = this.child.x + dx;
     pairs.push(pair);
 
     this.coordinates = {
@@ -94,7 +105,7 @@ Edge.prototype = {
     return svgEdge;
   },
 
-  drawEdgeTypeMarrige: function() {
+  renderTypeMarrige: function() {
     var self = this;
     var container = this.svgContainer
       .append('g')
@@ -104,13 +115,13 @@ Edge.prototype = {
       })
       .on('mouseout', function() {
         self.setColor(this, 'black', 'line');
-      })
+      });
     this.createLine(container, this.coordinates.pairs.slice(0, 2));
     this.createLine(container, this.coordinates.pairs.slice(2, 4));
     this.createLine(container, this.coordinates.pairs.slice(4, 6));
   },
 
-  drawEdgeTypeOfMarrige: function() {
+  renderTypeOfMarrige: function() {
     var self = this;
     var container = this.svgContainer
       .append('g')
@@ -120,7 +131,7 @@ Edge.prototype = {
       })
       .on('mouseout', function() {
         self.setColor(this, 'black', 'line');
-      })
+      });
 
     this.createLine(container, this.coordinates.pairs.slice(0, 2));
   },

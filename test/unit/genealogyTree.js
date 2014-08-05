@@ -287,8 +287,10 @@ describe('Genealogy tree: ', function() {
 
     expect(gTree.svgContainer).not.toBeUndefined();
     expect(gTree.svgContainer.selectAll('.node')[0].length).toEqual(10);
-    expect(gTree.svgContainer.selectAll('image')[0].length).toEqual(10);
-    expect(gTree.svgContainer.selectAll('text')[0].length).toEqual(13);
+    expect(gTree.svgContainer.selectAll('.img')[0].length).toEqual(10);
+    expect(gTree.svgContainer.selectAll('.label')[0].length).toEqual(10);
+    expect(gTree.svgContainer.selectAll('.symbol')[0].length).toEqual(3);
+    expect(gTree.svgContainer.selectAll('.edge')[0].length).toEqual(12);
     expect(gTree.svgEdges.length).toEqual(12);
   });
 
@@ -301,8 +303,9 @@ describe('Genealogy tree: ', function() {
     gTree.renderNodes();
 
     expect(gTree.svgContainer.selectAll('.node')[0].length).toEqual(10);
-    expect(gTree.svgContainer.selectAll('image')[0].length).toEqual(10);
-    expect(gTree.svgContainer.selectAll('text')[0].length).toEqual(13);
+    expect(gTree.svgContainer.selectAll('.img')[0].length).toEqual(10);
+    expect(gTree.svgContainer.selectAll('.label')[0].length).toEqual(10);
+    expect(gTree.svgContainer.selectAll('.symbol')[0].length).toEqual(3);
   });
 
   it('render node containers', function() {

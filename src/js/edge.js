@@ -63,7 +63,13 @@ Edge.prototype = {
   createLine: function() {
     var line = this.svgContainer
       .append('g')
-      .attr('class', '.edge')
+      .attr('class', 'edge')
+      .on('mouseover', function() {
+        d3.select(this).selectAll('line').style('stroke', 'red');
+      })
+      .on('mouseout', function() {
+        d3.select(this).selectAll('line').style('stroke', 'black');
+      })
       .append('line')
       .attr('x1', this.x1)
       .attr('y1', this.y1)
@@ -78,7 +84,7 @@ Edge.prototype = {
   paintPolyline: function (edge) {
     var lineGraph = this.svgContainer
       .append('g')
-      .attr('class', '.edge')
+      .attr('class', 'edge')
       .on('mouseover', function() {
         d3.select(this).selectAll('polyline').style('stroke', 'red');
       })

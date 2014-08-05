@@ -200,6 +200,7 @@ GenealogyTree.prototype = {
   renderNodeImgs: function() {
     this.svgNodes
       .append('svg:image')
+      .attr('class', 'img')
       .attr('xlink:href', 'img/male.png')
       // .attr('x', '0')
       // .attr('y', '-30')
@@ -210,6 +211,7 @@ GenealogyTree.prototype = {
   renderNodelabels: function() {
     this.svgNodes
       .append('text')
+      .attr('class', 'label')
       .attr('y', 30)
       .text(function(d) { return d.name; });
   },
@@ -220,6 +222,7 @@ GenealogyTree.prototype = {
         return node.whetherDrawSymbol();
       })
       .append('text')
+      .attr('class', 'symbol')
       .attr('dx', function(node) {
         return node.symbol.x;
       })

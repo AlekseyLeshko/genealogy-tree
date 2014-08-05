@@ -25,25 +25,34 @@ describe('Edge: ', function() {
   });
 
   it('calculation edge coordinates for marriage type', function() {
-    var gTree = getCreatedGenealogyTree();
-    gTree.calcContainerParameters();
-    gTree.calcCoordinatesForLayouts();
+    var gTree = getGenealogyTree();
+    gTree.generationLayouts();
+    var gtCalc = new GenealogyTreeCalculator(gTree.layouts, gTree.edges);
+    gtCalc.calcContainerParameters();
+    expect(gTree.layouts).not.toBeUndefined();
+
+    gtCalc.calcCoordinatesForLayouts();
+
     var nodes = gTree.nodes;
     var typeRelationship = 'marriage';
 
     var edge = new Edge(nodes[0], nodes[1], typeRelationship);
     edge.calcCoordinates();
 
-    expect(edge.x1).toEqual(nodes[0].y + 5);
-    expect(edge.y1).toEqual(nodes[0].x + 12);
-    expect(edge.x2).toEqual(nodes[1].y + 15);
-    expect(edge.y2).toEqual(nodes[1].x + 12);
+    expect(edge.x1).toEqual(nodes[0].x + 5);
+    expect(edge.y1).toEqual(nodes[0].y + 12);
+    expect(edge.x2).toEqual(nodes[1].x + 15);
+    expect(edge.y2).toEqual(nodes[1].y + 12);
   });
 
   it('calculation edge coordinates for of_marriage type', function() {
-    var gTree = getCreatedGenealogyTree();
-    gTree.calcContainerParameters();
-    gTree.calcCoordinatesForLayouts();
+    var gTree = getGenealogyTree();
+    gTree.generationLayouts();
+    var gtCalc = new GenealogyTreeCalculator(gTree.layouts, gTree.edges);
+    gtCalc.calcContainerParameters();
+    expect(gTree.layouts).not.toBeUndefined();
+
+    gtCalc.calcCoordinatesForLayouts();
     var nodes = gTree.nodes;
     var parentType = 'marriage';
     var typeRelationship = 'of_marriage';

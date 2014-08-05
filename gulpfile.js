@@ -18,10 +18,10 @@ gulp.task('scripts', ['clean'], function() {
   return gulp.src(paths.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(sourcemaps.init())
-    .pipe(uglify())
+    // .pipe(sourcemaps.init())
+    // .pipe(uglify())
     .pipe(concat('all.min.js'))
-    .pipe(sourcemaps.write('../maps'))
+    // .pipe(sourcemaps.write('../maps'))
     .pipe(gulp.dest('dist/js/'))
     .pipe(connect.reload());
 });
@@ -51,7 +51,9 @@ var karmaCommonConf = {
   files: [
     'src/js/**/*.js',
     'test/unit/**/*.js',
-    'node_modules/underscore/underscore-min.js'
+    'node_modules/underscore/underscore-min.js',
+    'node_modules/d3/d3.min.js',
+    'node_modules/jquery/dist/jquery.min.js'
   ],
   autoWatch : true,
   usePolling: true,
@@ -82,7 +84,7 @@ var karmaCommonConf = {
 };
 
 gulp.task('test-single-run', function (done) {
-  karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
+  karma.start(_.assign({}, karmaCommonConf, {singleRun: true, browsers: ['PhantomJS']}), done);
 });
 
 gulp.task('tdd', function (done) {

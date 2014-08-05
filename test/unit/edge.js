@@ -1,7 +1,35 @@
 'use strict';
 
 describe('Edge: ', function() {
-  it('init edge', function() {
+  it('render link with type marriage', function() {
+    var container = d3.select('body').append('svg');
+    var link = new Edge({}, {}, 'marriage');
+
+    var svglink = link.render(container);
+
+    expect(svglink).not.toBeUndefined();
+    expect(svglink).not.toBeNull();
+    expect(svglink.attr('class')).toEqual('link');
+  });
+
+  it('render link with type of_marriage', function() {
+    var container = d3.select('body').append('svg');
+    var gTree = getGenealogyTree();
+    gTree.generationLayouts();
+    var parent = gTree.edges.slice(0, 1)[0];
+    parent.calcCoorTypeMarrige();
+    var child = gTree.nodes.slice(3, 4)[0];
+    var link = new Edge(parent, child, 'of_marriage');
+
+    var svglink = link.render(container);
+
+    expect(svglink).not.toBeUndefined();
+    expect(svglink).not.toBeNull();
+    expect(svglink.attr('class')).toEqual('link');
+  });
+
+
+  it('init', function() {
     var link = new Edge();
     link.options = undefined;
     link.methodOfType = undefined;
@@ -42,8 +70,6 @@ describe('Edge: ', function() {
     expect(link.options.strokeWidth).toEqual(2);
   });
 
-
-
   it('draw and set edge container', function() {
     var link = new Edge();
     var container = d3.select('body').append('svg');
@@ -71,44 +97,71 @@ describe('Edge: ', function() {
     expect(edge.typeRelationship).toEqual(typeRelationship);
   });
 
-  // it('calculation edge coordinates for marriage type', function() {
-  //   var gTree = getGenealogyTree();
-  //   gTree.generationLayouts();
-  //   var gtCalc = new GenealogyTreeCalculator(gTree.layouts, gTree.edges);
-  //   gtCalc.calcContainerParameters();
-  //   expect(gTree.layouts).not.toBeUndefined();
+  it('calculation edge coordinates for marriage type', function() {
+    var gTree = getGenealogyTree();
+    gTree.generationLayouts();
+    var gtCalc = new GenealogyTreeCalculator(gTree.layouts, gTree.edges);
+    gtCalc.calcContainerParameters();
+    expect(gTree.layouts).not.toBeUndefined();
 
-  //   gtCalc.calcCoordinatesForLayouts();
+    gtCalc.calcCoordinatesForLayouts();
 
-  //   var nodes = gTree.nodes;
-  //   var typeRelationship = 'marriage';
+    var nodes = gTree.nodes;
+    var typeRelationship = 'marriage';
 
-  //   var edge = new Edge(nodes[0], nodes[1], typeRelationship);
-  //   edge.calcCoordinates();
+    var edge = new Edge(nodes[0], nodes[1], typeRelationship);
+    edge.calcCoordinates();
 
-  //   expect(edge.coordinates.pairs.length).toEqual(6);
-  // });
+    expect(edge.coordinates.pairs.length).toEqual(6);
+  });
 
-  // it('calculation edge coordinates for of_marriage type', function() {
-  //   var gTree = getGenealogyTree();
-  //   gTree.generationLayouts();
-  //   var gtCalc = new GenealogyTreeCalculator(gTree.layouts, gTree.edges);
-  //   gtCalc.calcContainerParameters();
-  //   expect(gTree.layouts).not.toBeUndefined();
+  it('calculation edge coordinates for of_marriage type', function() {
+    var gTree = getGenealogyTree();
+    gTree.generationLayouts();
+    var gtCalc = new GenealogyTreeCalculator(gTree.layouts, gTree.edges);
+    gtCalc.calcContainerParameters();
+    expect(gTree.layouts).not.toBeUndefined();
 
-  //   gtCalc.calcCoordinatesForLayouts();
-  //   var nodes = gTree.nodes;
-  //   var parentType = 'marriage';
-  //   var typeRelationship = 'of_marriage';
+    gtCalc.calcCoordinatesForLayouts();
+    var nodes = gTree.nodes;
+    var parentType = 'marriage';
+    var typeRelationship = 'of_marriage';
 
-  //   var parentEdge = new Edge(nodes[0], nodes[1], parentType);
-  //   parentEdge.calcCoordinates();
-  //   var edge = new Edge(parentEdge, nodes[2], typeRelationship);
+    var parentEdge = new Edge(nodes[0], nodes[1], parentType);
+    parentEdge.calcCoordinates();
+    var edge = new Edge(parentEdge, nodes[2], typeRelationship);
 
-  //   edge.calcCoordinates();
+    edge.calcCoordinates();
 
-  //   expect(edge.coordinates.pairs.length).toEqual(2);
-  // });
+    expect(edge.coordinates.pairs.length).toEqual(2);
+  });
+
+  it('calculation coordinatesfor node with type marrige', function() {
+    var gTree = getGenealogyTree();
+    gTree.generationLayouts();
+    var parent = gTree.edges.slice(0, 1)[0];
+    var child = gTree.nodes.slice(1, 2)[0];
+
+    var link = new Edge(parent, child);
+
+    link.calcCoorTypeMarrige();
+
+    expect(link.coordinates.pairs.length).toEqual(6);
+  });
+
+  it('calculation coordinatesfor node with type of_marrige', function() {
+    var gTree = getGenealogyTree();
+    gTree.generationLayouts();
+    var parent = gTree.edges.slice(0, 1)[0];
+    parent.calcCoorTypeMarrige();
+    var child = gTree.nodes.slice(3, 4)[0];
+
+    var link = new Edge(parent, child);
+
+    link.calcCoorTypeOfMarrige();
+
+    expect(link.coordinates.pairs.length).toEqual(2);
+  });
 
   it('render type of_marrige', function() {
     var container = d3.select('body').append('svg');

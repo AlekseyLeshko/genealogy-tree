@@ -205,10 +205,12 @@ GenealogyTree.prototype = {
         var filePath = 'img/' + node.gender + '.png';
         return 'img/male.png';
       })
-      // .attr('x', '0')
-      // .attr('y', '-30')
-      .attr('width', '20')
-      .attr('height', '20');
+      .attr('width', function(node) {
+        return node.width;
+      })
+      .attr('height', function(node) {
+        return node.height;
+      });
   },
 
   renderNodelabels: function() {

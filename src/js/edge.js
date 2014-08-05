@@ -19,8 +19,8 @@ var Edge = (function() {
       this.drawAndSetEdgeContainer(svgContainer);
       this.calcCoordinates();
 
-      var svgEdge = this.methodOfType[this.typeRelationship].render();
-      return svgEdge;
+      this.methodOfType[this.typeRelationship].render();
+      return this.container;
     },
 
     drawAndSetEdgeContainer: function(svgContainer) {
@@ -65,26 +65,32 @@ var Edge = (function() {
 
     calcCoorTypeMarrige: function() {
       var pairs = [];
-      var dy = 11;
+      var dx = (this.child.width / 2) + 4;
+      var dy = (this.child.height / 2) + 1;
       var pair = {
-        x: this.parent.x + 14,
+        x: this.parent.x + dx,
         y: this.parent.y + dy
       };
       pairs.push(pair);
+
+      dx = (this.child.width / 4);
       pair = {
-        x: this.child.x + 5,
+        x: this.child.x + dx,
         y: this.child.y + dy
       };
       pairs.push(pair);
 
-      dy = 14;
+      dx = (this.child.width / 2) + 4;
+      dy = (this.child.height / 2) + 4;
       pair = {
-        x: this.parent.x + 14,
+        x: this.parent.x + dx,
         y: this.parent.y + dy
       };
       pairs.push(pair);
+
+      dx = (this.child.width / 4);
       pair = {
-        x: this.child.x + 5,
+        x: this.child.x + dx,
         y: this.child.y + dy
       };
       pairs.push(pair);
@@ -95,9 +101,11 @@ var Edge = (function() {
         y: this.parent.y + dy
       };
       pairs.push(pair);
+
+      dy += 25;
       pair = {
         x: middle,
-        y: this.child.y + dy + 50
+        y: this.child.y + dy
       };
       pairs.push(pair);
 
@@ -109,10 +117,10 @@ var Edge = (function() {
 
     calcCoorTypeOfMarrige: function() {
       var pairs = [];
-      var dx = 10;
+      var dy = -3;
       var pair = {
-        x: this.child.x + dx,
-        y: this.child.y + 7
+        x: this.child.x + (this.child.width / 2),
+        y: this.child.y + (this.child.height / 2) + dy
       };
       pairs.push(pair);
 

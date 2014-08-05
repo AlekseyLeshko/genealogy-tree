@@ -276,4 +276,27 @@ describe('Genealogy tree: ', function() {
     expect(parameters.width).toEqual(1050);
     expect(parameters.height).toEqual(900);
   });
+
+  it('render', function() {
+    var gTree = getGenealogyTree();
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+
+    gTree.render(render.main);
+
+    expect(gTree.svgContainer).not.toBeUndefined();
+  });
+
+  it('render node containers', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+
+    gTree.svgContainer = render.main;
+
+    gTree.renderNodeContainers();
+
+    expect(gTree.svgContainer.selectAll('.node')[0].length).toEqual(10);
+  });
 });

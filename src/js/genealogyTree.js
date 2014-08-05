@@ -170,5 +170,37 @@ GenealogyTree.prototype = {
     });
 
     return arr;
+  },
+
+  render: function(svgContainer) {
+    this.svgContainer = svgContainer;
+    // this.renderNodeContainers();
+    // this.renderNodes();
+    // this.renderNodeImgs();
+    // this.renderNodelabels();
+    // this.renderSymbols();
+    // this.renderEdges();
+  },
+
+  renderNodeContainers: function() {
+    this.svgNodes = this.svgContainer
+      .selectAll('.node')
+      .data(this.nodes)
+      .enter()
+      .append('g')
+      .attr('class', 'node')
+      .attr('transform', function(d) {
+        return 'translate(' + d.x + ',' + d.y + ')';
+      });
+  },
+
+  renderNodes: function() {
+
+  },
+
+  renderEdges: function() {
+    _.each(this.gTree.edges, function(edge) {
+      this.renderEdge(edge);
+    }, this);
   }
 };

@@ -299,4 +299,18 @@ describe('Genealogy tree: ', function() {
 
     expect(gTree.svgContainer.selectAll('.node')[0].length).toEqual(10);
   });
+
+  it('render img in node containers', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+
+    gTree.svgContainer = render.main;
+    gTree.renderNodeContainers();
+    gTree.svgContainer = render.main;
+    gTree.renderNodeImgs();
+
+    expect(gTree.svgContainer.selectAll('image')[0].length).toEqual(10);
+  });
 });

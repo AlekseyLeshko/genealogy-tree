@@ -174,11 +174,7 @@ GenealogyTree.prototype = {
 
   render: function(svgContainer) {
     this.svgContainer = svgContainer;
-    // this.renderNodeContainers();
     // this.renderNodes();
-    // this.renderNodeImgs();
-    // this.renderNodelabels();
-    // this.renderSymbols();
     // this.renderEdges();
   },
 
@@ -195,7 +191,45 @@ GenealogyTree.prototype = {
   },
 
   renderNodes: function() {
+    // this.renderNodeContainers();
+    // this.renderNodes();
+    // this.renderNodeImgs();
+    // this.renderNodelabels();
+    // this.renderSymbols();
+  },
 
+  renderNodeImgs: function() {
+    this.svgNodes
+      .append('svg:image')
+      .attr('xlink:href', 'img/male.png')
+      // .attr('x', '0')
+      // .attr('y', '-30')
+      .attr('width', '20')
+      .attr('height', '20');
+  },
+
+  renderNodelabels: function() {
+    this.svgNodes
+      .append('text')
+      .attr('y', 30)
+      .text(function(d) { return d.name; });
+  },
+
+  renderSymbols: function() {
+    var self = this;
+    this.svgNodes.append('text')
+      .filter(function(node) {
+        return node.whetherDrawSymbol();
+      })
+      .attr('dx', function(node) {
+        return self.getSymbol(node).x;
+      })
+      .attr('y', function(node) {
+        return self.getSymbol(node).y;
+      })
+      .text(function(node) {
+        return self.getSymbol(node).text;
+      });
   },
 
   renderEdges: function() {

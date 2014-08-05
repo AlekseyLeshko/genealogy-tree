@@ -12,13 +12,23 @@ var Edge = function(parent, child, type) {
 Edge.prototype = {
   init: function() {
     var self = this;
-    this.calcCoordinatesOfType = {
-      'marriage': function() { self.calcCoordinatesTypeMarrige(); },
-      'of_marriage': function() { self.calcCoordinatesTypeOfMarrige(); }
-    };
-    this.renderOfType = {
-      'marriage': function() { self.renderTypeMarrige(); },
-      'of_marriage': function() { self.renderTypeOfMarrige(); }
+    this.methodOfType = {
+      'marriage': {
+        calculation: function() {
+          return self.calcCoorTypeMarrige();
+        },
+        render: function() {
+          return self.renderTypeMarrige();
+        }
+      },
+      'of_marriage': {
+        calculation: function() {
+          return self.calcCoorTypeOfMarrige();
+        },
+        render: function() {
+          return self.renderTypeOfMarrige();
+        }
+      }
     };
 
     this.createOptions();
@@ -35,10 +45,10 @@ Edge.prototype = {
   },
 
   calcCoordinates: function() {
-    this.calcCoordinatesOfType[this.typeRelationship]();
+    this.methodOfType[this.typeRelationship].calculation();
   },
 
-  calcCoordinatesTypeMarrige: function() {
+  calcCoorTypeMarrige: function() {
     var pairs = [];
     var dy = 11;
     var pair = {
@@ -82,7 +92,7 @@ Edge.prototype = {
     };
   },
 
-  calcCoordinatesTypeOfMarrige: function() {
+  calcCoorTypeOfMarrige: function() {
     var pairs = [];
     var dx = 10;
     var pair = {
@@ -103,7 +113,7 @@ Edge.prototype = {
     this.svgContainer = svgContainer;
     this.calcCoordinates();
 
-    var svgEdge = this.renderOfType[this.typeRelationship]();
+    var svgEdge = this.methodOfType[this.typeRelationship].render();
     return svgEdge;
   },
 

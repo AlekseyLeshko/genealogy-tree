@@ -11,6 +11,24 @@ var Edge = (function() {
   };
 
   Edge.prototype = {
+    calcCoordinates: function() {
+      this.methodOfType[this.typeRelationship].calculation();
+    },
+
+    render: function(svgContainer) {
+      this.drawAndSetEdgeContainer(svgContainer);
+      this.calcCoordinates();
+
+      var svgEdge = this.methodOfType[this.typeRelationship].render();
+      return svgEdge;
+    },
+
+    drawAndSetEdgeContainer: function(svgContainer) {
+      this.container = svgContainer
+        .append('g')
+        .attr('class', this.options.class);
+    },
+
     init: function() {
       var self = this;
       this.methodOfType = {
@@ -43,10 +61,6 @@ var Edge = (function() {
       };
 
       this.options = $.extend(true, defaultOptions, options);
-    },
-
-    calcCoordinates: function() {
-      this.methodOfType[this.typeRelationship].calculation();
     },
 
     calcCoorTypeMarrige: function() {
@@ -110,36 +124,18 @@ var Edge = (function() {
       };
     },
 
-    render: function(svgContainer) {
-      this.svgContainer = svgContainer;
-      this.calcCoordinates();
-
-      var svgEdge = this.methodOfType[this.typeRelationship].render();
-      return svgEdge;
-    },
-
     renderTypeMarrige: function() {
-      var self = this;
-      var container = this.svgContainer
-        .append('g')
-        .attr('class', 'edge');
-
-      this.drawLink(container, this.coordinates.pairs.slice(0, 2));
-      this.drawLink(container, this.coordinates.pairs.slice(2, 4));
-      this.drawLink(container, this.coordinates.pairs.slice(4, 6));
+      this.drawLink(this.coordinates.pairs.slice(0, 2));
+      this.drawLink(this.coordinates.pairs.slice(2, 4));
+      this.drawLink(this.coordinates.pairs.slice(4, 6));
     },
 
     renderTypeOfMarrige: function() {
-      var self = this;
-      var container = this.svgContainer
-        .append('g')
-        .attr('class', 'edge');
-
-      this.drawLink(container, this.coordinates.pairs.slice(0, 2));
+      this.drawLink(this.coordinates.pairs);
     },
 
-    drawLink: function(container, pairs) {
-      container
+    drawLink: function(pairs) {
+      this.container
         .append('line')
         .attr('x1', pairs[0].x)
         .attr('y1', pairs[0].y)

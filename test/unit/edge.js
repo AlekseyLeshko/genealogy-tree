@@ -14,6 +14,23 @@ describe('Edge: ', function() {
     expect(link.options.strokeWidth).toEqual(1);
   });
 
+  it('create options with argument', function() {
+    var link = new Edge();
+    link.options = null;
+    expect(link.options).toBeNull();
+    var options = {
+      borderColor: 'red',
+      strokeWidth: 2
+    };
+
+    link.createOptions(options);
+
+    expect(link.options).not.toBeNull();
+    expect(link.options.class).toEqual('link');
+    expect(link.options.borderColor).toEqual('red');
+    expect(link.options.strokeWidth).toEqual(2);
+  });
+
   it('create edge without parameters', function() {
     var edge = new Edge();
 

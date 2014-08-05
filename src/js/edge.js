@@ -24,12 +24,14 @@ Edge.prototype = {
     this.createOptions();
   },
 
-  createOptions: function() {
-    this.options = {
+  createOptions: function(options) {
+    var defaultOptions = {
       class: 'link',
       borderColor: 'black',
       strokeWidth: 1
     };
+
+    this.options = $.extend(true, defaultOptions, options);
   },
 
   calcCoordinates: function() {

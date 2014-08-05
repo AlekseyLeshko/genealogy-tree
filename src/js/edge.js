@@ -66,10 +66,10 @@ Edge.prototype = {
       .append('g')
       .attr('class', 'edge')
       .on('mouseover', function() {
-        self.setColor(this, 'red');
+        self.setColor(this, 'red', 'line');
       })
       .on('mouseout', function() {
-        self.setColor(this, 'red');
+        self.setColor(this, 'black', 'line');
       })
       .append('line')
       .attr('x1', this.x1)
@@ -83,14 +83,15 @@ Edge.prototype = {
   },
 
   paintPolyline: function (edge) {
+    var self = this;
     var lineGraph = this.svgContainer
       .append('g')
       .attr('class', 'edge')
       .on('mouseover', function() {
-        self.setColor(this, 'red');
+        self.setColor(this, 'red', 'polyline');
       })
       .on('mouseout', function() {
-        self.setColor(this, 'red');
+        self.setColor(this, 'black', 'polyline');
       })
       .append('polyline')
       .attr('points', this.points)
@@ -101,7 +102,7 @@ Edge.prototype = {
     return lineGraph;
   },
 
-  setColor: function(el, color) {
-    d3.select(el).selectAll('line').style('stroke', color);
+  setColor: function(el, color, type) {
+    d3.select(el).selectAll(type).style('stroke', color);
   }
 };

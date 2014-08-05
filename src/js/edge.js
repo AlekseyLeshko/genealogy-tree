@@ -61,14 +61,15 @@ Edge.prototype = {
   },
 
   createLine: function() {
+    var self = this;
     var line = this.svgContainer
       .append('g')
       .attr('class', 'edge')
       .on('mouseover', function() {
-        d3.select(this).selectAll('line').style('stroke', 'red');
+        self.setColor(this, 'red');
       })
       .on('mouseout', function() {
-        d3.select(this).selectAll('line').style('stroke', 'black');
+        self.setColor(this, 'red');
       })
       .append('line')
       .attr('x1', this.x1)
@@ -86,10 +87,10 @@ Edge.prototype = {
       .append('g')
       .attr('class', 'edge')
       .on('mouseover', function() {
-        d3.select(this).selectAll('polyline').style('stroke', 'red');
+        self.setColor(this, 'red');
       })
       .on('mouseout', function() {
-        d3.select(this).selectAll('polyline').style('stroke', 'black');
+        self.setColor(this, 'red');
       })
       .append('polyline')
       .attr('points', this.points)
@@ -98,5 +99,9 @@ Edge.prototype = {
       .attr('fill', 'none');
 
     return lineGraph;
+  },
+
+  setColor: function(el, color) {
+    d3.select(el).selectAll('line').style('stroke', color);
   }
 };

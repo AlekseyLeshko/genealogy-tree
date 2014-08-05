@@ -10,7 +10,7 @@ describe('Edge: ', function() {
 
     expect(link.options).not.toBeNull();
     expect(link.options.class).toEqual('link');
-    expect(link.options.borderColor).toEqual('black');
+    expect(link.options.strokeColor).toEqual('black');
     expect(link.options.strokeWidth).toEqual(1);
   });
 
@@ -19,7 +19,7 @@ describe('Edge: ', function() {
     link.options = null;
     expect(link.options).toBeNull();
     var options = {
-      borderColor: 'red',
+      strokeColor: 'red',
       strokeWidth: 2
     };
 
@@ -27,8 +27,19 @@ describe('Edge: ', function() {
 
     expect(link.options).not.toBeNull();
     expect(link.options.class).toEqual('link');
-    expect(link.options.borderColor).toEqual('red');
+    expect(link.options.strokeColor).toEqual('red');
     expect(link.options.strokeWidth).toEqual(2);
+  });
+
+  it('create line', function() {
+    var link = new Edge();
+    var pairs = [{ x: 1, y: 1}, { x: 10, y: 10}];
+    var container = d3.select('body').append('svg');
+    expect(container.selectAll('line')[0].length).toEqual(0);
+
+    link.drawLink(container, pairs);
+
+    expect(container.selectAll('line')[0].length).toEqual(1);
   });
 
   it('create edge without parameters', function() {

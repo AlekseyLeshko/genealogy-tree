@@ -37,7 +37,7 @@ Edge.prototype = {
   createOptions: function(options) {
     var defaultOptions = {
       class: 'link',
-      borderColor: 'black',
+      strokeColor: 'black',
       strokeWidth: 1
     };
 
@@ -128,9 +128,9 @@ Edge.prototype = {
       .on('mouseout', function() {
         self.setColor(this, 'black', 'line');
       });
-    this.createLine(container, this.coordinates.pairs.slice(0, 2));
-    this.createLine(container, this.coordinates.pairs.slice(2, 4));
-    this.createLine(container, this.coordinates.pairs.slice(4, 6));
+    this.drawLink(container, this.coordinates.pairs.slice(0, 2));
+    this.drawLink(container, this.coordinates.pairs.slice(2, 4));
+    this.drawLink(container, this.coordinates.pairs.slice(4, 6));
   },
 
   renderTypeOfMarrige: function() {
@@ -145,20 +145,18 @@ Edge.prototype = {
         self.setColor(this, 'black', 'line');
       });
 
-    this.createLine(container, this.coordinates.pairs.slice(0, 2));
+    this.drawLink(container, this.coordinates.pairs.slice(0, 2));
   },
 
-  createLine: function(container, pairs) {
-    var border = 1;
-    var borderColor = 'black';
+  drawLink: function(container, pairs) {
     container
       .append('line')
       .attr('x1', pairs[0].x)
       .attr('y1', pairs[0].y)
       .attr('x2', pairs[1].x)
       .attr('y2', pairs[1].y)
-      .attr('stroke-width', border)
-      .attr('stroke', borderColor);
+      .attr('stroke-width', this.options.strokeWidth)
+      .attr('stroke', this.options.strokeColor);
   },
 
   setColor: function(el, color, type) {

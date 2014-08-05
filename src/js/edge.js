@@ -14,6 +14,10 @@ Edge.prototype = {
       'marriage': function() { self.calcCoordinatesTypeMarrige(); },
       'of_marriage': function() { self.calcCoordinatesTypeOfMarrige(); }
     };
+    this.renderOfType = {
+      'marriage': function() { self.createLine(); },
+      'of_marriage': function() { self.paintPolyline(); }
+    };
   },
 
   calcCoordinates: function() {
@@ -48,45 +52,43 @@ Edge.prototype = {
     this.points.push(this.child.y - 63);
   },
 
-  render: function() {
-    this.svgEdges = [];
-    edge.calcCoordinates();
+  render: function(svgContainer) {
+    this.svgContainer = svgContainer;
+    this.calcCoordinates();
 
-    if (edge.typeRelationship === 'marriage') {
-      this.svgEdges.push(this.createLine(edge));
-    } else {
-      this.svgEdges.push(this.paintPolyline(edge));
-    }
+    var svgEdge = this.renderOfType[this.typeRelationship]();
+    return svgEdge;
   },
 
-  paintPolyline: function (edge) {
-    var lineGraph = this.main.append('g')
-    .on('mouseover', function() {
-      d3.select(this).selectAll('polyline').style('stroke', 'red');
-    })
-    .on('mouseout', function() {
-      d3.select(this).selectAll('polyline').style('stroke', 'black');
-    })
-    .append('polyline')
-    .attr('points', edge.points)
-    .attr('stroke', 'black')
-    .attr('stroke-width', 2)
-    .attr('fill', 'none');
-
-    return lineGraph;
-  },
-
-  createLine: function(edge) {
-    var line = this.main
+  createLine: function() {
+    var line = this.svgContainer
       .append('g')
       .append('line')
-      .attr('x1', edge.x1)
-      .attr('y1', edge.y1)
-      .attr('x2', edge.x2)
-      .attr('y2', edge.y2)
+      .attr('x1', this.x1)
+      .attr('y1', this.y1)
+      .attr('x2', this.x2)
+      .attr('y2', this.y2)
       .attr('stroke-width', 2)
       .attr('stroke', 'black');
 
     return line;
+  },
+
+  paintPolyline: function (edge) {
+    var lineGraph = this.svgContainer
+      .append('g')
+      .on('mouseover', function() {
+        d3.select(this).selectAll('polyline').style('stroke', 'red');
+      })
+      .on('mouseout', function() {
+        d3.select(this).selectAll('polyline').style('stroke', 'black');
+      })
+      .append('polyline')
+      .attr('points', this.points)
+      .attr('stroke', 'black')
+      .attr('stroke-width', 2)
+      .attr('fill', 'none');
+
+    return lineGraph;
   }
 };

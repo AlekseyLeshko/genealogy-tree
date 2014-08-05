@@ -308,9 +308,47 @@ describe('Genealogy tree: ', function() {
 
     gTree.svgContainer = render.main;
     gTree.renderNodeContainers();
-    gTree.svgContainer = render.main;
     gTree.renderNodeImgs();
 
     expect(gTree.svgContainer.selectAll('image')[0].length).toEqual(10);
+  });
+
+  it('render label in node containers', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+
+    gTree.svgContainer = render.main;
+    gTree.renderNodeContainers();
+    gTree.renderNodelabels();
+
+    expect(gTree.svgContainer.selectAll('text')[0].length).toEqual(10);
+  });
+
+  it('render symbol in node containers', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+
+    gTree.svgContainer = render.main;
+    gTree.renderNodeContainers();
+    gTree.renderSymbols();
+
+    expect(gTree.svgContainer.selectAll('text')[0].length).toEqual(3);
+  });
+
+  it('render node containers', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+
+    gTree.svgContainer = render.main;
+
+    gTree.renderEdges();
+
+    expect(gTree.svgEdges.length).toEqual(12);
   });
 });

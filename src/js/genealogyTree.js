@@ -216,24 +216,27 @@ GenealogyTree.prototype = {
   },
 
   renderSymbols: function() {
-    this.svgNodes.append('text')
+    this.svgNodes
       .filter(function(node) {
         return node.whetherDrawSymbol();
       })
+      .append('text')
       .attr('dx', function(node) {
-        return this.symbol.x;
+        return node.symbol.x;
       })
       .attr('y', function(node) {
-        return this.symbol.y;
+        return node.symbol.y;
       })
       .text(function(node) {
-        return this.symbol.text;
+        return node.symbol.text;
       });
   },
 
   renderEdges: function() {
-    _.each(this.gTree.edges, function(edge) {
-      this.renderEdge(edge);
+    this.svgEdges = [];
+    _.each(this.edges, function(edge) {
+      var svgEdge = edge.render(this.svgContainer);
+      this.svgEdges.push(svgEdge);
     }, this);
   }
 };

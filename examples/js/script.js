@@ -16,13 +16,22 @@ function loadData() {
 
 var render;
 function drawTree() {
-  var container = '#tree';
+  var options = {
+    container: {
+      id: '#tree'
+    },
+    focus: {
+      scale: 2
+    }
+  };
 
   var rootIds = [1];
   var gTree = new GenealogyTree(nodes, relationships, rootIds);
 
-  render = new Render(container);
+  render = new Render(options);
   render.tree(gTree);
+
+  render.focusToNode(gTree.nodes[0]);
 };
 
 loadData();

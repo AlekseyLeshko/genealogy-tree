@@ -15,8 +15,8 @@ Edge.prototype = {
       'of_marriage': function() { self.calcCoordinatesTypeOfMarrige(); }
     };
     this.renderOfType = {
-      'marriage': function() { self.createLine(); },
-      'of_marriage': function() { self.paintPolyline(); }
+      'marriage': function() { self.drawEdgeTypeMarrige(); },
+      'of_marriage': function() { self.drawEdgeTypeOfMarrige(); }
     };
   },
 
@@ -25,31 +25,64 @@ Edge.prototype = {
   },
 
   calcCoordinatesTypeMarrige: function() {
-    this.x1 = this.parent.x + 5;
-    this.y1 = this.parent.y + 12;
+    var pairs = [];
+    var dy = 11;
+    var pair = {
+      x: this.parent.x + 14,
+      y: this.parent.y + dy
+    };
+    pairs.push(pair);
+    pair = {
+      x: this.child.x + 5,
+      y: this.child.y + dy
+    };
+    pairs.push(pair);
 
-    this.x2 = this.child.x + 15;
-    this.y2 = this.child.y + 12;
+    dy = 14;
+    pair = {
+      x: this.parent.x + 14,
+      y: this.parent.y + dy
+    };
+    pairs.push(pair);
+    pair = {
+      x: this.child.x + 5,
+      y: this.child.y + dy
+    };
+    pairs.push(pair);
 
-    this.middle = this.x2 + ((this.x1 - this.x2) / 2);
+    var middle = pairs[1].x + ((pairs[0].x - pairs[1].x) / 2);
+    pair = {
+      x: middle,
+      y: this.parent.y + dy
+    };
+    pairs.push(pair);
+    pair = {
+      x: middle,
+      y: this.child.y + dy + 50
+    };
+    pairs.push(pair);
+
+    this.coordinates = {
+      pairs: pairs,
+      middle: middle
+    };
   },
 
   calcCoordinatesTypeOfMarrige: function() {
-    this.points = [];
-    this.points.push(this.child.x + 9);
-    this.points.push(this.child.y + 7);
+    var pairs = [];
+    var pair = {
+      x: this.child.x + 9,
+      y: this.child.y + 7
+    };
+    pairs.push(pair);
 
-    this.points.push(this.child.x + 9);
-    this.points.push(this.child.y - 25);
+    pair = _.last(this.parent.coordinates.pairs);
+    pair.x = this.child.x + 9;
+    pairs.push(pair);
 
-    var dy = 50;
-    dy *= this.child.y <= this.parent.middle ? 1 : -1;
-
-    this.points.push(this.child.x + dy + 9);
-    this.points.push(this.child.y - 25);
-
-    this.points.push(this.child.x + dy + 9);
-    this.points.push(this.child.y - 63);
+    this.coordinates = {
+      pairs: pairs
+    };
   },
 
   render: function(svgContainer) {
@@ -60,9 +93,9 @@ Edge.prototype = {
     return svgEdge;
   },
 
-  createLine: function() {
+  drawEdgeTypeMarrige: function() {
     var self = this;
-    var line = this.svgContainer
+    var container = this.svgContainer
       .append('g')
       .attr('class', 'edge')
       .on('mouseover', function() {
@@ -71,35 +104,37 @@ Edge.prototype = {
       .on('mouseout', function() {
         self.setColor(this, 'black', 'line');
       })
-      .append('line')
-      .attr('x1', this.x1)
-      .attr('y1', this.y1)
-      .attr('x2', this.x2)
-      .attr('y2', this.y2)
-      .attr('stroke-width', 2)
-      .attr('stroke', 'black');
-
-    return line;
+    this.createLine(container, this.coordinates.pairs.slice(0, 2));
+    this.createLine(container, this.coordinates.pairs.slice(2, 4));
+    this.createLine(container, this.coordinates.pairs.slice(4, 6));
   },
 
-  paintPolyline: function (edge) {
+  drawEdgeTypeOfMarrige: function() {
     var self = this;
-    var lineGraph = this.svgContainer
+    var container = this.svgContainer
       .append('g')
       .attr('class', 'edge')
       .on('mouseover', function() {
-        self.setColor(this, 'red', 'polyline');
+        self.setColor(this, 'red', 'line');
       })
       .on('mouseout', function() {
-        self.setColor(this, 'black', 'polyline');
+        self.setColor(this, 'black', 'line');
       })
-      .append('polyline')
-      .attr('points', this.points)
-      .attr('stroke', 'black')
-      .attr('stroke-width', 2)
-      .attr('fill', 'none');
 
-    return lineGraph;
+    this.createLine(container, this.coordinates.pairs.slice(0, 2));
+  },
+
+  createLine: function(container, pairs) {
+    var border = 1;
+    var borderColor = 'black';
+    container
+      .append('line')
+      .attr('x1', pairs[0].x)
+      .attr('y1', pairs[0].y)
+      .attr('x2', pairs[1].x)
+      .attr('y2', pairs[1].y)
+      .attr('stroke-width', border)
+      .attr('stroke', borderColor);
   },
 
   setColor: function(el, color, type) {

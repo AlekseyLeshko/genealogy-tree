@@ -96,7 +96,7 @@ describe('Node: ', function() {
     expect(node.height).not.toEqual(magicNum);
   });
 
-  it('whether to draw a symbol', function() {
+  it('whether to draw a symbol for node with type concubine', function() {
     var data = {
       isConcubine: true,
       isUnnamed: false
@@ -107,4 +107,28 @@ describe('Node: ', function() {
 
     expect(answer).toBeTruthy();
   });
+
+  it('whether to draw a symbol for node with type unnamed', function() {
+    var data = {
+      isConcubine: false,
+      isUnnamed: true
+    };
+
+    var node = new Node(data);
+    var answer = node.whetherDrawSymbol();
+
+    expect(answer).toBeTruthy();
+  });
+
+  it('get symbol', function() {
+    var data = {
+      isConcubine: true,
+      isUnnamed: false
+    };
+
+    var node = new Node(data);
+    var answer = node.getSymbol();
+
+    expect(answer.text).toEqual('c');
+  })
 });

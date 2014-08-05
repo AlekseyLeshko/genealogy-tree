@@ -12,6 +12,7 @@ var Node = function(data) {
   this.parents = [];
   this.children = [];
   this.edges = [];
+  this.symbol = this.getSymbol();
 
   this.type = 'Node';
 };
@@ -51,30 +52,30 @@ Node.prototype = {
     return this.height;
   },
 
-  getSymbol: function(d) {
-    this.symbols = {
+  getSymbol: function() {
+    var symbols = {
       concubine: {
         text: 'c',
         x: 7,
         y: 15
-      }, unnamed: {
+      },
+      unnamed: {
         text: '?',
         x: 7,
         y: 16
-      },
+      }
     };
 
-    if (d.isConcubine) {
-      return this.symbols.concubine;
-    }
-
-    if (d.isUnnamed) {
-      return this.symbols.unnamed;
+    for (var key in this) {
+      var str = key.substr(2, key.length).toLowerCase();
+      if (symbols[str] && this[key]) {
+        return symbols[str];
+      }
     }
   },
 
   whetherDrawSymbol: function() {
-    var answer = this.isConcubine || this.isUnnamed;;
+    var answer = this.isConcubine || this.isUnnamed;
     return answer;
   },
 };

@@ -216,19 +216,18 @@ GenealogyTree.prototype = {
   },
 
   renderSymbols: function() {
-    var self = this;
     this.svgNodes.append('text')
       .filter(function(node) {
         return node.whetherDrawSymbol();
       })
       .attr('dx', function(node) {
-        return self.getSymbol(node).x;
+        return this.symbol.x;
       })
       .attr('y', function(node) {
-        return self.getSymbol(node).y;
+        return this.symbol.y;
       })
       .text(function(node) {
-        return self.getSymbol(node).text;
+        return this.symbol.text;
       });
   },
 

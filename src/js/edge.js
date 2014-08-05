@@ -70,14 +70,15 @@ Edge.prototype = {
 
   calcCoordinatesTypeOfMarrige: function() {
     var pairs = [];
+    var dx = 10;
     var pair = {
-      x: this.child.x + 9,
+      x: this.child.x + dx,
       y: this.child.y + 7
     };
     pairs.push(pair);
 
     pair = _.last(this.parent.coordinates.pairs);
-    pair.x = this.child.x + 9;
+    // pair.x = this.child.x + dx;
     pairs.push(pair);
 
     this.coordinates = {

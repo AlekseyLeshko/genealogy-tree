@@ -30,8 +30,6 @@ function drawTree() {
 
   render = new Render(options);
   render.tree(gTree);
-
-  render.focusToNode(gTree.nodes[0]);
 };
 
 loadData();

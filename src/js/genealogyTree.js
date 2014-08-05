@@ -201,7 +201,10 @@ GenealogyTree.prototype = {
     this.svgNodes
       .append('svg:image')
       .attr('class', 'img')
-      .attr('xlink:href', 'img/male.png')
+      .attr('xlink:href', function(node) {
+        var filePath = 'img/' + node.gender + '.png';
+        return 'img/male.png';
+      })
       // .attr('x', '0')
       // .attr('y', '-30')
       .attr('width', '20')

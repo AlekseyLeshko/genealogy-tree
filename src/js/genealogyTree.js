@@ -1,219 +1,147 @@
-var GenealogyTree = function(nodes, relationships, rootRelationships) {
-  'use strict';
-
+var GenealogyTree = function(dataNodes, relationships, rootIds) {
   this.init();
 
-  this.nodes = nodes;
+  this.nodes = this.createNodes(dataNodes);
   this.relationships = relationships;
-  this.dataLayouts[this.level] = rootRelationships;
+  this.dataLayouts[this.level] = rootIds;
 };
 
 GenealogyTree.prototype = {
   init: function() {
-    this.options = this.getDefaultOptions();
-    this.level = this.options.startLevel;
+    this.level = 0;
     this.dataLayouts = [];
     this.layouts = [];
     this.edges = [];
   },
 
-  getDefaultOptions: function() {
-    var defaultOptions = {
-      frame: {
-        width: 250,
-        height: 250
-      },
-      stepX: 75,
-      stepY: 100,
-      nodeWidth: 30,
-      startLevel: 0
+  generation: function() {
+    this.generationLayouts();
+
+    this.gtClal = new GenealogyTreeCalculator(this.layouts, this.edges);
+    this.gtClal.calcContainerParameters();
+    this.gtClal.calcCoordinatesForLayouts();
+  },
+
+  getContainerParameters: function() {
+    var parameters = {
+      width: this.gtClal.options.container.width,
+      height: this.gtClal.options.container.height
     };
-    return defaultOptions;
+
+    return parameters;
   },
 
   generationLayouts: function() {
     do {
-      this.generationLayout();
-      if (this.needToCreateNextLayout()) {
-        this.preparationNextLayout();
-      } else {
+      this.preparationLayout();
+      var dataLayout = this.dataLayouts[this.level];
+      this.generationLayout(dataLayout);
+      if (!this.needToCreateNextLayout()) {
         break;
       }
+      this.level++;
     } while(true);
   },
 
-  preparationNextLayout: function() {
-    this.level++;
-    var nodeArr = this.findNodesByIds(this.dataLayouts[this.level]);
-    this.dataLayouts[this.level] = this.getRelationships(nodeArr);
+  generationLayout: function(data) {
+    _.each(data.relationships, this.preparationRelationship, this);
+    this.addNodesForLayout(data.nodes, this.layouts, this.level);
+  },
+
+  preparationLayout: function() {
+    var ids = this.dataLayouts[this.level];
+    this.dataLayouts[this.level] = this.getRelationshipsAndNodes(ids);
   },
 
   needToCreateNextLayout: function() {
-    var answer = false;
-
-    if (this.nextLayoutIsExists()) {
-      answer = true;
-    }
-    return answer;
+    return this.nextLayoutIsExists();
   },
 
   nextLayoutIsExists: function() {
     var nextLeval = this.level + 1;
 
-    var layoutIsExists = this.dataLayouts[nextLeval];
-    if (!layoutIsExists) {
-      return false;
-    }
-
-    var layoutIsEmpty = this.dataLayouts[nextLeval].length > 0;
-    if (!layoutIsEmpty) {
+    if (!this.dataLayouts[nextLeval] ||
+      this.dataLayouts[nextLeval].length === 0) {
       return false;
     }
 
     return true;
   },
 
-  generationLayout: function() {
-    _.each(this.dataLayouts[this.level], this.preparationRelationship, this);
-  },
-
   preparationRelationship: function(relationship) {
     this.addSpousesNodeToLayout(relationship);
-    this.addNodesForLayoutData(relationship.children);
+    this.addNodesForLayout(relationship.children, this.dataLayouts, this.level + 1);
     this.createEdges(relationship);
 
     this.unsetRelationship(relationship);
   },
 
   addSpousesNodeToLayout: function(relationship) {
-    var layout = [];
-
-    var wifeNode = this.getNodeOfRelationship(relationship.wife);
-    var husbandNode = this.getNodeOfRelationship(relationship.husband);
-    layout.push(wifeNode);
-    layout.push(husbandNode);
-
-    this.addNodesForCurrentLayout(layout);
+    var nodes = this.findNodesByIds(relationship.spouses);
+    this.addNodesForLayout(nodes, this.layouts, this.level);
   },
 
-  addNodesForLayoutData: function(arr) {
-    var nextLeval = this.level + 1;
-    var layout = this.dataLayouts[nextLeval];
+  addNodesForLayout: function(nodes, arr, level) {
+    var layout = arr[level];
     if (!layout) {
       layout = [];
     }
 
-    layout = layout.concat(arr);
+    layout = layout.concat(nodes);
 
-    this.dataLayouts[nextLeval] = layout;
+    arr[level] = layout;
   },
 
-  addNodesForCurrentLayout: function(arr) {
-    var layout = this.layouts[this.level];
-    if (!layout) {
-      layout = [];
-    }
-
-    layout = layout.concat(arr);
-
-    this.layouts[this.level] = layout;
-  },
-
-  calcContainerParameters: function() {
-    this.options.container = {
-      width: this.calcWidthСontainer(),
-      height: this.calcHeightСontainer()
-    };
-  },
-
-  calcCoordinatesForLayouts: function() {
-    for (var i = 0; i < this.layouts.length; i++) {
-      if (this.layouts[i]) {
-        this.level = i;
-        this.layouts[i] = this.calcCoordinatesForLayout(this.layouts[i]);
-      }
-    }
-  },
-
-  calcCoordinatesForLayout: function(arr) {
-    var layout = [];
-    var y = this.calcStartY(arr.length);
-    var x = this.calcValX();
-    for (var i = 0; i < arr.length; i++) {
-      var node = arr[i];
-      node.x = x;
-      node.y = y;
-      layout.push(node);
-      y += this.options.stepY;
-    }
-    return layout;
-  },
-
-  calcStartY: function(countNode) {
-    var y = (((countNode / 2) * this.options.nodeWidth) + ((countNode - 1) * this.options.stepY)) / 2;
-    var res = (this.options.container.width / 2) - y;
-    return res;
-  },
-
-  calcValX: function() {
-    var frame = this.options.frame.height;
-    var width = this.level * this.options.stepX;
-    var x =  frame + width;
-    return x;
-  },
-
-  findElementInArr: function(key, val, arr) {
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i][key] === val) {
-        return arr[i];
-      }
-    }
-  },
-
-  getRelationships: function(nodes) {
-    var key = 'id';
+  getRelationshipsAndNodes: function(ids) {
     var arr = [];
-    for (var i = 0; i < nodes.length; i++) {
-      var node = nodes[i];
-      var relationship = this.findElementInArr(key, node.relationship, this.relationships);
-
-      if (!this.findElementInArr(key, relationship.id, arr)) {
-        arr.push(relationship);
+    _.each(this.relationships, function(relationship) {
+      for (var i = 0; i < relationship.spouses.length; i++) {
+        var spouseId = relationship.spouses[i];
+        if (_.contains(ids, spouseId)) {
+          arr.push(relationship);
+          ids = _.without(ids, spouseId);
+        }
       }
-    }
-    return arr;
+    });
+
+    var data = {
+      relationships: _.uniq(arr),
+      nodes: this.findNodesByIds(ids)
+    };
+
+    return data;
   },
 
   findNodesByIds: function(ids) {
-    var key = 'id';
-    var arr = [];
-    for (var i = 0; i < ids.length; i++) {
-      var val = ids[i];
-      var node = this.findElementInArr(key, val, this.nodes);
-      arr.push(node);
-    }
-    return arr;
+    var nodes = [];
+
+    _.each(ids, function(id) {
+      var node = _.findWhere(this.nodes, {'id': id});
+      nodes.push(node);
+    }, this);
+    return nodes;
   },
 
   createEdges: function(relationship) {
-    var wifeNode = this.getNodeOfRelationship(relationship.wife);
-    var husbandNode = this.getNodeOfRelationship(relationship.husband);
+    var edgeArr = [];
+    var parents = this.findNodesByIds(relationship.spouses);
 
-    var parentEdge = new Edge(husbandNode, wifeNode, relationship.type);
-    this.edges.push(parentEdge);
+    var parentEdge = new Edge(_.first(parents),
+      _.last(parents), relationship.type);
+    edgeArr.push(parentEdge);
 
-    var nodeArr = this.findNodesByIds(relationship.children);
+    var children = this.findNodesByIds(relationship.children);
 
-    _.each(nodeArr, function(node) {
+    _.each(children, function(node) {
       var edge = new Edge(parentEdge, node, relationship.childrenType);
-      this.edges.push(edge);
+      edgeArr.push(edge);
+      node.updateToChildNode(parents, edge);
     }, this);
-  },
 
-  getNodeOfRelationship: function(val) {
-    var key = 'id';
-    var node = this.findElementInArr(key, val, this.nodes);
-    return node;
+    this.edges = this.edges.concat(edgeArr);
+
+    _.first(parents).updateToParentNode(children, edgeArr);
+    _.last(parents).updateToParentNode(children, edgeArr);
   },
 
   unsetRelationship: function(value) {
@@ -222,65 +150,95 @@ GenealogyTree.prototype = {
       self.comparison(obj, value);
     });
 
-    if(!index) {
-      return this.relationships.splice(index, 1);
-    }
+    return this.relationships.splice(index, 1);
   },
 
   getNodes: function() {
-    var nodes = [];
-    for (var i = 0; i < this.layouts.length; i++) {
-      if (this.layouts[i]) {
-        nodes = nodes.concat(this.layouts[i]);
-      }
-    }
-
+    var nodes = _.flatten(this.layouts);
     return nodes;
   },
 
   comparison: function(x, y) {
-    return  JSON.stringify(x) === JSON.stringify(y) ;
+    return JSON.stringify(x) === JSON.stringify(y) ;
   },
 
-  widthCalculationLayout: function() {
-    if (this.layouts.length <= 0) {
-      return 0;
-    }
-
+  createNodes: function(dataNodes) {
     var arr = [];
-    _.each(this.layouts, function(layout) {
-      if (layout) {
-        var length = layout.length;
-        arr.push(length);
-      }
+    _.each(dataNodes, function(data) {
+      var node = new Node(data);
+      arr.push(node);
     });
 
-    if (arr.length <= 0) {
-      return 0;
-    }
-
-    var maxCount = _.max(arr, function(length) {
-      return length;
-    });
-
-    var width = (this.options.nodeWidth * maxCount) + ((maxCount - 1) * this.options.stepY);
-
-    return width;
+    return arr;
   },
 
-  calcWidthСontainer: function() {
-    var widthLayout = this.widthCalculationLayout();
-    var frame = this.options.frame.width * 2;
-    var width = widthLayout + frame;
-
-    return width;
+  render: function(svgContainer) {
+    this.svgContainer = svgContainer;
+    this.renderNodes();
+    this.renderEdges();
   },
 
-  calcHeightСontainer: function() {
-    var heightLayouts = (this.layouts.length * this.options.stepY);
-    var frame = this.options.frame.height * 2;
-    var height = heightLayouts + frame;
+  renderNodes: function() {
+    this.renderNodeContainers();
+    this.renderNodeImgs();
+    this.renderNodelabels();
+    this.renderSymbols();
+  },
 
-    return height;
+  renderNodeContainers: function() {
+    this.svgNodes = this.svgContainer
+      .selectAll('.node')
+      .data(this.nodes)
+      .enter()
+      .append('g')
+      .attr('class', 'node')
+      .attr('transform', function(d) {
+        return 'translate(' + d.x + ',' + d.y + ')';
+      });
+  },
+
+  renderNodeImgs: function() {
+    this.svgNodes
+      .append('svg:image')
+      .attr('class', 'img')
+      .attr('xlink:href', 'img/male.png')
+      // .attr('x', '0')
+      // .attr('y', '-30')
+      .attr('width', '20')
+      .attr('height', '20');
+  },
+
+  renderNodelabels: function() {
+    this.svgNodes
+      .append('text')
+      .attr('class', 'label')
+      .attr('y', 30)
+      .text(function(d) { return d.name; });
+  },
+
+  renderSymbols: function() {
+    this.svgNodes
+      .filter(function(node) {
+        return node.whetherDrawSymbol();
+      })
+      .append('text')
+      .attr('class', 'symbol')
+      .attr('dx', function(node) {
+        return node.symbol.x;
+      })
+      .attr('y', function(node) {
+        return node.symbol.y;
+      })
+      .text(function(node) {
+        return node.symbol.text;
+      });
+  },
+
+  renderEdges: function() {
+    this.svgEdges = [];
+    _.each(this.edges, function(edge) {
+      var svgEdge = edge.render(this.svgContainer);
+      this.svgEdges.push(svgEdge);
+    }, this);
   }
 };

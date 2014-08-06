@@ -196,7 +196,7 @@ GenealogyTree.prototype = {
       .append('g')
       .on("click", function(node) {
         self.deactivatePath();
-        self.genealogyPath(node, adam);
+        self.buildGenealogyPath(node, adam);
       })
       .attr('class', 'node')
       .attr('transform', function(d) {
@@ -220,8 +220,18 @@ GenealogyTree.prototype = {
       });
   },
 
-  genealogyPath: function(firstNode, lastNode) {
+  isEndBuildGenealogyPath: function(firstNode, lastNode) {
     if (firstNode === lastNode) {
+      return true;
+    }
+    if (firstNode.parents.length === 0) {
+      return true;
+    }
+    return false;
+  },
+
+  buildGenealogyPath: function(firstNode, lastNode) {
+    if (this.isEndBuildGenealogyPath(firstNode, lastNode)) {
       return;
     }
     var color = 'red';
@@ -233,12 +243,12 @@ GenealogyTree.prototype = {
     var b = _.findWhere(this.edges, { child: firstNode });
     b.setColor(color);
 
-    this.genealogyPath(parent, lastNode);
+    this.buildGenealogyPath(parent, lastNode);
   },
 
   deactivatePath: function() {
     _.each(this.edges, function(edge) {
-      edge.setColor('black');
+      edge.setColor();
     });
   },
 

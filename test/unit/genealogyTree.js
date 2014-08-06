@@ -374,18 +374,89 @@ describe('Genealogy tree: ', function() {
   });
 
   it('genealogy path', function() {
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
     var gTree = getGenealogyTree();
-    var render = new Render();
-    var node = gTree.nodes.slice(6, 7)[0];
+    gTree.generation();
+    gTree.render(render.main);
+    var node = gTree.nodes.slice(9, 10)[0];
     var adam = gTree.nodes[0];
 
-    gTree.genealogyPath(node, adam);
+    gTree.buildGenealogyPath(node, adam);
 
     var edges = gTree.svgEdges
       .filter(function(edge) {
-        console.log(edge);
-        return edge;
+        var res = edge.selectAll('line').attr('style') === "stroke: rgb(255, 0, 0);";
+        return res;
       });
 
+    expect(edges.length).toEqual(6);
+  });
+
+  it('genealogy path for root node', function() {
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    gTree.render(render.main);
+    var node = gTree.nodes.slice(1, 2)[0];
+    var adam = gTree.nodes[0];
+
+    gTree.buildGenealogyPath(node, adam);
+
+    var edges = gTree.svgEdges
+      .filter(function(edge) {
+        var res = edge.selectAll('line').attr('style') === "stroke: rgb(255, 0, 0);";
+        return res;
+      });
+
+    expect(edges.length).toEqual(0);
+  });
+
+  it('deactivate path', function() {
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    gTree.render(render.main);
+    var edge = gTree.edges.slice(0, 1)[0];
+    edge.setColor('red');
+
+    gTree.deactivatePath();
+
+    expect(edge.container.selectAll('line').attr('style')).toBeNull();
+  });
+
+  it('is end build genealogy path return false', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    var node = gTree.nodes.slice(9, 10)[0];
+    var adam = gTree.nodes[0];
+
+    var res = gTree.isEndBuildGenealogyPath(node, adam);
+
+    expect(res).toBeFalsy();
+  });
+
+  it('is end build genealogy path with root node', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    var node = gTree.nodes.slice(0, 1)[0];
+    var adam = gTree.nodes[0];
+
+    var res = gTree.isEndBuildGenealogyPath(node, adam);
+
+    expect(res).toBeTruthy();
+  });
+
+  it('is end build genealogy path with second root node', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    var node = gTree.nodes.slice(1, 2)[0];
+    var adam = gTree.nodes[0];
+
+    var res = gTree.isEndBuildGenealogyPath(node, adam);
+
+    expect(res).toBeTruthy();
   });
 });

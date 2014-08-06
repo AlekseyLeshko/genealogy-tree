@@ -194,9 +194,6 @@ GenealogyTree.prototype = {
       .data(this.nodes)
       .enter()
       .append('g')
-      .on("click", function(node) {
-        self.buildGenealogyPathFromAdam(node);
-      })
       .attr('class', 'node')
       .attr('transform', function(d) {
         return 'translate(' + d.x + ',' + d.y + ')';

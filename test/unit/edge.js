@@ -203,4 +203,18 @@ describe('Edge: ', function() {
 
     expect(container.selectAll('line')[0].length).toEqual(1);
   });
+
+  it('set color', function() {
+    var edge = new Edge();
+    var pairs = [{ x: 1, y: 1}, { x: 10, y: 10}];
+    var container = d3.select('body').append('svg');
+    edge.drawAndSetEdgeContainer(container);
+    edge.drawLink(pairs);
+    var color = 'green';
+
+    edge.setColor(color);
+
+    expect(edge.container.select('line').attr('stroke')).toEqual('black');
+    expect(edge.container.select('line').attr('style')).toEqual('stroke: rgb(0, 128, 0);');
+  });
 });

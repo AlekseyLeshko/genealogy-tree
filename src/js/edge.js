@@ -151,6 +151,12 @@ var Edge = (function() {
         .attr('y2', pairs[1].y)
         .attr('stroke-width', this.options.strokeWidth)
         .attr('stroke', this.options.strokeColor);
+    },
+
+    setColor: function(color) {
+      this.container
+        .selectAll('line')
+        .style('stroke', color);
     }
   };
 

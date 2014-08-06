@@ -46,6 +46,7 @@ describe('Genealogy tree: ', function() {
     expect(GenealogyTree.prototype.dataLayouts.length).toEqual(0);
     expect(GenealogyTree.prototype.layouts.length).toEqual(0);
     expect(GenealogyTree.prototype.edges.length).toEqual(0);
+    expect(GenealogyTree.prototype.buildGenealogyPathFromAdam).not.toBeUndefined();
   });
 
   it('generation layouts', function() {
@@ -373,7 +374,7 @@ describe('Genealogy tree: ', function() {
     expect(gTree.svgEdges.length).toEqual(12);
   });
 
-  it('genealogy path', function() {
+  it('build genealogy path', function() {
     var options = {container: {id: 'body'}};
     var render = new Render(options);
     var gTree = getGenealogyTree();
@@ -382,7 +383,7 @@ describe('Genealogy tree: ', function() {
     var node = gTree.nodes.slice(9, 10)[0];
     var adam = gTree.nodes[0];
 
-    gTree.buildGenealogyPath(node, adam);
+    gTree.buildPartOfGenealogyPath(node, adam);
 
     var edges = gTree.svgEdges
       .filter(function(edge) {
@@ -393,7 +394,27 @@ describe('Genealogy tree: ', function() {
     expect(edges.length).toEqual(6);
   });
 
-  it('genealogy path for root node', function() {
+  it('build part of genealogy path', function() {
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    gTree.render(render.main);
+    var node = gTree.nodes.slice(9, 10)[0];
+    var adam = gTree.nodes[0];
+
+    gTree.buildPartOfGenealogyPath(node, adam);
+
+    var edges = gTree.svgEdges
+      .filter(function(edge) {
+        var res = edge.selectAll('line').attr('style') === "stroke: rgb(255, 0, 0);";
+        return res;
+      });
+
+    expect(edges.length).toEqual(6);
+  });
+
+  it('build part of genealogy path for root node', function() {
     var options = {container: {id: 'body'}};
     var render = new Render(options);
     var gTree = getGenealogyTree();
@@ -402,7 +423,7 @@ describe('Genealogy tree: ', function() {
     var node = gTree.nodes.slice(1, 2)[0];
     var adam = gTree.nodes[0];
 
-    gTree.buildGenealogyPath(node, adam);
+    gTree.buildPartOfGenealogyPath(node, adam);
 
     var edges = gTree.svgEdges
       .filter(function(edge) {
@@ -458,5 +479,54 @@ describe('Genealogy tree: ', function() {
     var res = gTree.isEndBuildGenealogyPath(node, adam);
 
     expect(res).toBeTruthy();
+  });
+
+  it('build genealogy path', function() {
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    gTree.render(render.main);
+    var node = gTree.nodes.slice(9, 10)[0];
+    var adam = gTree.getAdamNode();
+
+    gTree.buildGenealogyPath(node, adam, gTree);
+
+    var edges = gTree.svgEdges
+      .filter(function(edge) {
+        var res = edge.selectAll('line').attr('style') === "stroke: rgb(255, 0, 0);";
+        return res;
+      });
+
+    expect(edges.length).toEqual(6);
+  });
+
+  it('get adam node', function() {
+    var gTree = getGenealogyTree();
+    gTree.generation();
+
+    var node = gTree.getAdamNode();
+
+    expect(node.name).toEqual('Adam');
+  });
+
+  it('partial', function() {
+    var options = {container: {id: 'body'}};
+    var render = new Render(options);
+    var gTree = getGenealogyTree();
+    gTree.generation();
+    gTree.render(render.main);
+    var node = gTree.nodes.slice(9, 10)[0];
+
+    var fn = gTree.partial(gTree.buildGenealogyPath, gTree.getAdamNode, gTree);
+    fn(node);
+
+    var edges = gTree.svgEdges
+      .filter(function(edge) {
+        var res = edge.selectAll('line').attr('style') === "stroke: rgb(255, 0, 0);";
+        return res;
+      });
+
+    expect(edges.length).toEqual(6);
   });
 });

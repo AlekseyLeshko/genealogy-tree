@@ -12,6 +12,7 @@ GenealogyTree.prototype = {
     this.dataLayouts = [];
     this.layouts = [];
     this.edges = [];
+    this.buildGenealogyPathFromAdam = this.partial(this.buildGenealogyPath, this.getAdamNode, this);
   },
 
   generation: function() {
@@ -187,7 +188,6 @@ GenealogyTree.prototype = {
 
   renderNodeContainers: function() {
     var self = this;
-    var adam = this.nodes[0];
 
     this.svgNodes = this.svgContainer
       .selectAll('.node')
@@ -195,8 +195,7 @@ GenealogyTree.prototype = {
       .enter()
       .append('g')
       .on("click", function(node) {
-        self.deactivatePath();
-        self.buildGenealogyPath(node, adam);
+        self.buildGenealogyPathFromAdam(node);
       })
       .attr('class', 'node')
       .attr('transform', function(d) {
@@ -220,6 +219,23 @@ GenealogyTree.prototype = {
       });
   },
 
+  partial: function(fn, lastNode, context) {
+    return function(firstNode) {
+      return fn(firstNode, lastNode(), context);
+    };
+  },
+
+  getAdamNode: function() {
+    var name = 'Adam';
+    var node = _.findWhere(this.nodes, { name: name });
+    return node;
+  },
+
+  buildGenealogyPath: function(firstNode, lastNode, context) {
+    context.deactivatePath();
+    context.buildPartOfGenealogyPath(firstNode, lastNode);
+  },
+
   isEndBuildGenealogyPath: function(firstNode, lastNode) {
     if (firstNode === lastNode) {
       return true;
@@ -230,7 +246,7 @@ GenealogyTree.prototype = {
     return false;
   },
 
-  buildGenealogyPath: function(firstNode, lastNode) {
+  buildPartOfGenealogyPath: function(firstNode, lastNode) {
     if (this.isEndBuildGenealogyPath(firstNode, lastNode)) {
       return;
     }
@@ -243,7 +259,7 @@ GenealogyTree.prototype = {
     var b = _.findWhere(this.edges, { child: firstNode });
     b.setColor(color);
 
-    this.buildGenealogyPath(parent, lastNode);
+    this.buildPartOfGenealogyPath(parent, lastNode);
   },
 
   deactivatePath: function() {

@@ -133,7 +133,7 @@ describe('Edge: ', function() {
 
     edge.calcCoordinates();
 
-    expect(edge.coordinates.pairs.length).toEqual(2);
+    expect(edge.coordinates.pairs.length).toEqual(4);
   });
 
   it('calculation coordinatesfor node with type marrige', function() {
@@ -160,7 +160,7 @@ describe('Edge: ', function() {
 
     edge.calcCoorTypeOfMarrige();
 
-    expect(edge.coordinates.pairs.length).toEqual(2);
+    expect(edge.coordinates.pairs.length).toEqual(4);
   });
 
   it('render type marrige', function() {
@@ -189,12 +189,13 @@ describe('Edge: ', function() {
     var edge = new Edge();
     edge.drawAndSetEdgeContainer(container);
     edge.coordinates = {
-      pairs: [{ x: 1, y: 1}, { x: 10, y: 10}]
+      pairs: [{ x: 1, y: 1}, { x: 10, y: 10},
+      { x: 10, y: 10}, { x: 50, y: 50}]
     };
 
     edge.renderTypeOfMarrige();
 
-    expect(edge.container.selectAll('line')[0].length).toEqual(1);
+    expect(edge.container.selectAll('line')[0].length).toEqual(2);
   });
 
   it('create line', function() {

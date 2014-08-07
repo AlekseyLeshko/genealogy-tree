@@ -123,9 +123,26 @@ var Edge = (function() {
     calcCoorTypeOfMarrige: function() {
       var pairs = [];
       var dy = -3;
+
+      var x = this.child.x + (this.child.width / 2);
+      var y = this.child.y + (this.child.height / 2);
       var pair = {
-        x: this.child.x + (this.child.width / 2),
-        y: this.child.y + (this.child.height / 2) + dy
+        x: x,
+        y: y + dy
+      };
+      pairs.push(pair);
+
+      dy = -7;
+      pair = {
+        x: x,
+        y: y + dy
+      };
+      pairs.push(pair);
+
+      dy = -6.5;
+      pair = {
+        x: x,
+        y: y + dy
       };
       pairs.push(pair);
 
@@ -146,7 +163,8 @@ var Edge = (function() {
     },
 
     renderTypeOfMarrige: function() {
-      this.drawLink(this.coordinates.pairs);
+      this.drawLink(this.coordinates.pairs.slice(0, 2));
+      this.drawLink(this.coordinates.pairs.slice(2, 4));
     },
 
     drawLink: function(pairs) {

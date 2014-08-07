@@ -18,10 +18,10 @@ gulp.task('scripts', ['clean'], function() {
   return gulp.src(paths.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
-    // .pipe(sourcemaps.init())
-    // .pipe(uglify())
+    .pipe(sourcemaps.init())
+    .pipe(uglify())
     .pipe(concat('all.min.js'))
-    // .pipe(sourcemaps.write('../maps'))
+    .pipe(sourcemaps.write('../maps'))
     .pipe(gulp.dest('dist/js/'))
     .pipe(connect.reload());
 });
@@ -46,7 +46,13 @@ gulp.task('connect', function() {
 
 var karmaCommonConf = {
   basePath : '',
-  browsers: ['Chrome'],
+  browsers: [
+    'Chrome',
+    'PhantomJS',
+    'Firefox',
+    'FirefoxAurora',
+    'FirefoxNightly'
+  ],
   frameworks: ['jasmine'],
   files: [
     'src/js/**/*.js',
@@ -62,33 +68,30 @@ var karmaCommonConf = {
     'karma-phantomjs-launcher',
     'karma-firefox-launcher',
     'karma-jasmine',
-    'karma-junit-reporter',
     'karma-coverage'
   ],
-
-  junitReporter : {
-    outputFile: 'test_out/unit.xml',
-    suite: 'unit'
-  },
-
   reporters: ['progress', 'coverage'],
-
   preprocessors: {
     'src/js/**/*.js': ['coverage']
   },
-
   coverageReporter: {
     type : 'html',
     dir : 'coverage/'
   }
 };
 
-gulp.task('test-single-run', function (done) {
-  karma.start(_.assign({}, karmaCommonConf, {singleRun: true, browsers: ['PhantomJS']}), done);
+gulp.task('tdd', function (done) {
+  karma.start(_.assign({}, karmaCommonConf, {
+    browsers: ['PhantomJS']
+  }), done);
 });
 
-gulp.task('tdd', function (done) {
+gulp.task('tests', function (done) {
   karma.start(karmaCommonConf, done);
+});
+
+gulp.task('build', function(callback) {
+  runSequence(['scripts', 'tests'], callback);
 });
 
 gulp.task('default', function(callback) {

@@ -247,7 +247,7 @@ GenealogyTree.prototype = {
     if (this.isEndBuildGenealogyPath(firstNode, lastNode)) {
       return;
     }
-    var color = 'red';
+    var color = '#FF0000';
 
     var parent = _.first(firstNode.parents);
     var a = _.findWhere(this.edges, { parent: parent });

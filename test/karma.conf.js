@@ -1,8 +1,6 @@
 module.exports = function(config){
   config.set({
-
     basePath : '../',
-
     files : [
       'src/js/**/*.js',
       'test/unit/**/*.js',
@@ -10,37 +8,27 @@ module.exports = function(config){
       'node_modules/d3/d3.min.js',
       'node_modules/jquery/dist/jquery.min.js'
     ],
-
     autoWatch : true,
     usePolling: true,
-
     frameworks: ['jasmine'],
-
     browsers : [
       'Chrome',
-      'PhantomJS'
+      'PhantomJS',
+      'Firefox',
+      'FirefoxAurora',
+      'FirefoxNightly'
     ],
-
     plugins : [
       'karma-chrome-launcher',
       'karma-phantomjs-launcher',
       'karma-firefox-launcher',
       'karma-jasmine',
-      'karma-junit-reporter',
       'karma-coverage'
     ],
-
-    junitReporter : {
-      outputFile: 'test_out/unit.xml',
-      suite: 'unit'
-    },
-
     reporters: ['progress', 'coverage'],
-
     preprocessors: {
       'src/js/**/*.js': ['coverage']
     },
-
     coverageReporter: {
       reporters:[
         {
@@ -52,19 +40,6 @@ module.exports = function(config){
           dir:'coverage/'
         }
       ]
-    },
-
-    customLaunchers: {
-      'PhantomJS_custom': {
-        base: 'PhantomJS',
-        options: {
-          windowName: 'my-window',
-          settings: {
-            webSecurityEnabled: false
-          }
-        },
-        flags: ['--remote-debugger-port=9000']
-      }
     }
   });
 };

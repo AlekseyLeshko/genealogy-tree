@@ -32,9 +32,10 @@ function drawTree() {
 
   render = new Render(options);
   render.tree(gTree);
-  var node = gTree.nodes[9];
+  var node = gTree.nodes[4];
   render.focusToNode(node);
 
+  node = gTree.nodes[9];
   gTree.buildGenealogyPathFromAdam(node);
 };
 

@@ -75,7 +75,7 @@ describe('Genealogy tree calculator', function() {
 
     var x = gtCalc.calcValX(countNode);
 
-    expect(x).toEqual(290);
+    expect(x).toEqual(305);
   });
 
   it('calculation width container for empty layout', function() {

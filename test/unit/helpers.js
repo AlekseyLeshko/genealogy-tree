@@ -139,7 +139,7 @@ function getGCalcOptions() {
       width: 250,
       height: 250
     },
-    stepX: 80,
+    stepX: 50,
     stepY: 50,
     nodeWidth: 30
   };

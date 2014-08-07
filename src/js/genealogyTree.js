@@ -175,8 +175,8 @@ GenealogyTree.prototype = {
 
   render: function(svgContainer) {
     this.svgContainer = svgContainer;
-    this.renderNodes();
     this.renderEdges();
+    this.renderNodes();
   },
 
   renderNodes: function() {
@@ -206,13 +206,23 @@ GenealogyTree.prototype = {
       .attr('class', 'img')
       .attr('xlink:href', function(node) {
         var filePath = 'img/' + node.gender + '.png';
-        return 'img/male.png';
+        return filePath;
       })
       .attr('width', function(node) {
         return node.width;
       })
       .attr('height', function(node) {
         return node.height;
+      })
+      .attr('y', function(node) {
+        if (node.gender === 'female') {
+          return 4.5;
+        }
+      })
+      .attr('x', function(node) {
+        if (node.gender === 'female') {
+          return -0.5;
+        }
       });
   },
 

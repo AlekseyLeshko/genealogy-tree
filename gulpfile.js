@@ -11,7 +11,11 @@ var connect = require('gulp-connect');
 var runSequence = require('run-sequence');
 
 var paths = {
-  scripts: ['src/js/**/*.js']
+  scripts: ['src/js/**/*.js'],
+  examples: ['node_modules/jquery/dist/jquery.min.js',
+    'node_modules/underscore/underscore-min.js',
+    'node_modules/d3/d3.min.js',
+    'dist/js/all.min.js']
 };
 
 gulp.task('scripts', ['clean'], function() {
@@ -26,14 +30,19 @@ gulp.task('scripts', ['clean'], function() {
     .pipe(connect.reload());
 });
 
+gulp.task('examples', function () {
+  return gulp.src(paths.examples)
+    .pipe(gulp.dest('examples/js/lib/'));
+});
+
 gulp.task('clean', function () {
   return gulp.src('dist')
     .pipe(clean());
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.scripts, ['scripts']);
-  gulp.watch('examples/**/*.*', ['scripts']);
+  gulp.watch(paths.scripts, ['build']);
+  gulp.watch(['examples/**/*.*', '!examples/js/lib'], ['build']);
 });
 
 gulp.task('connect', function() {
@@ -90,10 +99,14 @@ gulp.task('tests', function (done) {
   karma.start(karmaCommonConf, done);
 });
 
-gulp.task('build', function(callback) {
+gulp.task('build-tests', function(callback) {
   runSequence(['scripts', 'tests'], callback);
 });
 
+gulp.task('build', function(callback) {
+  runSequence('scripts', 'examples', callback);
+});
+
 gulp.task('default', function(callback) {
-  runSequence('scripts', ['connect', 'watch', 'tdd'], callback);
+  runSequence('build', ['connect', 'watch', 'tdd'], callback);
 });

@@ -56,13 +56,13 @@ Node.prototype = {
     var symbols = {
       concubine: {
         text: 'c',
-        x: 7,
-        y: 15
+        x: 6.2,
+        y: 14.8
       },
       unnamed: {
         text: '?',
-        x: 7,
-        y: 16
+        x: 6.7,
+        y: 15.6
       }
     };
 

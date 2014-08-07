@@ -100,6 +100,11 @@ var Edge = (function() {
         x: middle,
         y: this.parent.y + dy
       };
+
+      if (this.parent === this.child) {
+        pair.y = this.parent.y + this.parent.height - 3;
+      }
+
       pairs.push(pair);
 
       dy += 25;
@@ -133,8 +138,10 @@ var Edge = (function() {
     },
 
     renderTypeMarrige: function() {
-      this.drawLink(this.coordinates.pairs.slice(0, 2));
-      this.drawLink(this.coordinates.pairs.slice(2, 4));
+      if (this.parent !== this.child) {
+        this.drawLink(this.coordinates.pairs.slice(0, 2));
+        this.drawLink(this.coordinates.pairs.slice(2, 4));
+      }
       this.drawLink(this.coordinates.pairs.slice(4, 6));
     },
 

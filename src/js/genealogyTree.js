@@ -175,8 +175,8 @@ GenealogyTree.prototype = {
 
   render: function(svgContainer) {
     this.svgContainer = svgContainer;
-    this.renderNodes();
     this.renderEdges();
+    this.renderNodes();
   },
 
   renderNodes: function() {

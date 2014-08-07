@@ -18,10 +18,12 @@ var render;
 function drawTree() {
   var options = {
     container: {
-      id: '#tree'
+      id: '#tree',
+      width: 1000,
+      height: 800
     },
     focus: {
-      scale: 2
+      scale: 3
     }
   };
 
@@ -30,6 +32,11 @@ function drawTree() {
 
   render = new Render(options);
   render.tree(gTree);
+  var node = gTree.nodes[4];
+  render.focusToNode(node);
+
+  node = gTree.nodes[9];
+  gTree.buildGenealogyPathFromAdam(node);
 };
 
 loadData();
